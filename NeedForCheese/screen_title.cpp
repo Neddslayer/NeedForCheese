@@ -186,38 +186,39 @@ void DrawTitleScreen(void)
 				elapsed = 0;
 			finishedTransition = true;
 		}
-		playButton = { 125.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0), -10.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0), 421, 273 };
+		playButton = { 125.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((playPressable && MouseCollidingWithRectF(playHitbox)) ? (rand() % 2 - 1) : 0), 10.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((playPressable && MouseCollidingWithRectF(playHitbox)) ? (rand() % 2 - 1) : 0), 421, 273 };
 		if (elapsed > 40 && finishedTransition)
 		{
 			playPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonPlayTexture, NULL, &playButton);
 			playHitbox = { 125, 50, 421, 200 };
 		}
-		equipButton = { 750.0f +((elapsed < 62) ? (rand() % 10 - 5) : 0), 20.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0), 427, 250 };
+		equipButton = { 750.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((equipPressable && MouseCollidingWithRectF(equipHitbox)) ? (rand() % 2 - 1) : 0), 20.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((equipPressable && MouseCollidingWithRectF(equipHitbox)) ? (rand() % 2 - 1) : 0), 427, 250};
 		if (elapsed > 55 && finishedTransition)
 		{
 			equipPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonEquipTexture, NULL, &equipButton);
 			equipHitbox = { 755, 80, 421, 180 };
 		}
-		optionsButton = { 125.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0), 460.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0), 474, 276 };
+		optionsButton = { 125.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((optionsPressable && MouseCollidingWithRectF(optionsHitbox)) ? (rand() % 2 - 1) : 0), 410.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((optionsPressable && MouseCollidingWithRectF(optionsHitbox)) ? (rand() % 2 - 1) : 0), 474, 276 };
 		if (elapsed > 70 && finishedTransition)
 		{
 			optionsPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonOptionsTexture, NULL, &optionsButton);
 			optionsHitbox = { 140, 480, 410, 225 };
 		}
-		creditsButton = { 700.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0), 450.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0), 487, 283 };
+		creditsButton = { 700.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((creditsPressable && MouseCollidingWithRectF(creditsHitbox)) ? (rand() % 2 - 1) : 0), 400.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((creditsPressable && MouseCollidingWithRectF(creditsHitbox)) ? (rand() % 2 - 1) : 0), 487, 283 };
 		if (elapsed > 85 && finishedTransition)
 		{
 			creditsPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonCreditsTexture, NULL, &creditsButton);
-			creditsHitbox = { 750, 490, 420, 200 };
+			creditsHitbox = { 750, 440, 420, 200 };
 		}
+		SDL_RenderDrawRectF(renderer, &creditsHitbox);
 	}
 	
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, pulsing ? overlayAlpha : 0);
-	//SDL_RenderFillRect(renderer, NULL);
+	SDL_RenderFillRect(renderer, NULL);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 }
 
