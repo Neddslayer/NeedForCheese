@@ -90,7 +90,11 @@ void DrawTitleSelectScreen(void)
 }
 void UnloadTitleSelectScreen(void)
 {
-
+	SDL_DestroyTexture(titleSelectBGTexturea);
+	SDL_DestroyTexture(titleSelectButtonCreditsTexture);
+	SDL_DestroyTexture(titleSelectButtonEquipTexture);
+	SDL_DestroyTexture(titleSelectButtonOptionsTexture);
+	SDL_DestroyTexture(titleSelectButtonPlayTexture);
 }
 int FinishTitleSelectScreen(void)
 {

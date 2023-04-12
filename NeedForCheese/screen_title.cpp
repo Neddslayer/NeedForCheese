@@ -164,6 +164,7 @@ void UnloadTitleScreen(void)
 	SDL_DestroyTexture(titleBGTexture);
 	SDL_DestroyTexture(titleGuyTexture);
 	SDL_DestroyTexture(titleTextTexture);
+	SDL_DestroyTexture(titleSelectBGTexture);
 	FC_FreeFont(startFont);
 }
 
