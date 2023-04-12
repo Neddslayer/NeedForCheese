@@ -27,6 +27,9 @@
     <ClCompile Include="screen_title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="screen_titleselect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="screens.h">
@@ -45,7 +48,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="iamsotiredofthisbullshit.rc">
+    <ResourceCompile Include="NeedForCheese.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

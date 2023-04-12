@@ -65,6 +65,7 @@ double t;
 FC_Font* startFont;
 
 Mix_Chunk* errorNotImplementedWAV;
+bool transitioningToEquipScreen;
 
 void InitTitleScreen(void)
 {
@@ -151,10 +152,18 @@ void UpdateTitleScreen(void)
 		}
 	}
 	if (!mouseClicked) playPressed = false; optionsPressed = false; equipPressed = false; creditsPressed = false;
-	if (playPressable && MouseCollidingWithRectF(playHitbox) && mouseClicked && !playPressed)
+	if (playPressable && ButtonClickedF(playHitbox) && !playPressed)
 	{
 		Mix_PlayChannel(-1, errorNotImplementedWAV, 0);
 		playPressed = true;
+	}
+	if (equipPressable && ButtonClickedF(equipHitbox) && !equipPressed)
+	{
+		transitioningToEquipScreen = true;
+	}
+	if (transitioningToEquipScreen)
+	{
+
 	}
 }
 
@@ -173,7 +182,7 @@ void DrawTitleScreen(void)
 	{
 		SDL_RenderCopy(renderer, titleSelectBGTexture, NULL, NULL);
 		// Only render the characters while they're on screen
-		if (t >= 0.01)
+		if (t >= 0.01 && !transitioningToEquipScreen)
 		{
 			SDL_FRect rect = { (float)x, (float)y, 493, 306.5 };
 			SDL_RenderCopyExF(renderer, titleTextTexture, NULL, &rect, angle, NULL, SDL_FLIP_NONE);
@@ -185,30 +194,31 @@ void DrawTitleScreen(void)
 			if (!finishedTransition)
 				elapsed = 0;
 			finishedTransition = true;
+			finishScreen = 1;
 		}
 		playButton = { 125.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((playPressable && MouseCollidingWithRectF(playHitbox)) ? (rand() % 2 - 1) : 0), 10.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((playPressable && MouseCollidingWithRectF(playHitbox)) ? (rand() % 2 - 1) : 0), 421, 273 };
-		if (elapsed > 40 && finishedTransition)
+		if ((elapsed > 40 && finishedTransition) || transitioningToEquipScreen)
 		{
 			playPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonPlayTexture, NULL, &playButton);
 			playHitbox = { 125, 50, 421, 200 };
 		}
 		equipButton = { 750.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((equipPressable && MouseCollidingWithRectF(equipHitbox)) ? (rand() % 2 - 1) : 0), 20.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((equipPressable && MouseCollidingWithRectF(equipHitbox)) ? (rand() % 2 - 1) : 0), 427, 250};
-		if (elapsed > 55 && finishedTransition)
+		if ((elapsed > 55 && finishedTransition) || transitioningToEquipScreen)
 		{
 			equipPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonEquipTexture, NULL, &equipButton);
 			equipHitbox = { 755, 80, 421, 180 };
 		}
 		optionsButton = { 125.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((optionsPressable && MouseCollidingWithRectF(optionsHitbox)) ? (rand() % 2 - 1) : 0), 410.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((optionsPressable && MouseCollidingWithRectF(optionsHitbox)) ? (rand() % 2 - 1) : 0), 474, 276 };
-		if (elapsed > 70 && finishedTransition)
+		if ((elapsed > 70 && finishedTransition) || transitioningToEquipScreen)
 		{
 			optionsPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonOptionsTexture, NULL, &optionsButton);
 			optionsHitbox = { 140, 420, 410, 225 };
 		}
 		creditsButton = { 700.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((creditsPressable && MouseCollidingWithRectF(creditsHitbox)) ? (rand() % 2 - 1) : 0), 400.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((creditsPressable && MouseCollidingWithRectF(creditsHitbox)) ? (rand() % 2 - 1) : 0), 487, 283 };
-		if (elapsed > 85 && finishedTransition)
+		if ((elapsed > 85 && finishedTransition) || transitioningToEquipScreen)
 		{
 			creditsPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonCreditsTexture, NULL, &creditsButton);

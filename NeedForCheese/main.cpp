@@ -172,6 +172,38 @@ bool MouseCollidingWithRectF(SDL_FRect rect)
 	return (mouseX >= rect.x && mouseX < rect.x + rect.w && mouseY >= rect.y && mouseY < rect.y + rect.h);
 }
 
+// Change to screen immediately, usually for a transition within the screen itself rather than a fade
+static void ChangeToScreen(GameScreen screen)
+{
+	// Unload current screen
+	switch (currentScreen)
+	{
+	case LOGO: UnloadLogoScreen(); break;
+	case TITLE: UnloadTitleScreen(); break;
+	case TITLESELECT: UnloadTitleSelectScreen(); break;
+	case OPTIONS: /*UnloadOptionsScreen();*/ break;
+	case LEVSEL: /*UnloadLevelSelectScreen();*/ break;
+	case GAMEPLAY: /*UnloadGameplayScreen();*/ break;
+	case ENDING: /*UnloadEndingScreen();*/ break;
+	default: break;
+	}
+
+	// Init next screen
+	switch (screen)
+	{
+	case LOGO: InitLogoScreen(); break;
+	case TITLE: InitTitleScreen(); break;
+	case TITLESELECT: InitTitleSelectScreen(); break;
+	case OPTIONS: /*InitOptionsScreen();*/ break;
+	case LEVSEL: /*InitLevelSelectScreen();*/ break;
+	case GAMEPLAY: /*InitGameplayScreen();*/ break;
+	case ENDING: /*InitEndingScreen();*/ break;
+	default: break;
+	}
+
+	currentScreen = screen;
+}
+
 // Request transition to next screen
 static void TransitionToScreen(GameScreen screen)
 {
@@ -318,9 +350,13 @@ void UpdateDrawFrame()
 		{
 			UpdateTitleScreen();
 
-			if (FinishTitleScreen() == 1) TransitionToScreen(OPTIONS);
-			else if (FinishTitleScreen() == 2) TransitionToScreen(LEVSEL);
+			if (FinishTitleScreen()) ChangeToScreen(TITLESELECT);
 		} break;
+		case TITLESELECT:
+		{
+			UpdateTitleSelectScreen();
+
+		}
 		case OPTIONS:
 		{/*
 			UpdateOptionsScreen();
@@ -368,6 +404,7 @@ void UpdateDrawFrame()
 	{
 	case LOGO: DrawLogoScreen(); break;
 	case TITLE: DrawTitleScreen(); break;
+	case TITLESELECT: DrawTitleSelectScreen();
 	case OPTIONS: /*DrawOptionsScreen();*/ break;
 	case LEVSEL: /*DrawLevelSelectScreen();*/ break;
 	case GAMEPLAY: /*DrawGameplayScreen();*/ break;
@@ -395,4 +432,13 @@ int GetScreenWidth()
 int GetScreenHeight()
 {
 	return window_height;
+}
+
+bool ButtonClicked(SDL_Rect button)
+{
+	return MouseCollidingWithRect(button) && mouseClicked;
+}
+bool ButtonClickedF(SDL_FRect button)
+{
+	return MouseCollidingWithRectF(button) && mouseClicked;
 }

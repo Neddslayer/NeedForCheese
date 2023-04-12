@@ -4,7 +4,7 @@
 #ifndef SCREENS_H
 #define SCREENS_H
 
-typedef enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE = 1, OPTIONS, LEVSEL, GAMEPLAY, ENDING};
+typedef enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE = 1, TITLESELECT, OPTIONS, LEVSEL, GAMEPLAY, ENDING};
 
 extern GameScreen currentScreen;
 extern SDL_Renderer* renderer;
@@ -14,6 +14,8 @@ extern const Uint8* keyboard;
 extern bool low_res;
 extern bool MouseCollidingWithRect(SDL_Rect rect);
 extern bool MouseCollidingWithRectF(SDL_FRect rect);
+extern bool ButtonClicked(SDL_Rect button);
+extern bool ButtonClickedF(SDL_FRect button);
 extern bool mouseClicked;
 extern int mouseX, mouseY;
 
@@ -28,6 +30,12 @@ void UpdateTitleScreen(void);
 void DrawTitleScreen(void);
 void UnloadTitleScreen(void);
 int FinishTitleScreen(void);
+
+void InitTitleSelectScreen(void);
+void UpdateTitleSelectScreen(void);
+void DrawTitleSelectScreen(void);
+void UnloadTitleSelectScreen(void);
+int FinishTitleSelectScreen(void);
 
 void InitOptionsScreen(void);
 void UpdateOptionsScreen(void);
