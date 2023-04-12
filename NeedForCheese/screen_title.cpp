@@ -205,7 +205,7 @@ void DrawTitleScreen(void)
 		{
 			optionsPressable = true;
 			SDL_RenderCopyF(renderer, titleSelectButtonOptionsTexture, NULL, &optionsButton);
-			optionsHitbox = { 140, 480, 410, 225 };
+			optionsHitbox = { 140, 420, 410, 225 };
 		}
 		creditsButton = { 700.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((creditsPressable && MouseCollidingWithRectF(creditsHitbox)) ? (rand() % 2 - 1) : 0), 400.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((creditsPressable && MouseCollidingWithRectF(creditsHitbox)) ? (rand() % 2 - 1) : 0), 487, 283 };
 		if (elapsed > 85 && finishedTransition)
@@ -214,7 +214,6 @@ void DrawTitleScreen(void)
 			SDL_RenderCopyF(renderer, titleSelectButtonCreditsTexture, NULL, &creditsButton);
 			creditsHitbox = { 750, 440, 420, 200 };
 		}
-		SDL_RenderDrawRectF(renderer, &creditsHitbox);
 	}
 	
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, pulsing ? overlayAlpha : 0);
