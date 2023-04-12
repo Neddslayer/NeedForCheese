@@ -18,16 +18,6 @@ SDL_Surface* titleGuySurface = NULL;
 SDL_Texture* titleGuyTexture = { 0 };
 SDL_Surface* titleTextSurface = NULL;
 SDL_Texture* titleTextTexture = { 0 };
-SDL_Surface* titleSelectBGSurface = NULL;
-SDL_Texture* titleSelectBGTexture = { 0 };
-SDL_Surface* titleSelectButtonPlaySurface = NULL;
-SDL_Texture* titleSelectButtonPlayTexture = { 0 };
-SDL_Surface* titleSelectButtonEquipSurface = NULL;
-SDL_Texture* titleSelectButtonEquipTexture = { 0 };
-SDL_Surface* titleSelectButtonOptionsSurface = NULL;
-SDL_Texture* titleSelectButtonOptionsTexture = { 0 };
-SDL_Surface* titleSelectButtonCreditsSurface = NULL;
-SDL_Texture* titleSelectButtonCreditsTexture = { 0 };
 
 SDL_Point titleTextStart = { 600, 800 };
 SDL_Point titleTextEnd = { 25, 10 };
@@ -49,13 +39,6 @@ double duration2 = 100.0;
 double elapsed = 0.0;
 
 bool incrementing = true, pulsing, secondPulse, renderText, subtractTime, secondScreen, finishedTransition;
-bool playPressable, equipPressable, optionsPressable, creditsPressable;
-
-// the positions of the button sprite
-SDL_FRect playButton, equipButton, optionsButton, creditsButton;
-// the actual hitbox of the buttons, essentially an approximation of the sprite to a rectangle
-SDL_FRect playHitbox, equipHitbox, optionsHitbox, creditsHitbox;
-bool playPressed, equipPressed, optionsPressed, creditsPressed;
 
 double x, y, angle, overlayAlpha = -5;
 double t2;
@@ -64,7 +47,6 @@ double t;
 
 FC_Font* startFont;
 
-Mix_Chunk* errorNotImplementedWAV;
 bool transitioningToEquipScreen;
 
 void InitTitleScreen(void)
@@ -73,34 +55,16 @@ void InitTitleScreen(void)
 	titleBGSurface = IMG_Load("resources/title_bg.png");
 	titleGuySurface = IMG_Load("resources/title_theman.png");
 	titleTextSurface = IMG_Load("resources/title_text.png");
-	titleSelectBGSurface = IMG_Load("resources/title_select_bg.png");
-	titleSelectButtonPlaySurface = IMG_Load("resources/button_title_play.png");
-	titleSelectButtonEquipSurface = IMG_Load("resources/button_title_equip.png");
-	titleSelectButtonOptionsSurface = IMG_Load("resources/button_title_options.png");
-	titleSelectButtonCreditsSurface = IMG_Load("resources/button_title_credits.png");
-	titleSelectBGTexture = SDL_CreateTextureFromSurface(renderer, titleSelectBGSurface);
 	titleBGTexture = SDL_CreateTextureFromSurface(renderer, titleBGSurface);
 	titleGuyTexture = SDL_CreateTextureFromSurface(renderer, titleGuySurface);
 	titleTextTexture = SDL_CreateTextureFromSurface(renderer, titleTextSurface);
-	titleSelectButtonPlayTexture = SDL_CreateTextureFromSurface(renderer, titleSelectButtonPlaySurface);
-	titleSelectButtonEquipTexture = SDL_CreateTextureFromSurface(renderer, titleSelectButtonEquipSurface);
-	titleSelectButtonOptionsTexture = SDL_CreateTextureFromSurface(renderer, titleSelectButtonOptionsSurface);
-	titleSelectButtonCreditsTexture = SDL_CreateTextureFromSurface(renderer, titleSelectButtonCreditsSurface);
 	SDL_FreeSurface(titleBGSurface);
 	SDL_FreeSurface(titleGuySurface);
 	SDL_FreeSurface(titleTextSurface);
-	SDL_FreeSurface(titleSelectBGSurface);
-	SDL_FreeSurface(titleSelectButtonPlaySurface);
-	SDL_FreeSurface(titleSelectButtonEquipSurface);
-	SDL_FreeSurface(titleSelectButtonOptionsSurface);
-	SDL_FreeSurface(titleSelectButtonCreditsSurface);
-	errorNotImplementedWAV = Mix_LoadWAV("resources/error.wav");
+	
 	startFont = FC_CreateFont();
 	FC_LoadFont(startFont, renderer, "resources/RobotoSlab.ttf", 60, FC_MakeColor(255, 255, 255, 255), TTF_STYLE_NORMAL);
-	playHitbox = { 0, 0, 0, 0 };
-	equipHitbox = { 0, 0, 0, 0 };
-	optionsHitbox = { 0, 0, 0, 0 };
-	creditsHitbox = { 0, 0, 0, 0 };
+	
 }
 
 void UpdateTitleScreen(void)
@@ -143,28 +107,15 @@ void UpdateTitleScreen(void)
 				// Handle the pressed key
 				subtractTime = true; // make the animation subtract
 				secondScreen = true; // make the second screen render
-				pulsing = true; // make the overlay alpha decrease
 				renderText = false; // remove the text
 				overlayAlpha = 255; // make the screen white
 				elapsed = 50;
 				duration = 50;
+				finishScreen = 1;
 			}
 		}
 	}
-	if (!mouseClicked) playPressed = false; optionsPressed = false; equipPressed = false; creditsPressed = false;
-	if (playPressable && ButtonClickedF(playHitbox) && !playPressed)
-	{
-		Mix_PlayChannel(-1, errorNotImplementedWAV, 0);
-		playPressed = true;
-	}
-	if (equipPressable && ButtonClickedF(equipHitbox) && !equipPressed)
-	{
-		transitioningToEquipScreen = true;
-	}
-	if (transitioningToEquipScreen)
-	{
-
-	}
+	
 }
 
 void DrawTitleScreen(void)
