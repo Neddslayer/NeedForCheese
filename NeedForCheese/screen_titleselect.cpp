@@ -24,7 +24,7 @@ bool playPressed, equipPressed, optionsPressed, creditsPressed;
 
 Mix_Chunk* errorNotImplementedWAV;
 
-bool transitioningToEquipScreen;
+bool transitioningToEquipScreen, transitioningScreen;
 
 int uiOffsetX;
 
@@ -70,7 +70,8 @@ void UpdateTitleSelectScreen(void)
 	{
 		equipPressed = true;
 		transitioningToEquipScreen = true;
-		elapsed = 0;
+		transitioningScreen = true;
+		uiOffsetX = 2;
 		playHitbox = { 0, 0, 0, 0 };
 		equipHitbox = { 0, 0, 0, 0, };
 		optionsHitbox = { 0, 0, 0, 0 };
@@ -97,35 +98,36 @@ void UpdateTitleSelectScreen(void)
 	}
 	else
 	{
-		uiOffsetX++;
+		uiOffsetX *= 2;
+		uiOffsetX = fmax(0.0, fmin(1500.0, uiOffsetX));
 	}
 }
 
 void DrawTitleSelectScreen(void)
 {
 	SDL_RenderCopy(renderer, titleSelectBGTexturea, NULL, NULL);
-	playButton = { 125.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(playHitbox)) ? (rand() % 2 - 1) : 0), 10.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(playHitbox)) ? (rand() % 2 - 1) : 0), 421, 273 };
+	playButton = { 125.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(playHitbox) && !transitioningScreen) ? (rand() % 2 - 1) : 0) - uiOffsetX, 10.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(playHitbox)) ? (rand() % 2 - 1) : 0), 421, 273 };
 	if ((elapsed > 40) || transitioningToEquipScreen)
 	{
 		MouseCollidingWithRect(playHitbox) ? SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255) : SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderCopyF(renderer, titleSelectButtonPlayTexture, NULL, &playButton);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	}
-	equipButton = { 750.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(equipHitbox)) ? (rand() % 2 - 1) : 0), 20.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(equipHitbox)) ? (rand() % 2 - 1) : 0), 427, 250 };
+	equipButton = { 750.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(equipHitbox) && !transitioningScreen) ? (rand() % 2 - 1) : 0) - uiOffsetX, 20.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(equipHitbox)) ? (rand() % 2 - 1) : 0), 427, 250 };
 	if ((elapsed > 55) || transitioningToEquipScreen)
 	{
 		MouseCollidingWithRect(equipHitbox) ? SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255) : SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderCopyF(renderer, titleSelectButtonEquipTexture, NULL, &equipButton);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	}
-	optionsButton = { 125.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(optionsHitbox)) ? (rand() % 2 - 1) : 0), 410.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(optionsHitbox)) ? (rand() % 2 - 1) : 0), 474, 276 };
+	optionsButton = { 125.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(optionsHitbox) && !transitioningScreen) ? (rand() % 2 - 1) : 0) - uiOffsetX, 410.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(optionsHitbox)) ? (rand() % 2 - 1) : 0), 474, 276 };
 	if ((elapsed > 70) || transitioningToEquipScreen)
 	{
 		MouseCollidingWithRect(optionsHitbox) ? SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255) : SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderCopyF(renderer, titleSelectButtonOptionsTexture, NULL, &optionsButton);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	}
-	creditsButton = { 700.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(creditsHitbox)) ? (rand() % 2 - 1) : 0), 400.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(creditsHitbox)) ? (rand() % 2 - 1) : 0), 487, 283 };
+	creditsButton = { 700.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(creditsHitbox) && !transitioningScreen) ? (rand() % 2 - 1) : 0) - uiOffsetX, 400.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(creditsHitbox)) ? (rand() % 2 - 1) : 0), 487, 283 };
 	if ((elapsed > 85) || transitioningToEquipScreen)
 	{
 		MouseCollidingWithRect(creditsHitbox) ? SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255) : SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
