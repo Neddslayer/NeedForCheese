@@ -18,6 +18,8 @@ SDL_Surface* titleGuySurface = NULL;
 SDL_Texture* titleGuyTexture = { 0 };
 SDL_Surface* titleTextSurface = NULL;
 SDL_Texture* titleTextTexture = { 0 };
+SDL_Surface* titleSelectBGSurface = NULL;
+SDL_Texture* titleSelectBGTexture = { 0 };
 
 SDL_Point titleTextStart = { 600, 800 };
 SDL_Point titleTextEnd = { 25, 10 };
@@ -47,21 +49,23 @@ double t;
 
 FC_Font* startFont;
 
-bool transitioningToEquipScreen;
-
 void InitTitleScreen(void)
 {
 	overlayAlpha = -5;
 	titleBGSurface = IMG_Load("resources/title_bg.png");
 	titleGuySurface = IMG_Load("resources/title_theman.png");
 	titleTextSurface = IMG_Load("resources/title_text.png");
+	titleSelectBGSurface = IMG_Load("resources/title_select_bg.png");
 	titleBGTexture = SDL_CreateTextureFromSurface(renderer, titleBGSurface);
 	titleGuyTexture = SDL_CreateTextureFromSurface(renderer, titleGuySurface);
 	titleTextTexture = SDL_CreateTextureFromSurface(renderer, titleTextSurface);
+	titleSelectBGTexture = SDL_CreateTextureFromSurface(renderer, titleSelectBGSurface);
+
 	SDL_FreeSurface(titleBGSurface);
 	SDL_FreeSurface(titleGuySurface);
 	SDL_FreeSurface(titleTextSurface);
-	
+	SDL_FreeSurface(titleSelectBGSurface);
+
 	startFont = FC_CreateFont();
 	FC_LoadFont(startFont, renderer, "resources/RobotoSlab.ttf", 60, FC_MakeColor(255, 255, 255, 255), TTF_STYLE_NORMAL);
 	
@@ -91,7 +95,7 @@ void UpdateTitleScreen(void)
 	}
 	if (pulsing)
 	{
-		overlayAlpha -= subtractTime ? 3 : 2;
+		overlayAlpha -= subtractTime ? 8 : 2;
 	}
 	if (overlayAlpha <= 0 && pulsing)
 	{
@@ -107,21 +111,22 @@ void UpdateTitleScreen(void)
 				// Handle the pressed key
 				subtractTime = true; // make the animation subtract
 				secondScreen = true; // make the second screen render
+				pulsing = true;
 				renderText = false; // remove the text
 				overlayAlpha = 255; // make the screen white
 				elapsed = 50;
 				duration = 50;
-				finishScreen = 1;
+				t = 1;
 			}
 		}
-	}
+	} 
 	
 }
 
 void DrawTitleScreen(void)
 {
 	if (!secondScreen)
-	{
+	{ 
 		SDL_RenderCopy(renderer, titleBGTexture, NULL, NULL);
 		SDL_FRect rect = { (float)x, (float)y, 493, 306.5 };
 		SDL_FRect rect2 = { (float)x2, (float)y2, 508, 348 };
@@ -133,7 +138,7 @@ void DrawTitleScreen(void)
 	{
 		SDL_RenderCopy(renderer, titleSelectBGTexture, NULL, NULL);
 		// Only render the characters while they're on screen
-		if (t >= 0.01 && !transitioningToEquipScreen)
+		if (t >= 0.01)
 		{
 			SDL_FRect rect = { (float)x, (float)y, 493, 306.5 };
 			SDL_RenderCopyExF(renderer, titleTextTexture, NULL, &rect, angle, NULL, SDL_FLIP_NONE);
@@ -146,34 +151,6 @@ void DrawTitleScreen(void)
 				elapsed = 0;
 			finishedTransition = true;
 			finishScreen = 1;
-		}
-		playButton = { 125.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((playPressable && MouseCollidingWithRectF(playHitbox)) ? (rand() % 2 - 1) : 0), 10.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((playPressable && MouseCollidingWithRectF(playHitbox)) ? (rand() % 2 - 1) : 0), 421, 273 };
-		if ((elapsed > 40 && finishedTransition) || transitioningToEquipScreen)
-		{
-			playPressable = true;
-			SDL_RenderCopyF(renderer, titleSelectButtonPlayTexture, NULL, &playButton);
-			playHitbox = { 125, 50, 421, 200 };
-		}
-		equipButton = { 750.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((equipPressable && MouseCollidingWithRectF(equipHitbox)) ? (rand() % 2 - 1) : 0), 20.0f + ((elapsed < 62) ? (rand() % 10 - 5) : 0) + ((equipPressable && MouseCollidingWithRectF(equipHitbox)) ? (rand() % 2 - 1) : 0), 427, 250};
-		if ((elapsed > 55 && finishedTransition) || transitioningToEquipScreen)
-		{
-			equipPressable = true;
-			SDL_RenderCopyF(renderer, titleSelectButtonEquipTexture, NULL, &equipButton);
-			equipHitbox = { 755, 80, 421, 180 };
-		}
-		optionsButton = { 125.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((optionsPressable && MouseCollidingWithRectF(optionsHitbox)) ? (rand() % 2 - 1) : 0), 410.0f + ((elapsed < 77) ? (rand() % 10 - 5) : 0) + ((optionsPressable && MouseCollidingWithRectF(optionsHitbox)) ? (rand() % 2 - 1) : 0), 474, 276 };
-		if ((elapsed > 70 && finishedTransition) || transitioningToEquipScreen)
-		{
-			optionsPressable = true;
-			SDL_RenderCopyF(renderer, titleSelectButtonOptionsTexture, NULL, &optionsButton);
-			optionsHitbox = { 140, 420, 410, 225 };
-		}
-		creditsButton = { 700.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((creditsPressable && MouseCollidingWithRectF(creditsHitbox)) ? (rand() % 2 - 1) : 0), 400.0f + ((elapsed < 92) ? (rand() % 10 - 5) : 0) + ((creditsPressable && MouseCollidingWithRectF(creditsHitbox)) ? (rand() % 2 - 1) : 0), 487, 283 };
-		if ((elapsed > 85 && finishedTransition) || transitioningToEquipScreen)
-		{
-			creditsPressable = true;
-			SDL_RenderCopyF(renderer, titleSelectButtonCreditsTexture, NULL, &creditsButton);
-			creditsHitbox = { 750, 440, 420, 200 };
 		}
 	}
 	
