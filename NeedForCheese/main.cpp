@@ -380,7 +380,13 @@ void UpdateDrawFrame()
 			UpdateTitleSelectScreen();
 
 			if (FinishTitleSelectScreen() == 2) ChangeToScreen(EQUIP);
-		}
+		} break;
+		case EQUIP:
+		{
+			UpdateEquipScreen();
+
+			if (FinishEquipScreen) ChangeToScreen(TITLESELECT);
+		} break;
 		case OPTIONS:
 		{/*
 			UpdateOptionsScreen();
@@ -428,7 +434,7 @@ void UpdateDrawFrame()
 	{
 	case LOGO: DrawLogoScreen(); break;
 	case TITLE: DrawTitleScreen(); break;
-	case TITLESELECT: DrawTitleSelectScreen();
+	case TITLESELECT: DrawTitleSelectScreen(); break;
 	case OPTIONS: /*DrawOptionsScreen();*/ break;
 	case LEVSEL: /*DrawLevelSelectScreen();*/ break;
 	case GAMEPLAY: /*DrawGameplayScreen();*/ break;
