@@ -379,6 +379,7 @@ void UpdateDrawFrame()
 		{
 			UpdateTitleSelectScreen();
 
+			if (FinishTitleSelectScreen() == 2) ChangeToScreen(EQUIP);
 		}
 		case OPTIONS:
 		{/*
