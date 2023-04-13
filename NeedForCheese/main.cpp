@@ -137,11 +137,13 @@ bro main()
 		UnloadOptionsScreen();
 		break;
 	case LEVSEL:
-		UnloadLevelSelectScreen();
+		//UnloadLevelSelectScreen();
 		break;
 	case GAMEPLAY:
+		//UnloadGameplayScreen();
 		break;
 	case ENDING:
+		//UnloadEndingScreen();
 		break;
 	default:
 		break;
