@@ -435,6 +435,7 @@ void UpdateDrawFrame()
 	case LOGO: DrawLogoScreen(); break;
 	case TITLE: DrawTitleScreen(); break;
 	case TITLESELECT: DrawTitleSelectScreen(); break;
+	case EQUIP: DrawEquipScreen(); break;
 	case OPTIONS: /*DrawOptionsScreen();*/ break;
 	case LEVSEL: /*DrawLevelSelectScreen();*/ break;
 	case GAMEPLAY: /*DrawGameplayScreen();*/ break;
