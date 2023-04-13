@@ -95,7 +95,7 @@ void UpdateTitleScreen(void)
 	}
 	if (pulsing)
 	{
-		overlayAlpha -= subtractTime ? 8 : 2;
+		overlayAlpha -= subtractTime ? 16 : 8;
 	}
 	if (overlayAlpha <= 0 && pulsing)
 	{

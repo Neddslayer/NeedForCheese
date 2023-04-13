@@ -26,7 +26,7 @@ Mix_Chunk* errorNotImplementedWAV;
 
 bool transitioningToEquipScreen, transitioningScreen;
 
-int uiOffsetX;
+int uiOffsetX, increaseAmount;
 
 void ResetButtonStates(void);
 
@@ -71,7 +71,9 @@ void UpdateTitleSelectScreen(void)
 		equipPressed = true;
 		transitioningToEquipScreen = true;
 		transitioningScreen = true;
-		uiOffsetX = 2;
+		uiOffsetX = 0;
+		increaseAmount = 100;
+
 		playHitbox = { 0, 0, 0, 0 };
 		equipHitbox = { 0, 0, 0, 0, };
 		optionsHitbox = { 0, 0, 0, 0 };
@@ -92,14 +94,14 @@ void UpdateTitleSelectScreen(void)
 			optionsHitbox = { 140, 420, 410, 225 };
 		}
 		if (elapsed > 85)
-		{
+		{ 
 			creditsHitbox = { 750, 440, 420, 200 };
 		}
 	}
 	else
 	{
-		uiOffsetX *= 2;
-		uiOffsetX = fmax(0.0, fmin(1500.0, uiOffsetX));
+		uiOffsetX += increaseAmount;
+		increaseAmount /= 1.05;
 	}
 }
 
