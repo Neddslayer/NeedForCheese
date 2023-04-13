@@ -4,7 +4,7 @@
 #ifndef SCREENS_H
 #define SCREENS_H
 
-typedef enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE = 1, TITLESELECT, OPTIONS, LEVSEL, GAMEPLAY, ENDING};
+typedef enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE = 1, TITLESELECT, EQUIP, OPTIONS, LEVSEL, GAMEPLAY, ENDING};
 
 extern GameScreen currentScreen;
 extern SDL_Renderer* renderer;
@@ -36,6 +36,12 @@ void UpdateTitleSelectScreen(void);
 void DrawTitleSelectScreen(void);
 void UnloadTitleSelectScreen(void);
 int FinishTitleSelectScreen(void);
+
+void InitEquipScreen(void);
+void UpdateEquipScreen(void);
+void DrawEquipScreen(void);
+void UnloadEquipScreen(void);
+int FinishEquipScreen(void);
 
 void InitOptionsScreen(void);
 void UpdateOptionsScreen(void);

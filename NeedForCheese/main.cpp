@@ -119,8 +119,29 @@ bro main()
 	}
 	switch (currentScreen)
 	{
+	case UNKNOWN:
+		break;
 	case LOGO:
 		UnloadLogoScreen();
+		break;
+	case TITLE:
+		UnloadTitleScreen();
+		break;
+	case TITLESELECT:
+		UnloadTitleSelectScreen();
+		break;
+	case EQUIP:
+		UnloadEquipScreen();
+		break;
+	case OPTIONS:
+		
+		break;
+	case LEVSEL:
+		break;
+	case GAMEPLAY:
+		break;
+	case ENDING:
+		break;
 	default:
 		break;
 	}
@@ -181,6 +202,7 @@ static void ChangeToScreen(GameScreen screen)
 	case LOGO: UnloadLogoScreen(); break;
 	case TITLE: UnloadTitleScreen(); break;
 	case TITLESELECT: UnloadTitleSelectScreen(); break;
+	case EQUIP: UnloadEquipScreen(); break;
 	case OPTIONS: /*UnloadOptionsScreen();*/ break;
 	case LEVSEL: /*UnloadLevelSelectScreen();*/ break;
 	case GAMEPLAY: /*UnloadGameplayScreen();*/ break;
@@ -194,6 +216,7 @@ static void ChangeToScreen(GameScreen screen)
 	case LOGO: InitLogoScreen(); break;
 	case TITLE: InitTitleScreen(); break;
 	case TITLESELECT: InitTitleSelectScreen(); break;
+	case EQUIP: InitEquipScreen(); break;
 	case OPTIONS: /*InitOptionsScreen();*/ break;
 	case LEVSEL: /*InitLevelSelectScreen();*/ break;
 	case GAMEPLAY: /*InitGameplayScreen();*/ break;
