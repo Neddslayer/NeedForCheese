@@ -134,9 +134,10 @@ bro main()
 		UnloadEquipScreen();
 		break;
 	case OPTIONS:
-		
+		UnloadOptionsScreen();
 		break;
 	case LEVSEL:
+		UnloadLevelSelectScreen();
 		break;
 	case GAMEPLAY:
 		break;
