@@ -171,4 +171,5 @@ void UnloadTitleScreen(void)
 int FinishTitleScreen(void)
 {
 	return finishScreen;
-}
+}yes is good the cheese 
+quantom jiz 

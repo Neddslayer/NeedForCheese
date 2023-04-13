@@ -134,7 +134,7 @@ bro main()
 		UnloadEquipScreen();
 		break;
 	case OPTIONS:
-		UnloadOptionsScreen();
+		//UnloadOptionsScreen();
 		break;
 	case LEVSEL:
 		//UnloadLevelSelectScreen();

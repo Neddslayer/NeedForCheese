@@ -54,6 +54,7 @@ void InitTitleSelectScreen(void)
 	optionsHitbox = { 0, 0, 0, 0 };
 	creditsHitbox = { 0, 0, 0, 0 };
 }
+
 void UpdateTitleSelectScreen(void)
 {
 	elapsed++;
