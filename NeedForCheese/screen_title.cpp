@@ -57,6 +57,7 @@ void InitTitleScreen(void)
 	titleGuySurface = IMG_Load("resources/title_theman.png");
 	titleTextSurface = IMG_Load("resources/title_text.png");
 	titleSelectBGSurface = IMG_Load("resources/title_select_bg.png");
+
 	titleBGTexture = SDL_CreateTextureFromSurface(renderer, titleBGSurface);
 	titleGuyTexture = SDL_CreateTextureFromSurface(renderer, titleGuySurface);
 	titleTextTexture = SDL_CreateTextureFromSurface(renderer, titleTextSurface);
