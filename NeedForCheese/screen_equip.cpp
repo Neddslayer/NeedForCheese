@@ -5,7 +5,8 @@
 
 void InitEquipScreen(void)
 {
-
+	SDL_Surface* titleSelectBGSurfacea = NULL;
+	SDL_Texture* titleSelectBGTexturea = { 0 };
 }
 void UpdateEquipScreen(void)
 {

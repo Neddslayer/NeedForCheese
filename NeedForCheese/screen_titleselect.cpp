@@ -3,6 +3,7 @@
 #include "SDL_mixer.h"
 #include "screens.h"
 #include "utilities.h"
+#include <iostream>
 
 SDL_Surface* titleSelectBGSurfacea = NULL;
 SDL_Texture* titleSelectBGTexturea = { 0 };
@@ -110,6 +111,7 @@ void UpdateTitleSelectScreen(void)
 void DrawTitleSelectScreen(void)
 {
 	SDL_RenderCopy(renderer, titleSelectBGTexturea, NULL, NULL);
+	
 	playButton = { 125.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(playHitbox) && !transitioningScreen) ? (rand() % 2 - 1) : 0) - uiOffsetX, 10.0f + ((elapsed < 47) ? (rand() % 10 - 5) : 0) + ((MouseCollidingWithRect(playHitbox)) ? (rand() % 2 - 1) : 0), 421, 273 };
 	if ((elapsed > 40) || transitioningToEquipScreen)
 	{
