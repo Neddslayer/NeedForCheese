@@ -9,7 +9,7 @@ SDL_Texture* titleEquipBGTexture = { 0 }; // for tghe love of god why can't i re
 SDL_Surface* titleEquipSectionSurface = NULL;
 SDL_Texture* titleEquipSectionTexture = { 0 };
 
-int finishScreen;
+static int finishScreen;
 
 void InitEquipScreen(void)
 {

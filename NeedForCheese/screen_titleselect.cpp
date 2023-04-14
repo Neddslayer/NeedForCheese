@@ -32,6 +32,8 @@ int uiOffsetX, increaseAmount;
 
 void ResetButtonStates(void);
 
+static int finishScreen;
+
 void InitTitleSelectScreen(void)
 {
 	titleSelectBGSurfacea = IMG_Load("resources/title_select_bg.png");
@@ -162,7 +164,7 @@ void UnloadTitleSelectScreen(void)
 
 int FinishTitleSelectScreen(void)
 {
-	return 0;
+	return finishScreen;
 }
 
 void ResetButtonStates(void)

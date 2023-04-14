@@ -11,7 +11,7 @@
 using namespace std;
 
 int framesCounter = 0;
-int finishScreen = 0;
+static int finishScreen = 0;
 
 SDL_Surface* titleBGSurface = NULL;
 SDL_Texture* titleBGTexture = { 0 };
