@@ -19,7 +19,6 @@ void InitEquipScreen(void)
 	titleEquipBGTexture = SDL_CreateTextureFromSurface(renderer, titleEquipBGSurface);
 	titleEquipSectionTexture = SDL_CreateTextureFromSurface(renderer, titleEquipSectionSurface);
 
-
 	SDL_FreeSurface(titleEquipBGSurface);
 	SDL_FreeSurface(titleEquipSectionSurface);
 }
