@@ -8,16 +8,20 @@ SDL_Surface* titleEquipBGSurface = NULL;
 SDL_Texture* titleEquipBGTexture = { 0 }; // for tghe love of god why can't i reuse variable names
 SDL_Surface* titleEquipSectionSurface = NULL;
 SDL_Texture* titleEquipSectionTexture = { 0 };
+SDL_Surface* titleEquipSectionPreviewSurface = NULL;
+SDL_Texture* titleEquipSectionPreviewTexture = { 0 };
 
 static int finishScreen;
 
 void InitEquipScreen(void)
 {
 	titleEquipBGSurface = IMG_Load("resources/title_select_bg.png");
-	titleEquipSectionSurface = IMG_Load("resources/title_equip_section.png");
+	titleEquipSectionSurface = IMG_Load("resources/section_equip_costumeselect.png");
+	titleEquipSectionPreviewSurface = IMG_Load("resources/section_equip_preview.png");
 
 	titleEquipBGTexture = SDL_CreateTextureFromSurface(renderer, titleEquipBGSurface);
 	titleEquipSectionTexture = SDL_CreateTextureFromSurface(renderer, titleEquipSectionSurface);
+	titleEquipSectionPreviewTexture = SDL_CreateTextureFromSurface(renderer, titleEquipSectionPreviewSurface);
 
 	SDL_FreeSurface(titleEquipBGSurface);
 	SDL_FreeSurface(titleEquipSectionSurface);
