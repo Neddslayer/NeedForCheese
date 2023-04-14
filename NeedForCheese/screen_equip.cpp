@@ -9,6 +9,8 @@ SDL_Texture* titleEquipBGTexture = { 0 }; // for tghe love of god why can't i re
 SDL_Surface* titleEquipSectionSurface = NULL;
 SDL_Texture* titleEquipSectionTexture = { 0 };
 
+int finishScreen;
+
 void InitEquipScreen(void)
 {
 	titleEquipBGSurface = IMG_Load("resources/title_select_bg.png");
@@ -31,9 +33,10 @@ void DrawEquipScreen(void)
 }
 void UnloadEquipScreen(void)
 {
-
+	SDL_DestroyTexture(titleEquipBGTexture);
+	SDL_DestroyTexture(titleEquipSectionTexture);
 }
 int FinishEquipScreen(void)
 {
-	return 0;
+	return finishScreen;
 }
