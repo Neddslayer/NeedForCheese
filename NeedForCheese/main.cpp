@@ -4,6 +4,7 @@
 #include "SDL_mixer.h"
 #include <iostream>
 #include "screens.h"
+#include "utilities.h"
 #include <string>
 #undef main
 #define fr ;
