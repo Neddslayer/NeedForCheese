@@ -25,6 +25,7 @@ void InitEquipScreen(void)
 
 	SDL_FreeSurface(titleEquipBGSurface);
 	SDL_FreeSurface(titleEquipSectionSurface);
+	SDL_FreeSurface(titleEquipSectionPreviewSurface);
 }
 void UpdateEquipScreen(void)
 {
@@ -38,6 +39,7 @@ void UnloadEquipScreen(void)
 {
 	SDL_DestroyTexture(titleEquipBGTexture);
 	SDL_DestroyTexture(titleEquipSectionTexture);
+	SDL_DestroyTexture(titleEquipSectionPreviewTexture);
 }
 int FinishEquipScreen(void)
 {
