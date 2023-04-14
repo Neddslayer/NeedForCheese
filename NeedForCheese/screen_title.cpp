@@ -3,6 +3,7 @@
 #include "SDL_FontCache.h"
 #include "SDL_mixer.h"
 #include "screens.h"
+#include "utilities.h"
 #include <iostream>
 #include <string.h>
 #include <string>

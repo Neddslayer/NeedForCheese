@@ -2,6 +2,7 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "screens.h"
+#include "utilities.h"
 
 SDL_Surface* titleSelectBGSurfacea = NULL;
 SDL_Texture* titleSelectBGTexturea = { 0 };

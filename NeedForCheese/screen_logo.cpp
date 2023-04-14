@@ -1,5 +1,6 @@
 #include "SDL.h"
 #include "screens.h"
+#include "utilities.h"
 #include "box2d/box2d.h"
 #include "SDL_image.h"
 #include "SDL_FontCache.h"

@@ -1,5 +1,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
+#include "screens.h"
+#include "utilities.h"
 
 void InitEquipScreen(void)
 {
