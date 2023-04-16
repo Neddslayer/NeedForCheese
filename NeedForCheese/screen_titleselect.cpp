@@ -109,6 +109,10 @@ void UpdateTitleSelectScreen(void)
 	{
 		uiOffsetX += increaseAmount;
 		increaseAmount /= 1.05;
+		if (uiOffsetX > 1000)
+		{
+			finishScreen = 2;
+		}
 	}
 }
 
