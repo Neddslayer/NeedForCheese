@@ -53,10 +53,10 @@ FC_Font* startFont;
 void InitTitleScreen(void)
 {
 	overlayAlpha = -5;
-	titleBGSurface = IMG_Load("resources/title_bg.png");
-	titleGuySurface = IMG_Load("resources/title_theman.png");
-	titleTextSurface = IMG_Load("resources/title_text.png");
-	titleSelectBGSurface = IMG_Load("resources/title_select_bg.png");
+	titleBGSurface = IMG_Load("resources/img/title_bg.png");
+	titleGuySurface = IMG_Load("resources/img/title_theman.png");
+	titleTextSurface = IMG_Load("resources/img/title_text.png");
+	titleSelectBGSurface = IMG_Load("resources/img/title_select_bg.png");
 
 	titleBGTexture = SDL_CreateTextureFromSurface(renderer, titleBGSurface);
 	titleGuyTexture = SDL_CreateTextureFromSurface(renderer, titleGuySurface);
@@ -69,7 +69,7 @@ void InitTitleScreen(void)
 	SDL_FreeSurface(titleSelectBGSurface);
 
 	startFont = FC_CreateFont();
-	FC_LoadFont(startFont, renderer, "resources/RobotoSlab.ttf", 60, FC_MakeColor(255, 255, 255, 255), TTF_STYLE_NORMAL);
+	FC_LoadFont(startFont, renderer, "resources/font/RobotoSlab.ttf", 60, FC_MakeColor(255, 255, 255, 255), TTF_STYLE_NORMAL);
 	
 }
 
