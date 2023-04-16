@@ -389,7 +389,7 @@ void UpdateDrawFrame()
 		{
 			UpdateEquipScreen();
 
-			if (FinishEquipScreen) ChangeToScreen(TITLESELECT);
+			if (FinishEquipScreen()) ChangeToScreen(TITLESELECT);
 		} break;
 		case OPTIONS:
 		{/*
