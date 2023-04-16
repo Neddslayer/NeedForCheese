@@ -15,7 +15,6 @@ b2Body* playerBody;
 b2PolygonShape playerShape;
 b2FixtureDef playerFixtureDef;
 
-
 void InitLevelSelectScreen(void)
 {
 
