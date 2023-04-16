@@ -36,11 +36,11 @@ static int finishScreen;
 
 void InitTitleSelectScreen(void)
 {
-	titleSelectBGSurfacea = IMG_Load("resources/title_select_bg.png");
-	titleSelectButtonPlaySurface = IMG_Load("resources/button_title_play.png");
-	titleSelectButtonEquipSurface = IMG_Load("resources/button_title_equip.png");
-	titleSelectButtonOptionsSurface = IMG_Load("resources/button_title_options.png");
-	titleSelectButtonCreditsSurface = IMG_Load("resources/button_title_credits.png");
+	titleSelectBGSurfacea = IMG_Load("resources/img/title_select_bg.png");
+	titleSelectButtonPlaySurface = IMG_Load("resources/img/button_title_play.png");
+	titleSelectButtonEquipSurface = IMG_Load("resources/img/button_title_equip.png");
+	titleSelectButtonOptionsSurface = IMG_Load("resources/img/button_title_options.png");
+	titleSelectButtonCreditsSurface = IMG_Load("resources/img/button_title_credits.png");
 
 	titleSelectBGTexturea = SDL_CreateTextureFromSurface(renderer, titleSelectBGSurfacea);
 	titleSelectButtonPlayTexture = SDL_CreateTextureFromSurface(renderer, titleSelectButtonPlaySurface);
@@ -54,7 +54,7 @@ void InitTitleSelectScreen(void)
 	SDL_FreeSurface(titleSelectButtonOptionsSurface);
 	SDL_FreeSurface(titleSelectButtonCreditsSurface);
 
-	errorNotImplementedWAV = Mix_LoadWAV("resources/error.wav");
+	errorNotImplementedWAV = Mix_LoadWAV("resources/sfx/error.wav");
 	playHitbox = { 0, 0, 0, 0 };
 	equipHitbox = { 0, 0, 0, 0 };
 	optionsHitbox = { 0, 0, 0, 0 };
