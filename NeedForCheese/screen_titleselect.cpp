@@ -164,6 +164,7 @@ void UnloadTitleSelectScreen(void)
 	SDL_DestroyTexture(titleSelectButtonEquipTexture);
 	SDL_DestroyTexture(titleSelectButtonOptionsTexture);
 	SDL_DestroyTexture(titleSelectButtonPlayTexture);
+	Mix_FreeChunk(errorNotImplementedWAV);
 }
 
 int FinishTitleSelectScreen(void)

@@ -7,12 +7,14 @@
 
 static int finishScreen;
 
+
 b2Vec2 gravity(0.0f, -19.84f);
 b2World world(gravity);
 b2BodyDef playerDef;
 b2Body* playerBody;
 b2PolygonShape playerShape;
 b2FixtureDef playerFixtureDef;
+
 
 void InitLevelSelectScreen(void)
 {
