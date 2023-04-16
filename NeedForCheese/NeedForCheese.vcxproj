@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="screen_equip.cpp" />
+    <ClCompile Include="screen_levelselect.cpp" />
     <ClCompile Include="screen_logo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="screen_title.cpp" />
