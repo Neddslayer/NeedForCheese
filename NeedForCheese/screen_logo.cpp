@@ -39,13 +39,13 @@ void InitLogoScreen(void)
     logoPositionY = 360 - (128 * logoScale);
 
     alpha = 1.0f;
-    imageSurface = IMG_Load("resources/logo.png");
+    imageSurface = IMG_Load("resources/img/logo.png");
     logoTex = SDL_CreateTextureFromSurface(renderer, imageSurface);
-    logoBeep = Mix_LoadWAV("resources/logo.wav");
-    textSound = Mix_LoadWAV("resources/text.wav");
+    logoBeep = Mix_LoadWAV("resources/sfx/logo.wav");
+    textSound = Mix_LoadWAV("resources/sfx/text.wav");
     SDL_FreeSurface(imageSurface);
     font = FC_CreateFont();
-    FC_LoadFont(font, renderer, "resources/RobotoSlab.ttf", 50, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
+    FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 50, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
 }
 
 double clamp(double d, double min, double max)
