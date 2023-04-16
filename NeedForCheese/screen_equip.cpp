@@ -15,9 +15,9 @@ static int finishScreen;
 
 void InitEquipScreen(void)
 {
-	titleEquipBGSurface = IMG_Load("resources/title_select_bg.png");
-	titleEquipSectionSurface = IMG_Load("resources/section_equip_costumeselect.png");
-	titleEquipSectionPreviewSurface = IMG_Load("resources/section_equip_preview.png");
+	titleEquipBGSurface = IMG_Load("resources/img/title_select_bg.png");
+	titleEquipSectionSurface = IMG_Load("resources/img/section_equip_costumeselect.png");
+	titleEquipSectionPreviewSurface = IMG_Load("resources/img/section_equip_preview.png");
 
 	titleEquipBGTexture = SDL_CreateTextureFromSurface(renderer, titleEquipBGSurface);
 	titleEquipSectionTexture = SDL_CreateTextureFromSurface(renderer, titleEquipSectionSurface);
