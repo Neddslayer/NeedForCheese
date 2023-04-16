@@ -33,7 +33,7 @@ void UpdateEquipScreen(void)
 }
 void DrawEquipScreen(void)
 {
-
+	SDL_RenderCopy(renderer, titleEquipBGTexture, NULL, NULL);
 }
 void UnloadEquipScreen(void)
 {
