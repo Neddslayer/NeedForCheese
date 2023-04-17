@@ -8,7 +8,7 @@ Name: zlib
 Description: zlib compression library
 Version: 1.2.13
 
-Requires:
-Libs: "-L${libdir}" "-L${sharedlibdir}" -lzlib
-Cflags: "-I${includedir}"
 
+Libs: "-L${libdir}" "-L${sharedlibdir}" -lzlib
+Requires: 
+Cflags: "-I${includedir}"
