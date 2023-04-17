@@ -1,4 +1,4 @@
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #ifndef UTILITIES_H
 #define UTILITIES_H

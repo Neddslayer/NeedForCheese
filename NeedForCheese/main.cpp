@@ -1,7 +1,7 @@
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_TTF.h"
+#include "SDL.h"
+#include "SDL_TTF.h"
 #include "SDL_FontCache.h"
-#include "SDL2/SDL_mixer.h"
+#include "SDL_mixer.h"
 #include <iostream>
 #include "screens.h"
 #include "utilities.h"
