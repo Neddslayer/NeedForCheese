@@ -208,7 +208,7 @@ static void ChangeToScreen(GameScreen screen)
 	case TITLESELECT: UnloadTitleSelectScreen(); break;
 	case EQUIP: UnloadEquipScreen(); break;
 	case OPTIONS: /*UnloadOptionsScreen();*/ break;
-	case LEVSEL: /*UnloadLevelSelectScreen();*/ break;
+	case LEVSEL: UnloadLevelSelectScreen(); break;
 	case GAMEPLAY: /*UnloadGameplayScreen();*/ break;
 	case ENDING: /*UnloadEndingScreen();*/ break;
 	default: break;
@@ -222,7 +222,7 @@ static void ChangeToScreen(GameScreen screen)
 	case TITLESELECT: InitTitleSelectScreen(); break;
 	case EQUIP: InitEquipScreen(); break;
 	case OPTIONS: /*InitOptionsScreen();*/ break;
-	case LEVSEL: /*InitLevelSelectScreen();*/ break;
+	case LEVSEL: InitLevelSelectScreen(); break;
 	case GAMEPLAY: /*InitGameplayScreen();*/ break;
 	case ENDING: /*InitEndingScreen();*/ break;
 	default: break;
@@ -383,6 +383,7 @@ void UpdateDrawFrame()
 		{
 			UpdateTitleSelectScreen();
 
+			if (FinishTitleSelectScreen() == 1) ChangeToScreen(LEVSEL);
 			if (FinishTitleSelectScreen() == 2) ChangeToScreen(EQUIP);
 		} break;
 		case EQUIP:
@@ -400,11 +401,11 @@ void UpdateDrawFrame()
 		} break;
 		case LEVSEL:
 		{
-			/*
+			
 			UpdateLevelSelectScreen();
 
 			if (FinishLevelSelectScreen()) TransitionToScreen(GAMEPLAY);
-			*/
+			
 		} break;
 		case GAMEPLAY:
 		{
@@ -441,7 +442,7 @@ void UpdateDrawFrame()
 	case TITLESELECT: DrawTitleSelectScreen(); break;
 	case EQUIP: DrawEquipScreen(); break;
 	case OPTIONS: /*DrawOptionsScreen();*/ break;
-	case LEVSEL: /*DrawLevelSelectScreen();*/ break;
+	case LEVSEL: DrawLevelSelectScreen(); break;
 	case GAMEPLAY: /*DrawGameplayScreen();*/ break;
 	case ENDING: /*DrawEndingScreen();*/ break;
 	default: std::cout << "???"; break;

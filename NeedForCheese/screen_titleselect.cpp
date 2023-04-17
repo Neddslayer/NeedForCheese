@@ -71,7 +71,7 @@ void UpdateTitleSelectScreen(void)
 	if (ButtonClicked(playHitbox) && !playPressed)
 	{
 		playPressed = true;
-		Mix_PlayChannel(-1, errorNotImplementedWAV, 0);
+		finishScreen = 1;
 	}
 	if (ButtonClicked(equipHitbox) && !equipPressed)
 	{

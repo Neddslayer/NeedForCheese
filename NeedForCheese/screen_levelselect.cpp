@@ -9,7 +9,7 @@ using namespace std;
 
 static int finishScreen;
 
-b2World* world;
+b2World world = b2World(b2Vec2(0.0f, -9.81f));
 
 const int MET2PIX = 80; // 640 / 80 = 8
 
@@ -37,12 +37,16 @@ SDL_Rect box;
 b2Body* Body;
 b2EdgeShape edgeShape;
 SDL_Texture* texture_box = { 0 };
+SDL_Texture* background_sprite = { 0 };
 b2Vec2 pos; // Body = Body from box
 float angle;
+b2PolygonShape dynamicBox;
+b2FixtureDef edgeFixtureDef;
+b2BodyDef boxBodyDef;
+b2FixtureDef fixtureDef;
 
 void InitLevelSelectScreen(void)
 {
-    world = new b2World(b2Vec2(0.0f, 9.81f));
 
     // start ground point
     startpoint.x = -2.5f;
@@ -57,32 +61,32 @@ void InitLevelSelectScreen(void)
     myGroundDef.position.Set(ground_x, ground_y); // set the starting position x and y cartesian
     myGroundDef.angle = 0;
 
-    b2Body* groundLineBody = world->CreateBody(&myGroundDef);
+    b2Body* groundLineBody = world.CreateBody(&myGroundDef);
 
     edgeShape.SetTwoSided(startpoint, endpoint);
 
-    b2FixtureDef edgeFixtureDef;
     edgeFixtureDef.shape = &edgeShape;
     groundLineBody->CreateFixture(&edgeFixtureDef);
 
     SDL_Surface* tmp_sprites;
     tmp_sprites = IMG_Load("resources/img/checker.png");
 
-    SDL_Texture* texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
+    texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
     SDL_FreeSurface(tmp_sprites);
+    
+    SDL_Surface* bgSurface = IMG_Load("resources/img/title_select_bg");
+    background_sprite = SDL_CreateTextureFromSurface(renderer, bgSurface);
+    SDL_FreeSurface(bgSurface);
 
-    b2BodyDef boxBodyDef;
     boxBodyDef.type = b2_dynamicBody;
     boxBodyDef.angle = 45; // flips the whole thing -> 180 grad drehung
     //boxBodyDef.angle = 0;
     boxBodyDef.position.Set(x_box, y_box);
 
-    Body = world->CreateBody(&boxBodyDef);
+    Body = world.CreateBody(&boxBodyDef);
 
-    b2PolygonShape dynamicBox;
     dynamicBox.SetAsBox(w_box / 2.0f, h_box / 2.0f); // will be 0.5 x 0.5
 
-    b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1;
     fixtureDef.friction = 0.3f;
@@ -95,6 +99,7 @@ void InitLevelSelectScreen(void)
 }
 void UpdateLevelSelectScreen(void)
 {
+    world.Step(1.0f / 60.0f, 6.0f, 2.0f); // update
     pos = Body->GetPosition(); // Body = Body from box
     angle = Body->GetAngle();
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
@@ -102,19 +107,19 @@ void UpdateLevelSelectScreen(void)
 
     cout << "X of box:" << (20) << box.x << endl;
     cout << "Y of box:" << (20) << box.y << endl;
-    world->Step(1.0f / 60.0f, 6.0f, 2.0f); // update
 
 }
 void DrawLevelSelectScreen(void)
 {
-    SDL_SetRenderDrawColor(renderer, 255, 255, 0, 0);
+    SDL_RenderCopy(renderer, background_sprite, NULL, NULL);
+
     SDL_RenderDrawLine(renderer, ((SCALED_WIDTH / 2.0f) + edgeShape.m_vertex1.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + edgeShape.m_vertex1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + edgeShape.m_vertex2.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + edgeShape.m_vertex2.y) * MET2PIX);
 
     SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
 }
 void UnloadLevelSelectScreen(void)
 {
-
+    delete &world;
 }
 int FinishLevelSelectScreen(void)
 {
