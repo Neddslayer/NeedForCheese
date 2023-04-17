@@ -9,12 +9,12 @@ using namespace std;
 
 static int finishScreen;
 
-b2World world = b2World(b2Vec2(0.0f, -9.81f));
+b2World world = b2World(b2Vec2(0.0f, 9.81f));
 
 const int MET2PIX = 80; // 640 / 80 = 8
 
-const int WIDTH = 640;
-const int HEIGHT = 480;
+const int WIDTH = 1280;
+const int HEIGHT = 720;
 
 const int SCALED_WIDTH = WIDTH / MET2PIX; // 4 | 3
 const int SCALED_HEIGHT = HEIGHT / MET2PIX;
@@ -70,20 +70,23 @@ void InitLevelSelectScreen(void)
 
     SDL_Surface* tmp_sprites;
     tmp_sprites = IMG_Load("resources/img/checker.png");
-
+    // balls are my favorite 🤓👆
     texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
     SDL_FreeSurface(tmp_sprites);
+    //big cum balls
     
-    SDL_Surface* bgSurface = IMG_Load("resources/img/title_select_bg");
+    SDL_Surface* bgSurface = IMG_Load("resources/img/title_select_bg.png");
     background_sprite = SDL_CreateTextureFromSurface(renderer, bgSurface);
     SDL_FreeSurface(bgSurface);
 
     boxBodyDef.type = b2_dynamicBody;
-    boxBodyDef.angle = 45; // flips the whole thing -> 180 grad drehung
-    //boxBodyDef.angle = 0;
+    //boxBodyDef.angle = 45; // flips the whole thing -> 180 grad drehung
+    boxBodyDef.angle = 0;
+    boxBodyDef.fixedRotation = false;
     boxBodyDef.position.Set(x_box, y_box);
 
     Body = world.CreateBody(&boxBodyDef);
+    Body->SetFixedRotation(false);
 
     dynamicBox.SetAsBox(w_box / 2.0f, h_box / 2.0f); // will be 0.5 x 0.5
 
@@ -99,21 +102,32 @@ void InitLevelSelectScreen(void)
 }
 void UpdateLevelSelectScreen(void)
 {
+    if (keyboard[SDL_SCANCODE_A])
+    {
+        Body->ApplyForceToCenter(b2Vec2(-2.0, 0.0), true);
+    }
+    if (keyboard[SDL_SCANCODE_D])
+    {
+        Body->ApplyForceToCenter(b2Vec2(2.0, 0.0), true);
+    }
     world.Step(1.0f / 60.0f, 6.0f, 2.0f); // update
     pos = Body->GetPosition(); // Body = Body from box
     angle = Body->GetAngle();
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
-    box.y = ((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f;
+    box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + 2;
 
-    cout << "X of box:" << (20) << box.x << endl;
-    cout << "Y of box:" << (20) << box.y << endl;
+    cout << "X of box:" << box.x << endl;
+    cout << "Y of box:" << box.y << endl;
+    cout << "Angle of box: " << angle << endl;
 
 }
 void DrawLevelSelectScreen(void)
 {
     SDL_RenderCopy(renderer, background_sprite, NULL, NULL);
 
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderDrawLine(renderer, ((SCALED_WIDTH / 2.0f) + edgeShape.m_vertex1.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + edgeShape.m_vertex1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + edgeShape.m_vertex2.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + edgeShape.m_vertex2.y) * MET2PIX);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
     SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
 }
