@@ -58,50 +58,27 @@ public:
     b2Fixture* m_fixture = nullptr;
 };
 
-bool OverlapBox(b2World* world, b2Vec2 position, b2Vec2 size, float angle, SDL_Renderer* renderer) {
-    bool overlapping = false;
+bool OverlapBox(b2World* world, b2Vec2 position, float size, int32_t layer)
+{
     b2AABB aabb;
-    b2Transform transform(position, b2Rot(angle));
-    b2Vec2 halfSize = size * 0.5f;
-    aabb.lowerBound = transform * (-halfSize);
-    aabb.upperBound = transform * halfSize;
+    b2Transform transform(position, b2Rot(0));
 
-    // Draw the rectangle with SDL2
-    b2Vec2 vertices[4] = {
-        aabb.lowerBound,
-        b2Vec2(aabb.upperBound.x, aabb.lowerBound.y),
-        aabb.upperBound,
-        b2Vec2(aabb.lowerBound.x, aabb.upperBound.y)
-    };
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawLines(renderer, (SDL_Point*)vertices, 5);
-
-    class QueryCallback : public b2QueryCallback {
-    public:
-        bool ReportFixture(b2Fixture* fixture) {
-            m_fixture = fixture;
-            return false;
-        }
-        b2Fixture* m_fixture = nullptr;
-    };
+    b2Vec2 lowerBound(transform.p.x * -size, transform.p.y * -size);
+    b2Vec2 upperBound(transform.p.x * size, transform.p.y * size);
+    aabb.lowerBound = lowerBound;
+    aabb.upperBound = upperBound;
 
     QueryCallback callback;
     world->QueryAABB(&callback, aabb);
 
-    if (callback.m_fixture != nullptr) {
-        // Draw the overlapping fixture with SDL2
-        b2PolygonShape* shape = (b2PolygonShape*)callback.m_fixture->GetShape();
-        for (int i = 0; i < 4; i++) {
-            vertices[i] = callback.m_fixture->GetBody()->GetWorldPoint(shape->GetVertex(i));
-        }
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-        SDL_RenderDrawLines(renderer, (SDL_Point*)vertices, 5);
-        overlapping = true;
+    if (callback.m_fixture != nullptr)
+    {
+        SDL_Rect test = SDL_Rect();
+        SDL_RenderDrawRect()
     }
 
-    return overlapping;
+    return (callback.m_fixture != nullptr) && (callback.m_fixture->GetFilterData().categoryBits);
 }
-
 
 void InitLevelSelectScreen(void)
 {
