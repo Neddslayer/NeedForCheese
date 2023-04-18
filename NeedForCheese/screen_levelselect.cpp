@@ -153,7 +153,7 @@ void UpdateLevelSelectScreen(void)
     velo = Player->GetLinearVelocity();
     angle = Player->GetAngle();
 
-    isGrounded = IsGrounded(Player);
+    isGrounded = IsGrounded(Player); // check if grounded (horray)
 
     cout << "Position: { " << pos.x << ",  " << pos.y << " }" << endl << "Velocity: { " << velo.x << ", " << velo.y << " }" << endl;
 
