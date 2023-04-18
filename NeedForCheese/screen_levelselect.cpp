@@ -45,6 +45,64 @@ b2FixtureDef edgeFixtureDef;
 b2BodyDef boxBodyDef;
 b2FixtureDef fixtureDef;
 
+bool isGrounded;
+
+class QueryCallback : public b2QueryCallback
+{
+public:
+    bool ReportFixture(b2Fixture* fixture)
+    {
+        m_fixture = fixture;
+        return false;
+    }
+    b2Fixture* m_fixture = nullptr;
+};
+
+bool OverlapBox(b2World* world, b2Vec2 position, b2Vec2 size, float angle, SDL_Renderer* renderer) {
+    bool overlapping = false;
+    b2AABB aabb;
+    b2Transform transform(position, b2Rot(angle));
+    b2Vec2 halfSize = size * 0.5f;
+    aabb.lowerBound = transform * (-halfSize);
+    aabb.upperBound = transform * halfSize;
+
+    // Draw the rectangle with SDL2
+    b2Vec2 vertices[4] = {
+        aabb.lowerBound,
+        b2Vec2(aabb.upperBound.x, aabb.lowerBound.y),
+        aabb.upperBound,
+        b2Vec2(aabb.lowerBound.x, aabb.upperBound.y)
+    };
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderDrawLines(renderer, (SDL_Point*)vertices, 5);
+
+    class QueryCallback : public b2QueryCallback {
+    public:
+        bool ReportFixture(b2Fixture* fixture) {
+            m_fixture = fixture;
+            return false;
+        }
+        b2Fixture* m_fixture = nullptr;
+    };
+
+    QueryCallback callback;
+    world->QueryAABB(&callback, aabb);
+
+    if (callback.m_fixture != nullptr) {
+        // Draw the overlapping fixture with SDL2
+        b2PolygonShape* shape = (b2PolygonShape*)callback.m_fixture->GetShape();
+        for (int i = 0; i < 4; i++) {
+            vertices[i] = callback.m_fixture->GetBody()->GetWorldPoint(shape->GetVertex(i));
+        }
+        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+        SDL_RenderDrawLines(renderer, (SDL_Point*)vertices, 5);
+        overlapping = true;
+    }
+
+    return overlapping;
+}
+
+
 void InitLevelSelectScreen(void)
 {
 
@@ -73,7 +131,7 @@ void InitLevelSelectScreen(void)
     // balls are my favorite 🤓👆
     texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
     SDL_FreeSurface(tmp_sprites);
-    //big cum balls -owen
+    //big balls -owen
     
     SDL_Surface* bgSurface = IMG_Load("resources/img/title_select_bg.png");
     background_sprite = SDL_CreateTextureFromSurface(renderer, bgSurface);
@@ -82,18 +140,18 @@ void InitLevelSelectScreen(void)
     boxBodyDef.type = b2_dynamicBody;
     //boxBodyDef.angle = 45; // flips the whole thing -> 180 grad drehung
     boxBodyDef.angle = 0;
-    boxBodyDef.fixedRotation = false;
+    boxBodyDef.fixedRotation = true;
     boxBodyDef.position.Set(x_box, y_box);
 
     Body = world.CreateBody(&boxBodyDef);
-    Body->SetFixedRotation(false);
+    Body->SetFixedRotation(true);
 
     dynamicBox.SetAsBox(w_box / 2.0f, h_box / 2.0f); // will be 0.5 x 0.5
 
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1;
-    fixtureDef.friction = 0.3f;
-    fixtureDef.restitution = 0.5f;
+    fixtureDef.friction = 0.8f;
+    fixtureDef.restitution = 0.0f;
     Body->CreateFixture(&fixtureDef);
 
     // box: convert Metres back to Pixels for width and height
@@ -102,23 +160,28 @@ void InitLevelSelectScreen(void)
 }
 void UpdateLevelSelectScreen(void)
 {
-    if (keyboard[SDL_SCANCODE_A])
+    if (keyboard[SDL_SCANCODE_LEFT])
     {
         Body->ApplyForceToCenter(b2Vec2(-2.0, 0.0), true);
     }
-    if (keyboard[SDL_SCANCODE_D])
+    if (keyboard[SDL_SCANCODE_RIGHT])
     {
         Body->ApplyForceToCenter(b2Vec2(2.0, 0.0), true);
+    }
+    if (keyboard[SDL_SCANCODE_Z] && isGrounded)
+    {
+        Body->ApplyForceToCenter(b2Vec2(0.0, -20.0), true);
     }
     world.Step(1.0f / 60.0f, 6.0f, 2.0f); // update
     pos = Body->GetPosition(); // Body = Body from box
     angle = Body->GetAngle();
+
+    isGrounded = OverlapBox(&world, b2Vec2(pos.x, pos.y - 0.475), 0.15f, 0);
+
+    cout <<  pos.x << " " << pos.y << endl;
+
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + 2;
-
-    cout << "X of box:" << box.x << endl;
-    cout << "Y of box:" << box.y << endl;
-    cout << "Angle of box: " << angle << endl;
 
 }
 void DrawLevelSelectScreen(void)
