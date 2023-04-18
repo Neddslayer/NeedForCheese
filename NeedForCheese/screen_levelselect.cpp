@@ -4,6 +4,7 @@
 #include "screens.h"
 #include "utilities.h"
 #include "box2d/box2d.h"
+#include <map>
 #include <iostream>
 using namespace std;
 
@@ -31,14 +32,15 @@ float y_box = -2.5f;
 
 // size of box
 float w_box = 0.5;
-float h_box = 0.5;
+float h_box = 0.75;
 // Box
 SDL_Rect box;
-b2Body* Body;
+b2Body* Player;
 b2EdgeShape edgeShape;
 SDL_Texture* texture_box = { 0 };
 SDL_Texture* background_sprite = { 0 };
 b2Vec2 pos; // Body = Body from box
+b2Vec2 velo;
 float angle;
 b2PolygonShape dynamicBox;
 b2FixtureDef edgeFixtureDef;
@@ -47,37 +49,32 @@ b2FixtureDef fixtureDef;
 
 bool isGrounded;
 
-class QueryCallback : public b2QueryCallback
+bool IsGrounded(b2Body* playerBody)
 {
-public:
-    bool ReportFixture(b2Fixture* fixture)
+    bool grounded = false;
+
+    for (b2ContactEdge* ce = playerBody->GetContactList(); ce; ce = ce->next)
     {
-        m_fixture = fixture;
-        return false;
-    }
-    b2Fixture* m_fixture = nullptr;
-};
-
-bool OverlapBox(b2World* world, b2Vec2 position, float size, int32_t layer)
-{
-    b2AABB aabb;
-    b2Transform transform(position, b2Rot(0));
-
-    b2Vec2 lowerBound(transform.p.x * -size, transform.p.y * -size);
-    b2Vec2 upperBound(transform.p.x * size, transform.p.y * size);
-    aabb.lowerBound = lowerBound;
-    aabb.upperBound = upperBound;
-
-    QueryCallback callback;
-    world->QueryAABB(&callback, aabb);
-
-    if (callback.m_fixture != nullptr)
-    {
-        SDL_Rect test = SDL_Rect();
-        SDL_RenderDrawRect()
+        b2Contact* c = ce->contact;
+        if (c->IsTouching())
+        {
+            b2Vec2 contactNormal = c->GetManifold()->localNormal;
+            if (contactNormal.y < -0.5f)
+            {
+                b2Fixture* fA = c->GetFixtureA();
+                b2Fixture* fB = c->GetFixtureB();
+                int userDataA = fA->GetUserData().pointer;
+                int userDataB = fB->GetUserData().pointer;
+                if (userDataA == 0 || userDataB == 0)
+                {
+                    grounded = true;
+                    break;
+                }
+            }
+        }
     }
 
-    return (callback.m_fixture != nullptr) && (callback.m_fixture->GetFilterData().categoryBits);
+    return grounded;
 }
 
 void InitLevelSelectScreen(void)
@@ -101,6 +98,7 @@ void InitLevelSelectScreen(void)
     edgeShape.SetTwoSided(startpoint, endpoint);
 
     edgeFixtureDef.shape = &edgeShape;
+    edgeFixtureDef.userData.pointer = (uintptr_t)1;
     groundLineBody->CreateFixture(&edgeFixtureDef);
 
     SDL_Surface* tmp_sprites;
@@ -120,8 +118,8 @@ void InitLevelSelectScreen(void)
     boxBodyDef.fixedRotation = true;
     boxBodyDef.position.Set(x_box, y_box);
 
-    Body = world.CreateBody(&boxBodyDef);
-    Body->SetFixedRotation(true);
+    Player = world.CreateBody(&boxBodyDef);
+    Player->SetFixedRotation(true);
 
     dynamicBox.SetAsBox(w_box / 2.0f, h_box / 2.0f); // will be 0.5 x 0.5
 
@@ -129,7 +127,8 @@ void InitLevelSelectScreen(void)
     fixtureDef.density = 1;
     fixtureDef.friction = 0.8f;
     fixtureDef.restitution = 0.0f;
-    Body->CreateFixture(&fixtureDef);
+    fixtureDef.userData.pointer = (uintptr_t)0;
+    Player->CreateFixture(&fixtureDef);
 
     // box: convert Metres back to Pixels for width and height
     box.w = w_box * MET2PIX;
@@ -139,23 +138,24 @@ void UpdateLevelSelectScreen(void)
 {
     if (keyboard[SDL_SCANCODE_LEFT])
     {
-        Body->ApplyForceToCenter(b2Vec2(-2.0, 0.0), true);
+        Player->ApplyForceToCenter(b2Vec2(-2.0, 0.0), true);
     }
     if (keyboard[SDL_SCANCODE_RIGHT])
     {
-        Body->ApplyForceToCenter(b2Vec2(2.0, 0.0), true);
+        Player->ApplyForceToCenter(b2Vec2(2.0, 0.0), true);
     }
     if (keyboard[SDL_SCANCODE_Z] && isGrounded)
     {
-        Body->ApplyForceToCenter(b2Vec2(0.0, -20.0), true);
+        Player->ApplyForceToCenter(b2Vec2(0.0, -50.0), true);
     }
     world.Step(1.0f / 60.0f, 6.0f, 2.0f); // update
-    pos = Body->GetPosition(); // Body = Body from box
-    angle = Body->GetAngle();
+    pos = Player->GetPosition(); // Body = Body from box
+    velo = Player->GetLinearVelocity();
+    angle = Player->GetAngle();
 
-    isGrounded = OverlapBox(&world, b2Vec2(pos.x, pos.y - 0.475), 0.15f, 0);
+    isGrounded = IsGrounded(Player);
 
-    cout <<  pos.x << " " << pos.y << endl;
+    cout << "Position: { " << pos.x << ",  " << pos.y << " }" << endl << "Velocity: { " << velo.x << ", " << velo.y << " }" << endl;
 
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + 2;
@@ -170,10 +170,13 @@ void DrawLevelSelectScreen(void)
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
     SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
+
 }
 void UnloadLevelSelectScreen(void)
 {
     delete &world;
+    SDL_DestroyTexture(background_sprite);
+    SDL_DestroyTexture(texture_box);
 }
 int FinishLevelSelectScreen(void)
 {
@@ -183,7 +186,7 @@ int FinishLevelSelectScreen(void)
 * 
 b2World* world;
 
-const int MET2PIX = 80; // 640 / 80 = 8
+const int MET2PIX = 80; // 640 / 80 = 8 
 
 const int WIDTH = 640;
 const int HEIGHT = 480;
