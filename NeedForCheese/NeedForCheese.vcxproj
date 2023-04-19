@@ -160,6 +160,7 @@
     <ClInclude Include="screens.h" />
     <ClInclude Include="SDL_FontCache.h" />
     <ClInclude Include="utilities.h" />
+    <ClInclude Include="world.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\icon.ico" />

@@ -59,7 +59,7 @@ void InitLevelSelectScreen(void)
     background_sprite = SDL_CreateTextureFromSurface(renderer, bgSurface);
     SDL_FreeSurface(bgSurface);
 
-    player.Initialize();
+    player.Initialize(&world, b2Vec2(0, -2.5), b2Vec2_zero);
     
 }
 
@@ -77,12 +77,13 @@ void DrawLevelSelectScreen(void)
     SDL_RenderDrawLine(renderer, ((SCALED_WIDTH / 2.0f) + edgeShape.m_vertex1.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + edgeShape.m_vertex1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + edgeShape.m_vertex2.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + edgeShape.m_vertex2.y) * MET2PIX);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-    SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
+    player.Draw();
 
 }
 
 void UnloadLevelSelectScreen(void)
 {
+    delete& player;
     SDL_DestroyTexture(background_sprite);
     SDL_DestroyTexture(texture_box);
 }

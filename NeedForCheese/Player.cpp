@@ -1,8 +1,5 @@
 #include "Player.h"
 
-// cartesian origin box
-float x_box = 0;
-float y_box = -2.5f;
 
 // size of box
 float w_box = 0.5;
@@ -23,10 +20,11 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     //boxBodyDef.angle = 45; // flips the whole thing -> 180 grad drehung
     boxBodyDef.angle = 0;
     boxBodyDef.fixedRotation = true;
-    boxBodyDef.position.Set(x_box, y_box);
+    boxBodyDef.position.Set(position.x, position.y);
 
     Player = world->CreateBody(&boxBodyDef);
     Player->SetFixedRotation(true);
+    Player->SetLinearVelocity(velocity);
 
     dynamicBox.SetAsBox(w_box / 2.0f, h_box / 2.0f); // will be 0.5 x 0.5
 
