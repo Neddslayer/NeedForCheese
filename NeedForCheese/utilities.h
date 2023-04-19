@@ -17,5 +17,6 @@ extern int mouseX, mouseY;
 extern Uint32 frameTime;
 extern Uint32 updateTime;
 extern bool development_mode;
+const int MET2PIX = 160;
 
 #endif // !UTILITIES_H
