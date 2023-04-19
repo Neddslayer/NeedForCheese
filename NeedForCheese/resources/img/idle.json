@@ -127,13 +127,5 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":164,"h":270},
 	"sourceSize": {"w":164,"h":270}
-}},
-"meta": {
-	"app": "Adobe Animate",
-	"version": "23.0.0.407",
-	"image": "idle.png",
-	"format": "RGBA8888",
-	"size": {"w":1024,"h":1024},
-	"scale": "1"
-}
+}}
 }
