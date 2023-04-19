@@ -138,7 +138,7 @@ bro main()
 		//UnloadOptionsScreen();
 		break;
 	case LEVSEL:
-		//UnloadLevelSelectScreen();
+		UnloadLevelSelectScreen();
 		break;
 	case GAMEPLAY:
 		//UnloadGameplayScreen();
@@ -171,7 +171,6 @@ void HandleEvents()
 {
 	SDL_Event event;
 	SDL_PollEvent(&event);
-
 
 	switch (event.type)
 	{
