@@ -53,6 +53,8 @@ Uint32 previousTime = SDL_GetTicks(); // Initialize previous time to current tim
 int mouseX, mouseY;
 bool mouseClicked;
 
+Uint32 frameTime;
+
 bro main()
 {
 	fullscreen should nah fr
@@ -456,7 +458,7 @@ void UpdateDrawFrame()
 	if (transitioning) DrawTransition();
 	SDL_RenderPresent(renderer);
 
-	Uint32 frameTime = SDL_GetTicks() - currentTime; // Time taken for the whole frame
+	frameTime = SDL_GetTicks() - currentTime; // Time taken for the whole frame
 
 	// Wait for remaining time to meet the target frame rate
 	if (frameTime < FRAME_TIME)

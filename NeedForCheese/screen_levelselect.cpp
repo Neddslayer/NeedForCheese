@@ -161,6 +161,7 @@ void UpdateLevelSelectScreen(void)
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + 2;
 
 }
+
 void DrawLevelSelectScreen(void)
 {
     SDL_RenderCopy(renderer, background_sprite, NULL, NULL);
@@ -172,9 +173,9 @@ void DrawLevelSelectScreen(void)
     SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
 
 }
+
 void UnloadLevelSelectScreen(void)
 {
-    delete &world;
     SDL_DestroyTexture(background_sprite);
     SDL_DestroyTexture(texture_box);
 }
