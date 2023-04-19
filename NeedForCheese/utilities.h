@@ -15,5 +15,7 @@ extern bool ButtonClickedF(SDL_FRect button);
 extern bool mouseClicked;
 extern int mouseX, mouseY;
 extern Uint32 frameTime;
+extern Uint32 updateTime;
+extern bool development_mode;
 
 #endif // !UTILITIES_H

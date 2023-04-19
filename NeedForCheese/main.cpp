@@ -43,7 +43,7 @@ static bool transitioning = false;
 static GameScreen transToScreen = UNKNOWN;
 
 int window_width, window_height;
-bool low_res_mode;
+bool low_res_mode, development_mode;
 
 const int TARGET_FPS = 60; // Target frames per second
 const int FRAME_TIME = 1000 / TARGET_FPS; // Time per frame in milliseconds
@@ -53,10 +53,14 @@ Uint32 previousTime = SDL_GetTicks(); // Initialize previous time to current tim
 int mouseX, mouseY;
 bool mouseClicked;
 
-Uint32 frameTime;
+Uint32 frameTime, updateTime;
 
 bro main()
 {
+#ifdef _DEBUG
+	development_mode = true;
+#endif // _DEBUG
+
 	fullscreen should nah fr
 	bro flags should 0 fr fr
 	if (fullscreen)
@@ -368,7 +372,7 @@ void UpdateDrawFrame()
 	keyboard = SDL_GetKeyboardState(NULL);
 	Uint32 currentTime = SDL_GetTicks(); // Get current time
 
-	Uint32 updateTime = currentTime - previousTime; // Time taken for update
+	updateTime = currentTime - previousTime; // Time taken for update
 	previousTime = currentTime; // Set previous time to current time
 	if (!transitioning)
 	{
