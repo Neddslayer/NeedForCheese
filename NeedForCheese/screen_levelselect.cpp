@@ -65,7 +65,7 @@ bool IsGrounded(b2Body* playerBody)
                 b2Fixture* fB = c->GetFixtureB();
                 int userDataA = fA->GetUserData().pointer;
                 int userDataB = fB->GetUserData().pointer;
-                if (userDataA == 0 || userDataB == 0)
+                if (userDataA == 2 || userDataB == 2)
                 {
                     grounded = true;
                     break;
@@ -97,7 +97,7 @@ void InitLevelSelectScreen(void)
     edgeShape.SetTwoSided(startpoint, endpoint);
 
     edgeFixtureDef.shape = &edgeShape;
-    edgeFixtureDef.userData.pointer = (uintptr_t)1;
+    edgeFixtureDef.userData.pointer = (uintptr_t)2;
     groundLineBody->CreateFixture(&edgeFixtureDef);
 
     SDL_Surface* tmp_sprites;
@@ -126,7 +126,7 @@ void InitLevelSelectScreen(void)
     fixtureDef.density = 1;
     fixtureDef.friction = 0.8f;
     fixtureDef.restitution = 0.0f;
-    fixtureDef.userData.pointer = (uintptr_t)0;
+    fixtureDef.userData.pointer = (uintptr_t)1;
     Player->CreateFixture(&fixtureDef);
 
     // box: convert Metres back to Pixels for width and height
