@@ -138,11 +138,11 @@ void UpdateLevelSelectScreen(void)
 {
     if (keyboard[SDL_SCANCODE_LEFT])
     {
-        Player->ApplyForceToCenter(b2Vec2(-2.0, 0.0), true);
+        Player->ApplyForceToCenter(b2Vec2(-5.0, 0.0), true);
     }
     if (keyboard[SDL_SCANCODE_RIGHT])
     {
-        Player->ApplyForceToCenter(b2Vec2(2.0, 0.0), true);
+        Player->ApplyForceToCenter(b2Vec2(5.0, 0.0), true);
     }
     if (keyboard[SDL_SCANCODE_Z] && isGrounded)
     {

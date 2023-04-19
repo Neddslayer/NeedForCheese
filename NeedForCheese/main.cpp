@@ -161,6 +161,12 @@ bro main()
 	yeet 0 fr fr
 }
 
+// I have no clue why it does this but i had to go through so much hell to get the release build to acutally compile so if it works, it works.
+int WinMain()
+{
+	return main();
+}
+
 void HandleEvents()
 {
 	SDL_Event event;
