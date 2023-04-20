@@ -46,14 +46,14 @@ void Player::Update()
     }
     if (keyboard[SDL_SCANCODE_Z] && isGrounded)
     {
-        Player_Body->ApplyForceToCenter(b2Vec2(0.0, -50.0), true);
+        Player_Body->ApplyForceToCenter(b2Vec2(0.0, -35.0), true);
     }
     pos = Player_Body->GetPosition(); // Body = Body from box
     velo = Player_Body->GetLinearVelocity();
     angle = Player_Body->GetAngle();
     isGrounded = IsGrounded(Player_Body); // check if grounded (horray)
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
-    box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + 2;
+    box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 40.0f;
 }
 
 void Player::Draw()
