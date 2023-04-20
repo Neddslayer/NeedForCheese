@@ -18,7 +18,6 @@ float ground_x, ground_y = 0.0f;
 b2Vec2 startpoint, endpoint;
 b2BodyDef myGroundDef;
 b2EdgeShape edgeShape;
-SDL_Texture* texture_box = { 0 };
 SDL_Texture* background_sprite = { 0 };
 b2FixtureDef edgeFixtureDef;
 
@@ -48,11 +47,6 @@ void InitLevelSelectScreen(void)
     edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
     groundLineBody->CreateFixture(&edgeFixtureDef);
 
-    SDL_Surface* tmp_sprites;
-    tmp_sprites = IMG_Load("resources/img/checker.png");
-    // balls are my favorite 🤓👆
-    texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
-    SDL_FreeSurface(tmp_sprites);
     //big balls -owen
     
     SDL_Surface* bgSurface = IMG_Load("resources/img/title_select_bg.png");
@@ -65,6 +59,7 @@ void InitLevelSelectScreen(void)
 
 void UpdateLevelSelectScreen(void)
 {
+    player.Update();
     world.Step(1.0f / 60.0f, 6.0f, 2.0f); // update
     //cout << "Position: { " << pos.x << ",  " << pos.y << " }" << endl << "Velocity: { " << velo.x << ", " << velo.y << " }" << endl;
 }
@@ -83,9 +78,9 @@ void DrawLevelSelectScreen(void)
 
 void UnloadLevelSelectScreen(void)
 {
+    player.Unload();
     delete& player;
     SDL_DestroyTexture(background_sprite);
-    SDL_DestroyTexture(texture_box);
 }
 
 int FinishLevelSelectScreen(void)

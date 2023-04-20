@@ -1,18 +1,7 @@
 #include "Player.h"
+#include "SDL2/SDL_image.h"
 
-
-// size of box
-float w_box = 0.5;
-float h_box = 0.75;
-// Box
-SDL_Rect box;
-b2Body* Player;
-b2Vec2 pos; // Body = Body from box
-b2Vec2 velo;
-float angle;
-b2PolygonShape dynamicBox;
-b2BodyDef boxBodyDef;
-b2FixtureDef fixtureDef;
+SDL_Texture* texture_box = { 0 };
 
 void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
 {
@@ -38,6 +27,11 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     // box: convert Metres back to Pixels for width and height
     box.w = w_box * MET2PIX;
     box.h = h_box * MET2PIX;
+
+    SDL_Surface* tmp_sprites;
+    tmp_sprites = IMG_Load("resources/img/checker.png");
+    texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
+    SDL_FreeSurface(tmp_sprites);
 }
 
 void Player::Update()
@@ -64,5 +58,9 @@ void Player::Update()
 
 void Player::Draw()
 {
-
+    SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
+}
+void Player::Unload()
+{
+    SDL_DestroyTexture(texture_box);
 }

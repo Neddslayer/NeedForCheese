@@ -14,8 +14,8 @@ public:
     float y_box;
 
     // size of box
-    float w_box;
-    float h_box;
+    float w_box = 0.5;
+    float h_box = 0.75;
     // Box
     SDL_Rect box;
     b2Body* Player;
@@ -31,6 +31,7 @@ public:
 	// Update the player. This includes applying velocity based on input, and detecting stuff like crouching.
 	void Update();
 	void Draw();
+    void Unload();
 private:
 
     bool isGrounded;
