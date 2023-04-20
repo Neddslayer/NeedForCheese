@@ -18,7 +18,7 @@ public:
     float h_box = 0.75;
     // Box
     SDL_Rect box;
-    b2Body* Player;
+    b2Body* Player_Body;
     b2Vec2 pos; // Body = Body from box
     b2Vec2 velo;
     float angle;

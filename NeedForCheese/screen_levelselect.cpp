@@ -79,7 +79,6 @@ void DrawLevelSelectScreen(void)
 void UnloadLevelSelectScreen(void)
 {
     player.Unload();
-    delete& player;
     SDL_DestroyTexture(background_sprite);
 }
 
