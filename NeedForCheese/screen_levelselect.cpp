@@ -27,11 +27,11 @@ void InitLevelSelectScreen(void)
 {
     // start ground point
     startpoint.x = -2.5f;
-    startpoint.y = 2.5;
+    startpoint.y = 1.5;
 
     // end ground point
     endpoint.x = 2.5;
-    endpoint.y = 2.5;
+    endpoint.y = 1.5;
 
     // LineGround
     myGroundDef.type = b2_staticBody;
