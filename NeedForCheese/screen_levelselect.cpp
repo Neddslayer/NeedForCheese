@@ -23,16 +23,15 @@ b2FixtureDef edgeFixtureDef;
 
 Player player = Player();
 
-
 void InitLevelSelectScreen(void)
 {
     // start ground point
     startpoint.x = -2.5f;
-    startpoint.y = 0;
+    startpoint.y = 2.5;
 
     // end ground point
     endpoint.x = 2.5;
-    endpoint.y = 0;
+    endpoint.y = 2.5;
 
     // LineGround
     myGroundDef.type = b2_staticBody;
@@ -62,6 +61,10 @@ void UpdateLevelSelectScreen(void)
     player.Update();
     world.Step(1.0f / 60.0f, 6.0f, 2.0f); // update
     //cout << "Position: { " << pos.x << ",  " << pos.y << " }" << endl << "Velocity: { " << velo.x << ", " << velo.y << " }" << endl;
+    if (keyboard[SDL_SCANCODE_R])
+    {
+        player.Player_Body->SetTransform(b2Vec2_zero, 0);
+    }
 }
 
 void DrawLevelSelectScreen(void)

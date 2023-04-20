@@ -60,6 +60,7 @@ void Player::Draw()
 {
     SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
 }
+
 void Player::Unload()
 {
     SDL_DestroyTexture(texture_box);
