@@ -64,3 +64,4 @@
 
 SDL2-2.26.5/** linguist-vendored
 box2d-2.4.1/** linguist-vendored
+SDL-FontCache linguist-vendored
