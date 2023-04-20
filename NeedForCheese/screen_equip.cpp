@@ -6,6 +6,7 @@
 
 SDL_Surface* titleEquipBGSurface = NULL;
 SDL_Texture* titleEquipBGTexture = { 0 }; // for tghe love of god why can't i reuse variable names
+// they need to be marked static dumbass
 SDL_Surface* titleEquipSectionSurface = NULL;
 SDL_Texture* titleEquipSectionTexture = { 0 };
 SDL_Surface* titleEquipSectionPreviewSurface = NULL;
