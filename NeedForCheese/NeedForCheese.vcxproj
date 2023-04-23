@@ -159,6 +159,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="screens.h" />
     <ClInclude Include="SDL_FontCache.h" />
+    <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>

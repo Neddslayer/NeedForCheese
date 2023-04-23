@@ -64,6 +64,7 @@ void UpdateLevelSelectScreen(void)
     if (keyboard[SDL_SCANCODE_R])
     {
         player.Player_Body->SetTransform(b2Vec2_zero, 0);
+        player.Player_Body->SetLinearVelocity(b2Vec2_zero);
     }
 }
 
