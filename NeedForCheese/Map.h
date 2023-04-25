@@ -11,7 +11,7 @@ class Map
 {
 public:
     Map(const char* filename);
-    void draw_map(SDL_renderer* renderer);
+    void draw_map(SDL_Renderer* renderer);
 private:
     SDL_Texture* texture;
     int texture_width;
