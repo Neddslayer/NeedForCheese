@@ -7,7 +7,9 @@
 #include "box2d/box2d.h"
 #include <map>
 #include <iostream>
+#include <vector>
 #include "Player.h"
+#include "tinyxml2.h"
 using namespace std;
 
 static int finishScreen;
@@ -22,6 +24,71 @@ SDL_Texture* background_sprite = { 0 };
 b2FixtureDef edgeFixtureDef;
 
 Player player = Player();
+
+std::vector<int> split_string_to_ints(const char* str, const char* delimiter)
+{
+    std::vector<int> result;
+    char* tmp = strdup(str);
+    char* token = strtok(tmp, delimiter);
+    while (token != nullptr)
+    {
+        result.push_back(atoi(token));
+        token = strtok(nullptr, delimiter);
+    }
+    free(tmp);
+    return result;
+}
+
+void load_map(const char* filename, SDL_Renderer* renderer)
+{
+    // Load the XML document and get the root map node
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile(filename);
+    tinyxml2::XMLElement* mapNode = doc.FirstChildElement("map");
+
+    // Get the map dimensions and tile size
+    int width, height, tileWidth, tileHeight;
+    mapNode->QueryIntAttribute("width", &width);
+    mapNode->QueryIntAttribute("height", &height);
+    mapNode->QueryIntAttribute("tilewidth", &tileWidth);
+    mapNode->QueryIntAttribute("tileheight", &tileHeight);
+
+    // Load the tileset texture
+    tinyxml2::XMLElement* tilesetNode = mapNode->FirstChildElement("tileset");
+    const char* imagePath = tilesetNode->FirstChildElement("image")->Attribute("source");
+    SDL_Texture* texture = IMG_LoadTexture(renderer, imagePath);
+    int texture_width, texture_height;
+    SDL_QueryTexture(texture, NULL, NULL, &texture_width, &texture_height);
+    SDL_Rect srcrect = { 0, 0, tileWidth, tileHeight };
+
+    // Iterate through the background layer and draw each tile
+    for (tinyxml2::XMLElement* layerNode = mapNode->FirstChildElement("layer"); layerNode != nullptr; layerNode = layerNode->NextSiblingElement("layer"))
+    {
+        if (strcmp(layerNode->Attribute("name"), "background") == 0)
+        {
+            const char* data = layerNode->FirstChildElement("data")->GetText();
+            std::vector<int> tiles = split_string_to_ints(data, ",");
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int index = tiles[y * width + x];
+                    if (index == 0)
+                    {
+                        continue;
+                    }
+                    int tilex = (index - 1) % (texture_width / tileWidth);
+                    int tiley = (index - 1) / (texture_width / tileWidth);
+                    SDL_Rect srcrect = { tilex * tileWidth, tiley * tileHeight, tileWidth, tileHeight };
+                    SDL_Rect dstrect = { x * tileWidth, y * tileHeight, tileWidth, tileHeight };
+                    SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
+                }
+            }
+        }
+    }
+}
+
+
 
 void InitLevelSelectScreen(void)
 {
