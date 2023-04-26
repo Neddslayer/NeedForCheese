@@ -2,8 +2,9 @@
 #include "utilities.h"
 #include "tinyxml2.h"
 #include "SDL2/SDL.h"
+#include "box2d/box2d.h"
 
-Map::Map(const char* filename)
+Map::Map(const char* filename, b2World world)
 {
     XMLDocument level;
     level.LoadFile(filename);
@@ -73,6 +74,75 @@ Map::Map(const char* filename)
         {
             cout << columns[j] << endl;
             tiles.push_back(stoi(columns[j]));
+        }
+    }
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+    b2Body* body = world.CreateBody(&bodyDef);
+
+    for (int y = 0; y < mapHeight; y++)
+    {
+        for (int x = 0; x < mapWidth; x++)
+        {
+            int tileIndex = y * mapWidth + x;
+            int tile = tiles[tileIndex];
+
+            // If the current tile is "0", check adjacent tiles
+            if (tile == 0)
+            {
+                // Check top tile
+                if (y > 0 && tiles[tileIndex - mapWidth] != 0)
+                {
+                    // Create static body at center of current tile
+                    bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
+                        y * tileHeight + tileHeight / 2.0f);
+                    body = world.CreateBody(&bodyDef);
+
+                    // Create fixture for current tile
+                    b2PolygonShape shape;
+                    shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
+                    body->CreateFixture(&shape, 0.0f);
+                }
+                // Check bottom tile
+                if (y < mapHeight - 1 && tiles[tileIndex + mapWidth] != 0)
+                {
+                    // Create static body at center of current tile
+                    bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
+                        (y + 1) * tileHeight - tileHeight / 2.0f);
+                    body = world.CreateBody(&bodyDef);
+
+                    // Create fixture for current tile
+                    b2PolygonShape shape;
+                    shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
+                    body->CreateFixture(&shape, 0.0f);
+                }
+                // Check left tile
+                if (x > 0 && tiles[tileIndex - 1] != 0)
+                {
+                    // Create static body at center of current tile
+                    bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
+                        y * tileHeight + tileHeight / 2.0f);
+                    body = world.CreateBody(&bodyDef);
+
+                    // Create fixture for current tile
+                    b2PolygonShape shape;
+                    shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
+                    body->CreateFixture(&shape, 0.0f);
+                }
+                // Check right tile
+                if (x < mapWidth - 1 && tiles[tileIndex + 1] != 0)
+                {
+                    // Create static body at center of current tile
+                    bodyDef.position.Set((x + 1) * tileWidth - tileWidth / 2.0f,
+                        y * tileHeight + tileHeight / 2.0f);
+                    body = world.CreateBody(&bodyDef);
+
+                    // Create fixture for current tile
+                    b2PolygonShape shape;
+                    shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
+                    body->CreateFixture(&shape, 0.0f);
+                }
+            }
         }
     }
 }

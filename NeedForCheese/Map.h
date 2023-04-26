@@ -7,12 +7,13 @@
 #include "utilities.h"
 #include "tinyxml2.h"
 #include "SDL2/SDL_image.h"
+#include "box2d/box2d.h"
 using namespace std;
 using namespace tinyxml2;
 class Map
 {
 public:
-    Map(const char* filename);
+    Map(const char* filename, b2World world);
     Map();
     void draw_map(SDL_Renderer* renderer);
 private:
