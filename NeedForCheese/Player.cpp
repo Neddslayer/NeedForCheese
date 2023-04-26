@@ -58,6 +58,28 @@ void Player::Update()
 
 void Player::Draw()
 {
+    switch (state)
+    {
+    case 0:
+        // animate idle
+        break;
+    case 1:
+        // animate walking
+        break;
+    case 2:
+        // animate running
+        break;
+    case 3:
+        // animate attack
+        break;
+    case 4:
+        //animate block
+        break;
+    default:
+        // animate idle
+        break;
+    }
+
     SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
 }
 
