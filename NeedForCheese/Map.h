@@ -13,7 +13,7 @@ using namespace tinyxml2;
 class Map
 {
 public:
-    Map(const char* filename, b2World world);
+    Map(const char* filename, b2World* world);
     Map();
     void draw_map(SDL_Renderer* renderer);
 private:

@@ -4,7 +4,7 @@
 #include "SDL2/SDL.h"
 #include "box2d/box2d.h"
 
-Map::Map(const char* filename, b2World world)
+Map::Map(const char* filename, b2World* world)
 {
     XMLDocument level;
     level.LoadFile(filename);
@@ -78,7 +78,7 @@ Map::Map(const char* filename, b2World world)
     }
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
-    b2Body* body = world.CreateBody(&bodyDef);
+    b2Body* body = world->CreateBody(&bodyDef);
 
     for (int y = 0; y < mapHeight; y++)
     {
@@ -87,62 +87,15 @@ Map::Map(const char* filename, b2World world)
             int tileIndex = y * mapWidth + x;
             int tile = tiles[tileIndex];
 
-            // If the current tile is "0", check adjacent tiles
-            if (tile == 0)
-            {
-                // Check top tile
-                if (y > 0 && tiles[tileIndex - mapWidth] != 0)
-                {
-                    // Create static body at center of current tile
-                    bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
-                        y * tileHeight + tileHeight / 2.0f);
-                    body = world.CreateBody(&bodyDef);
+            // Create static body at center of current tile
+            bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
+                y * tileHeight + tileHeight / 2.0f);
+            body = world->CreateBody(&bodyDef);
 
-                    // Create fixture for current tile
-                    b2PolygonShape shape;
-                    shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
-                    body->CreateFixture(&shape, 0.0f);
-                }
-                // Check bottom tile
-                if (y < mapHeight - 1 && tiles[tileIndex + mapWidth] != 0)
-                {
-                    // Create static body at center of current tile
-                    bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
-                        (y + 1) * tileHeight - tileHeight / 2.0f);
-                    body = world.CreateBody(&bodyDef);
-
-                    // Create fixture for current tile
-                    b2PolygonShape shape;
-                    shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
-                    body->CreateFixture(&shape, 0.0f);
-                }
-                // Check left tile
-                if (x > 0 && tiles[tileIndex - 1] != 0)
-                {
-                    // Create static body at center of current tile
-                    bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
-                        y * tileHeight + tileHeight / 2.0f);
-                    body = world.CreateBody(&bodyDef);
-
-                    // Create fixture for current tile
-                    b2PolygonShape shape;
-                    shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
-                    body->CreateFixture(&shape, 0.0f);
-                }
-                // Check right tile
-                if (x < mapWidth - 1 && tiles[tileIndex + 1] != 0)
-                {
-                    // Create static body at center of current tile
-                    bodyDef.position.Set((x + 1) * tileWidth - tileWidth / 2.0f,
-                        y * tileHeight + tileHeight / 2.0f);
-                    body = world.CreateBody(&bodyDef);
-
-                    // Create fixture for current tile
-                    b2PolygonShape shape;
-                    shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
-                    body->CreateFixture(&shape, 0.0f);
-                }
-            }
+            // Create fixture for current tile
+            b2PolygonShape shape;
+            shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
+            body->CreateFixture(&shape, 0.0f);
         }
     }
 }
@@ -176,7 +129,7 @@ void Map::draw_map(SDL_Renderer* renderer)
 
             // Set up the source and destination rectangles for rendering
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
-            SDL_Rect dstrect = { j * tileWidth * 3, i * tileHeight * 3, tileWidth * 3, tileHeight * 3 };
+            SDL_Rect dstrect = { j * tileWidth, i * tileHeight, tileWidth, tileHeight };
 
             // Render the tile to the screen
             SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
