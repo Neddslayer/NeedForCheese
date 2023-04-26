@@ -1,4 +1,7 @@
 #include "Map.h"
+#include "utilities.h"
+#include "tinyxml2.h"
+#include "SDL2/SDL.h"
 
 Map::Map(const char* filename)
 {
@@ -52,8 +55,8 @@ Map::Map(const char* filename)
     {
         printf("Error loading map: no layer data found\n");
     }
-
     const char* csvData = dataElement->GetText();
+    
     if (csvData == nullptr)
     {
         printf("Error loading map: no layer data found\n");
@@ -65,12 +68,16 @@ Map::Map(const char* filename)
     for (int i = 0; i < rows.size(); i++)
     {
         std::vector<std::string> columns = split_string(rows[i], ",");
-
+        printf(string(columns).c_str());
         for (int j = 0; j < columns.size(); j++)
         {
             tiles.push_back(std::stoi(columns[j]));
         }
     }
+}
+
+Map::Map()
+{
 }
 
 void Map::draw_map(SDL_Renderer* renderer)
@@ -104,4 +111,19 @@ void Map::draw_map(SDL_Renderer* renderer)
             SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
         }
     }
+}
+
+vector<string> split_string(const string& str, const char* delim)
+{
+    vector<string> tokens;
+    string token;
+    size_t start = 0, end = 0;
+    while ((end = str.find(delim, start)) != string::npos)
+    {
+        token = str.substr(start, end - start);
+        start = end + 1;
+        tokens.push_back(token);
+    }
+    tokens.push_back(str.substr(start));
+    return tokens;
 }

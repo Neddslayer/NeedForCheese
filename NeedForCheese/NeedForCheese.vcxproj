@@ -154,6 +154,7 @@
     <ClCompile Include="screen_title.cpp" />
     <ClCompile Include="screen_titleselect.cpp" />
     <ClCompile Include="SDL_FontCache.c" />
+    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h" />
