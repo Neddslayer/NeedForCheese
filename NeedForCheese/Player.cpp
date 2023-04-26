@@ -65,3 +65,31 @@ void Player::Unload()
 {
     SDL_DestroyTexture(texture_box);
 }
+
+bool Player::IsGrounded(b2Body* playerBody)
+{
+    bool grounded = false;
+
+    for (b2ContactEdge* ce = playerBody->GetContactList(); ce; ce = ce->next)
+    {
+        b2Contact* c = ce->contact;
+        if (c->IsTouching())
+        {
+            b2Vec2 contactNormal = c->GetManifold()->localNormal;
+            if (contactNormal.y < -0.5f)
+            {
+                b2Fixture* fA = c->GetFixtureA();
+                b2Fixture* fB = c->GetFixtureB();
+                int userDataA = fA->GetUserData().pointer;
+                int userDataB = fB->GetUserData().pointer;
+                if (userDataA == GROUND || userDataB == GROUND)
+                {
+                    grounded = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    return grounded;
+}

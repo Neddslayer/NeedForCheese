@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+using namespace std;
 
 #ifndef UTILITIES_H
 #define UTILITIES_H
@@ -22,6 +23,6 @@ extern Uint32 updateTime;
 extern bool development_mode;
 const int MET2PIX = 96;
 
-std::vector<std::string> split_string(const std::string& str, const char* delim);
+vector<string> split_string(const string& str, const char* delim);
 
 #endif // !UTILITIES_H
