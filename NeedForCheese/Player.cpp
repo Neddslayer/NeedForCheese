@@ -53,6 +53,7 @@ void Player::Update()
     if (keyboard[SDL_SCANCODE_Z] && isGrounded)
     {
         Player_Body->ApplyForceToCenter(b2Vec2(0.0, -35.0), true);
+        state = 3;
     }
     if (abs(Player_Body->GetLinearVelocity().x) < 0.2 && abs(Player_Body->GetLinearVelocity().y) < 0.2) state = 0;
     pos = Player_Body->GetPosition(); // Body = Body from box
@@ -77,12 +78,14 @@ void Player::Draw()
         // animate running
         break;
     case 3:
-        // animate attack
+        // animate jumping
         break;
     case 4:
-        //animate block
+        //animate attack
         break;
     case 5:
+        // animate block
+        break;
     default:
         // animate idle
         break;
