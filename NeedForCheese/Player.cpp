@@ -81,9 +81,12 @@ void Player::Draw()
         // animate jumping
         break;
     case 4:
-        //animate attack
+        //animate falling
         break;
     case 5:
+        // animate attack
+        break;
+    case 6:
         // animate block
         break;
     default:
