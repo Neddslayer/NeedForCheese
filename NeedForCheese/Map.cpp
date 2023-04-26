@@ -68,8 +68,10 @@ Map::Map(const char* filename)
     for (int i = 0; i < rows.size(); i++)
     {
         vector<string> columns = split_string(rows[i], ",");
+        
         for (int j = 0; j < columns.size(); j++)
         {
+            cout << columns[j] << endl;
             tiles.push_back(stoi(columns[j]));
         }
     }
