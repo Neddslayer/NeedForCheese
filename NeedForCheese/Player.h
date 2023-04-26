@@ -24,7 +24,7 @@ public:
     b2BodyDef boxBodyDef;
     b2FixtureDef fixtureDef;
 
-    int state;
+    int state, direction;
 
 	// Initialize the player. This includes adding it into the world and giving it a starting position and velocity, usually for cutscene purposes.
     void Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity);

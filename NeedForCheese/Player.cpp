@@ -32,6 +32,8 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     tmp_sprites = IMG_Load("resources/img/checker.png");
     texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
     SDL_FreeSurface(tmp_sprites);
+    direction = 1;
+    state = 0;
 }
 
 void Player::Update()
@@ -39,15 +41,20 @@ void Player::Update()
     if (keyboard[SDL_SCANCODE_LEFT])
     {
         Player_Body->ApplyForceToCenter(b2Vec2(-5.0, 0.0), true);
+        direction = -1;
+        state = 1;
     }
     if (keyboard[SDL_SCANCODE_RIGHT])
     {
         Player_Body->ApplyForceToCenter(b2Vec2(5.0, 0.0), true);
+        direction = 1;
+        state = 1;
     }
     if (keyboard[SDL_SCANCODE_Z] && isGrounded)
     {
         Player_Body->ApplyForceToCenter(b2Vec2(0.0, -35.0), true);
     }
+    if (abs(Player_Body->GetLinearVelocity().x) < 0.2 && abs(Player_Body->GetLinearVelocity().y) < 0.2) state = 0;
     pos = Player_Body->GetPosition(); // Body = Body from box
     velo = Player_Body->GetLinearVelocity();
     angle = Player_Body->GetAngle();
@@ -75,6 +82,7 @@ void Player::Draw()
     case 4:
         //animate block
         break;
+    case 5:
     default:
         // animate idle
         break;
