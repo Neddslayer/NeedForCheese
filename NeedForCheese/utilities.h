@@ -1,11 +1,11 @@
+#ifndef UTILITIES_H
+#define UTILITIES_H
+
 #include "SDL2/SDL.h"
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
-
-#ifndef UTILITIES_H
-#define UTILITIES_H
 
 extern SDL_Renderer* renderer;
 extern SDL_Window* window;

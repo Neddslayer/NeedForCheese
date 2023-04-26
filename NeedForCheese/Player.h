@@ -1,11 +1,9 @@
+#ifndef PLAYER_H
+#define PLAYER_H
 #include "SDL2/SDL.h"
 #include "box2d/box2d.h"
 #include "utilities.h"
 #include "world.h"
-
-#ifndef PLAYER_H
-#define PLAYER_H
-
 class Player
 {
 public:

@@ -1,3 +1,5 @@
+#ifndef MAP_H
+#define MAP_H
 #include <map>
 #include <iostream>
 #include <vector>
@@ -25,4 +27,4 @@ private:
     int tileHeight;
 
 };
-
+#endif // !MAP_H
