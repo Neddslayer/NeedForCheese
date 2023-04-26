@@ -136,7 +136,6 @@ void DrawLogoScreen(void)
         {
             if (framesCounter >= 70 && framesCounter % 3 == 0) Mix_PlayChannel(-1, textSound, 0);
             FC_Draw(font, renderer, logoPositionX - 100, logoPositionY + 256, logoText);//(logoText, logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
-            std::cout << FC_GetWidth(font, logoText) << std::endl;
         }
         else
         {

@@ -72,7 +72,6 @@ Map::Map(const char* filename, b2World* world)
         
         for (int j = 0; j < columns.size(); j++)
         {
-            cout << columns[j] << endl;
             tiles.push_back(stoi(columns[j]));
         }
     }
@@ -86,16 +85,18 @@ Map::Map(const char* filename, b2World* world)
         {
             int tileIndex = y * mapWidth + x;
             int tile = tiles[tileIndex];
+            if (tile != 0)
+            {
+                // Create static body at center of current tile
+                bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
+                    y * tileHeight + tileHeight / 2.0f);
+                body = world->CreateBody(&bodyDef);
 
-            // Create static body at center of current tile
-            bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
-                y * tileHeight + tileHeight / 2.0f);
-            body = world->CreateBody(&bodyDef);
-
-            // Create fixture for current tile
-            b2PolygonShape shape;
-            shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
-            body->CreateFixture(&shape, 0.0f);
+                // Create fixture for current tile
+                b2PolygonShape shape;
+                shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
+                body->CreateFixture(&shape, 0.0f);
+            }
         }
     }
 }
