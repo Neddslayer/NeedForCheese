@@ -62,16 +62,15 @@ Map::Map(const char* filename)
         printf("Error loading map: no layer data found\n");
     }
 
-    std::string csvString(csvData);
-    std::vector<std::string> rows = split_string(csvString, "\n");
+    string csvString(csvData);
+    vector<string> rows = split_string(csvString, "\n");
 
     for (int i = 0; i < rows.size(); i++)
     {
-        std::vector<std::string> columns = split_string(rows[i], ",");
-        printf(string(columns).c_str());
+        vector<string> columns = split_string(rows[i], ",");
         for (int j = 0; j < columns.size(); j++)
         {
-            tiles.push_back(std::stoi(columns[j]));
+            tiles.push_back(stoi(columns[j]));
         }
     }
 }
@@ -89,7 +88,7 @@ void Map::draw_map(SDL_Renderer* renderer)
     {
         for (int j = 0; j < mapWidth; j++)
         {
-            int tile = tiles[static_cast<std::vector<int, std::allocator<int>>::size_type>(i) * mapWidth + j];
+            int tile = tiles[static_cast<vector<int, allocator<int>>::size_type>(i) * mapWidth + j];
 
             // If the tile is 0, it's an empty tile so we skip it
             if (tile == 0)
@@ -113,17 +112,27 @@ void Map::draw_map(SDL_Renderer* renderer)
     }
 }
 
-vector<string> split_string(const string& str, const char* delim)
+vector<string> splitString(const string& str, const char* delimiter)
 {
-    vector<string> tokens;
-    string token;
-    size_t start = 0, end = 0;
-    while ((end = str.find(delim, start)) != string::npos)
+    vector<string> substrings;
+    string substring;
+    const int delimiterLength = strlen(delimiter);
+
+    for (size_t i = 0; i < str.size();)
     {
-        token = str.substr(start, end - start);
-        start = end + 1;
-        tokens.push_back(token);
+        if (str.substr(i, delimiterLength) == delimiter)
+        {
+            substrings.push_back(substring);
+            substring.clear();
+            i += delimiterLength;
+        }
+        else
+        {
+            substring += str[i];
+            ++i;
+        }
     }
-    tokens.push_back(str.substr(start));
-    return tokens;
+
+    substrings.push_back(substring);
+    return substrings;
 }
