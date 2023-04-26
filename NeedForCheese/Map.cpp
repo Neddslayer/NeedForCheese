@@ -106,7 +106,7 @@ void Map::draw_map(SDL_Renderer* renderer)
 
             // Set up the source and destination rectangles for rendering
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
-            SDL_Rect dstrect = { j * tileWidth, i * tileHeight, tileWidth, tileHeight };
+            SDL_Rect dstrect = { j * tileWidth * 3, i * tileHeight * 3, tileWidth * 3, tileHeight * 3 };
 
             // Render the tile to the screen
             SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
