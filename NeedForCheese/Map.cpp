@@ -112,7 +112,7 @@ void Map::draw_map(SDL_Renderer* renderer)
     }
 }
 
-vector<string> splitString(const string& str, const char* delimiter)
+vector<string> split_string(const string& str, const char* delimiter)
 {
     vector<string> substrings;
     string substring;
