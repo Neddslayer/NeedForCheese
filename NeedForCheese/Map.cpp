@@ -89,15 +89,18 @@ Map::Map(const char* filename, b2World* world)
             if (tile != 0)
             {
                 // Create static body at center of current tile
-                bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
-                    y * tileHeight + tileHeight / 2.0f);
+                bodyDef.position.Set(x + tileWidth / 32.0f,
+                    y + tileHeight / 32.0f);
                 std::cout << bodyDef.position.x << " " << bodyDef.position.y << " " << y << endl;
                 body = world->CreateBody(&bodyDef);
 
                 // Create fixture for current tile
                 b2PolygonShape shape;
-                shape.SetAsBox(tileWidth / 2.0f, tileHeight / 2.0f);
-                body->CreateFixture(&shape, 0.0f);
+                b2FixtureDef tileFixtureDef;
+                tileFixtureDef.userData.pointer = (uintptr_t)GROUND;
+                shape.SetAsBox(tileWidth / 32.0f, tileHeight / 32.0f);
+                tileFixtureDef.shape = &shape;
+                body->CreateFixture(&tileFixtureDef);
             }
         }
     }
