@@ -91,6 +91,7 @@ Map::Map(const char* filename, b2World* world)
                 // Create static body at center of current tile
                 bodyDef.position.Set(x * tileWidth + tileWidth / 2.0f,
                     y * tileHeight + tileHeight / 2.0f);
+                std::cout << bodyDef.position.x << " " << bodyDef.position.y << " " << y << endl;
                 body = world->CreateBody(&bodyDef);
 
                 // Create fixture for current tile
@@ -102,9 +103,7 @@ Map::Map(const char* filename, b2World* world)
     }
 }
 
-Map::Map()
-{
-}
+Map::Map(){}
 
 void Map::draw_map(SDL_Renderer* renderer)
 {
@@ -131,7 +130,7 @@ void Map::draw_map(SDL_Renderer* renderer)
 
             // Set up the source and destination rectangles for rendering
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
-            SDL_Rect dstrect = { j * tileWidth, i * tileHeight, tileWidth, tileHeight };
+            SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
 
             // Render the tile to the screen
             SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
