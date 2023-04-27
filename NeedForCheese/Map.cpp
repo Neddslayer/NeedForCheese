@@ -89,17 +89,17 @@ Map::Map(const char* filename, b2World* world)
             if (tile != 0)
             {
                 // Create static body at center of current tile
-                bodyDef.position.Set(x + tileWidth / 32.0f,
-                    y + tileHeight / 32.0f);
+                bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
+                    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
                 std::cout << bodyDef.position.x << " " << bodyDef.position.y << " " << y << endl;
                 body = world->CreateBody(&bodyDef);
 
                 // Create fixture for current tile
                 b2PolygonShape shape;
                 b2FixtureDef tileFixtureDef;
-                tileFixtureDef.userData.pointer = (uintptr_t)GROUND;
-                shape.SetAsBox(tileWidth / 32.0f, tileHeight / 32.0f);
+                shape.SetAsBox(((tileWidth / static_cast<float>(MET2PIX)) / 2.0f), ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
                 tileFixtureDef.shape = &shape;
+                tileFixtureDef.userData.pointer = (uintptr_t)GROUND;
                 body->CreateFixture(&tileFixtureDef);
             }
         }
@@ -133,10 +133,16 @@ void Map::draw_map(SDL_Renderer* renderer)
 
             // Set up the source and destination rectangles for rendering
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
-            SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
+            //SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
+            SDL_Rect dstrect = { (j * static_cast<float>(MET2PIX)) - ((tileWidth * static_cast<float>(MET2PIX)) / 2.0f),
+                    (i * static_cast<float>(MET2PIX)) - ((tileHeight * static_cast<float>(MET2PIX)) / 2.0f), 
+                ((tileWidth * static_cast<float>(MET2PIX)) * 2.0f),
+                ((tileHeight * static_cast<float>(MET2PIX)) * 2.0f) };
+
+            SDL_RenderFillRect(renderer, &dstrect);
 
             // Render the tile to the screen
-            SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
+            //SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
         }
     }
 }
