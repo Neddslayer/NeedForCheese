@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "utilities.h"
+#include "world.h"
 #include "tinyxml2.h"
 #include "SDL2/SDL.h"
 #include "box2d/box2d.h"
