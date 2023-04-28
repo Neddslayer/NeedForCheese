@@ -30,11 +30,11 @@ Map level = Map();
 void InitLevelSelectScreen(void)
 {
     // start ground point
-    startpoint.x = -2.5f;
+    startpoint.x = -1.5f;
     startpoint.y = 1.5;
 
     // end ground point
-    endpoint.x = 2.5;
+    endpoint.x = 1.5;
     endpoint.y = 1.5;
 
     // LineGround
