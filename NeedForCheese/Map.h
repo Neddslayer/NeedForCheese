@@ -15,7 +15,8 @@ class Map
 public:
     Map(const char* filename, b2World* world);
     Map();
-    void draw_map(SDL_Renderer* renderer);
+    void draw_map(SDL_Renderer* renderer, b2World* world);
+    void GetPolygonShapeDimensions(const b2PolygonShape& shape, float& width, float& height);
 private:
     SDL_Texture* texture;
     int texture_width;

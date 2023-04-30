@@ -81,7 +81,7 @@ void DrawLevelSelectScreen(void)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderDrawLine(renderer, ((SCALED_WIDTH / 2.0f) + edgeShape.m_vertex1.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + edgeShape.m_vertex1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + edgeShape.m_vertex2.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + edgeShape.m_vertex2.y) * MET2PIX);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    level.draw_map(renderer);
+    level.draw_map(renderer, &world);
     player.Draw();
 }
 

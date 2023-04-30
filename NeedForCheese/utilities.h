@@ -22,7 +22,7 @@ extern Uint32 frameTime;
 extern Uint32 updateTime;
 extern bool development_mode;
 const int MET2PIX = 96;
-const float PIX2MET = 5.0f / MET2PIX;
+const float PIX2MET = 1.0f / MET2PIX;
 
 vector<string> split_string(const string& str, const char* delim);
 

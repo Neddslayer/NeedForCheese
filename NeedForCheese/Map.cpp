@@ -92,7 +92,7 @@ Map::Map(const char* filename, b2World* world)
                 //bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
                 //    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
                 bodyDef.position.Set((x * (tileWidth * PIX2MET)) + (tileWidth * PIX2MET) / 2.0f,
-                    (y * (tileHeight * PIX2MET)) + (tileHeight * PIX2MET) / 2.0f - 7);
+                    (y * (tileHeight * PIX2MET)) + (tileHeight * PIX2MET) / 2.0f);
                 body = world->CreateBody(&bodyDef);
 
                 // Create fixture for current tile
@@ -111,11 +111,12 @@ Map::Map(const char* filename, b2World* world)
 
 Map::Map(){}
 
-void Map::draw_map(SDL_Renderer* renderer)
+void Map::draw_map(SDL_Renderer* renderer, b2World* world)
 {
     int texture_width, texture_height;
     SDL_QueryTexture(texture, NULL, NULL, &texture_width, &texture_height);
 
+    /*
     for (int i = 0; i < mapHeight; i++)
     {
         for (int j = 0; j < mapWidth; j++)
@@ -138,7 +139,7 @@ void Map::draw_map(SDL_Renderer* renderer)
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
             //SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
             SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + j) * MET2PIX,
-                    ((SCALED_WIDTH / 2.0f) + i) * MET2PIX - (7 * MET2PIX),
+                    ((SCALED_WIDTH / 2.0f) + i) * MET2PIX,
                 (tileWidth * MET2PIX),
                 (tileHeight * MET2PIX) };
 
@@ -146,6 +147,57 @@ void Map::draw_map(SDL_Renderer* renderer)
 
             // Render the tile to the screen
             SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
+        }
+    }
+    */
+    for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
+    {
+        // Get the body position and angle
+        b2Vec2 position = body->GetPosition();
+        float angle = body->GetAngle();
+
+        // Iterate over all fixtures in the body
+        for (b2Fixture* fixture = body->GetFixtureList(); fixture; fixture = fixture->GetNext())
+        {
+            // Get the fixture shape and type
+            b2Shape* shape = fixture->GetShape();
+            b2Shape::Type type = shape->GetType();
+
+            // Set the rendering color
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+            // Draw the shape based on its type
+            if (type == b2Shape::e_edge)
+            {
+                b2EdgeShape* edgeShape = static_cast<b2EdgeShape*>(shape);
+                b2Vec2 v1 = edgeShape->m_vertex1;
+                b2Vec2 v2 = edgeShape->m_vertex2;
+                SDL_RenderDrawLine(renderer, ((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX);
+            }
+            else if (type == b2Shape::e_polygon)
+            {
+                b2PolygonShape* polygonShape = static_cast<b2PolygonShape*>(shape);
+                b2PolygonShape copy;
+                copy.Set(polygonShape->m_vertices, polygonShape->m_count);
+                int count = polygonShape->m_count;
+                float width = 0;
+                float height = 0;
+                GetPolygonShapeDimensions(copy, width, height);
+                for (int i = 0; i < count; i++)
+                {
+                    b2Vec2 v1 = body->GetWorldPoint(polygonShape->m_vertices[i]);
+                    b2Vec2 v2 = body->GetWorldPoint(polygonShape->m_vertices[(i + 1) % count]);
+                    SDL_RenderDrawLine(renderer, (((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX) - height / 2.0f - MET2PIX * 2, (((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX) - height / 2.0f - MET2PIX * 2);
+                }
+            }
+            else if (type == b2Shape::e_circle)
+            {
+                b2CircleShape* circleShape = static_cast<b2CircleShape*>(shape);
+                b2Vec2 center = body->GetWorldPoint(circleShape->m_p);
+                float radius = circleShape->m_radius * SCALED_WIDTH;
+                SDL_Rect rect = { (int)(center.x - radius), (int)(center.y - radius), (int)(2 * radius), (int)(2 * radius) };
+                SDL_RenderDrawRect(renderer, &rect);
+            }
         }
     }
 }
@@ -173,4 +225,25 @@ vector<string> split_string(const string& str, const char* delimiter)
 
     substrings.push_back(substring);
     return substrings;
+}
+void Map::GetPolygonShapeDimensions(const b2PolygonShape& shape, float& width, float& height)
+{
+    const b2Vec2* vertices = shape.m_vertices;
+    int32 count = shape.m_count;
+    float minX = vertices[0].x, maxX = vertices[0].x;
+    float minY = vertices[0].y, maxY = vertices[0].y;
+
+    // Loop through all the vertices to find the min and max x and y values
+    for (int32 i = 1; i < count; ++i)
+    {
+        b2Vec2 vertex = vertices[i];
+        if (vertex.x < minX) minX = vertex.x;
+        if (vertex.x > maxX) maxX = vertex.x;
+        if (vertex.y < minY) minY = vertex.y;
+        if (vertex.y > maxY) maxY = vertex.y;
+    }
+
+    // Calculate the width and height based on the min and max values
+    width = maxX - minX;
+    height = maxY - minY;
 }
