@@ -138,7 +138,7 @@ void Map::draw_map(SDL_Renderer* renderer)
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
             //SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
             SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + j) * MET2PIX,
-                    ((SCALED_WIDTH / 2.0f) + i) * MET2PIX,
+                    ((SCALED_WIDTH / 2.0f) + i) * MET2PIX - (7 * MET2PIX),
                 (tileWidth * MET2PIX),
                 (tileHeight * MET2PIX) };
 
