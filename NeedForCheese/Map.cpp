@@ -91,8 +91,8 @@ Map::Map(const char* filename, b2World* world)
                 // Create static body at center of current tile
                 //bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
                 //    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
-                bodyDef.position.Set((x * (tileWidth * PIX2MET)) + (tileWidth * PIX2MET) / 2.0f,
-                    (y * (tileHeight * PIX2MET)) + (tileHeight * PIX2MET) / 2.0f);
+                bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 16.0f,
+                    (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) * 4.0f);
                 body = world->CreateBody(&bodyDef);
 
                 // Create fixture for current tile
