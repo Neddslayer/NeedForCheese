@@ -4,6 +4,9 @@
 #include "tinyxml2.h"
 #include "SDL2/SDL.h"
 #include "box2d/box2d.h"
+#include <string>
+#include <iostream>
+using namespace std;
 
 Map::Map(const char* filename, b2World* world)
 {
@@ -100,10 +103,10 @@ Map::Map(const char* filename, b2World* world)
                 b2FixtureDef tileFixtureDef;
                 shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
                 tileFixtureDef.shape = &shape;
-                tileFixtureDef.userData.pointer = (uintptr_t)GROUND;
+                body->GetUserData().pointer = GROUND;
                 body->CreateFixture(&tileFixtureDef);
 
-                std::cout << bodyDef.position.x << " " << bodyDef.position.y << " " << shape.m_radius << endl;
+                std::cout << bodyDef.position.x << " " << bodyDef.position.y << endl;
             }
         }
     }

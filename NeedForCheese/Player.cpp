@@ -117,8 +117,8 @@ bool Player::IsGrounded(b2Body* playerBody)
             {
                 b2Fixture* fA = c->GetFixtureA();
                 b2Fixture* fB = c->GetFixtureB();
-                int userDataA = fA->GetUserData().pointer;
-                int userDataB = fB->GetUserData().pointer;
+                int userDataA = fA->GetBody()->GetUserData().pointer;
+                int userDataB = fB->GetBody()->GetUserData().pointer;
                 if (userDataA == GROUND || userDataB == GROUND)
                 {
                     grounded = true;

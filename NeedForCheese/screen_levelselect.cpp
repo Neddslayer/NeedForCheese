@@ -58,7 +58,7 @@ void InitLevelSelectScreen(void)
 
     player.Initialize(&world, b2Vec2(0, 0), b2Vec2_zero);
 
-    level = Map("resources/map/test.xml", &world);
+    level = Map("resources/map/timmy.xml", &world);
     
 }
 
