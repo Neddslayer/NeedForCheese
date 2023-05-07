@@ -94,8 +94,8 @@ Map::Map(const char* filename, b2World* world)
                 // Create static body at center of current tile
                 //bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
                 //    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
-                bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 10.0f,
-                    (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) / 2.0f);
+                bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+                    (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET));
                 body = world->CreateBody(&bodyDef);
 
                 // Create fixture for current tile
@@ -187,7 +187,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world)
                 {
                     b2Vec2 v1 = body->GetWorldPoint(polygonShape->m_vertices[i]);
                     b2Vec2 v2 = body->GetWorldPoint(polygonShape->m_vertices[(i + 1) % count]);
-                    SDL_RenderDrawLine(renderer, (((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX) - height / 2.0f - MET2PIX * 4, (((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX) - height / 2.0f - MET2PIX * 4);
+                    SDL_RenderDrawLine(renderer, (((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.975f, (((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.975f);
                 }
             }
             else if (type == b2Shape::e_circle)
