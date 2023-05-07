@@ -119,7 +119,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world)
     int texture_width, texture_height;
     SDL_QueryTexture(texture, NULL, NULL, &texture_width, &texture_height);
 
-    /*
+    
     for (int i = 0; i < mapHeight; i++)
     {
         for (int j = 0; j < mapWidth; j++)
@@ -141,10 +141,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world)
             // Set up the source and destination rectangles for rendering
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
             //SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
-            SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + j) * MET2PIX,
-                    ((SCALED_WIDTH / 2.0f) + i) * MET2PIX,
-                (tileWidth * MET2PIX),
-                (tileHeight * MET2PIX) };
+            SDL_Rect dstrect = { j, i, tileWidth, tileHeight };
 
             //SDL_RenderFillRect(renderer, &dstrect);
 
@@ -152,7 +149,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world)
             SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
         }
     }
-    */
+    
     for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
     {
         // Get the body position and angle
