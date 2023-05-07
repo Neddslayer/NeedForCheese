@@ -44,10 +44,11 @@ void InitLevelSelectScreen(void)
 
     b2Body* groundLineBody = world.CreateBody(&myGroundDef);
 
+    groundLineBody->GetUserData().pointer = (uintptr_t)GROUND;
+
     edgeShape.SetTwoSided(startpoint, endpoint);
 
     edgeFixtureDef.shape = &edgeShape;
-    edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
     groundLineBody->CreateFixture(&edgeFixtureDef);
 
     //big balls -owen
