@@ -94,8 +94,8 @@ Map::Map(const char* filename, b2World* world)
                 // Create static body at center of current tile
                 //bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
                 //    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
-                bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 16.0f,
-                    (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) * 4.0f);
+                bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 10.0f,
+                    (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) / 2.0f);
                 body = world->CreateBody(&bodyDef);
 
                 // Create fixture for current tile
@@ -141,7 +141,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world)
             // Set up the source and destination rectangles for rendering
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
             //SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
-            SDL_Rect dstrect = { j, i, tileWidth, tileHeight };
+            SDL_Rect dstrect = { j * tileWidth, i * tileHeight, tileWidth, tileHeight };
 
             //SDL_RenderFillRect(renderer, &dstrect);
 
