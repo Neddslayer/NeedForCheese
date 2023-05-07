@@ -97,13 +97,13 @@ Map::Map(const char* filename, b2World* world)
                 bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
                     (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
                 body = world->CreateBody(&bodyDef);
+                body->GetUserData().pointer = (uintptr_t)GROUND;
 
                 // Create fixture for current tile
                 b2PolygonShape shape;
                 b2FixtureDef tileFixtureDef;
                 shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
                 tileFixtureDef.shape = &shape;
-                body->GetUserData().pointer = GROUND;
                 body->CreateFixture(&tileFixtureDef);
 
                 std::cout << bodyDef.position.x << " " << bodyDef.position.y << endl;

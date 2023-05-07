@@ -62,7 +62,6 @@ void Player::Update()
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 40.0f;
     if (-0.2 < velo.x < 0.2 && -0.2 < velo.y < 0.2) state = 0;
-    std::cout << pos.x << " " << pos.y << endl;
 }
 
 void Player::Draw()
@@ -113,7 +112,8 @@ bool Player::IsGrounded(b2Body* playerBody)
         if (c->IsTouching())
         {
             b2Vec2 contactNormal = c->GetManifold()->localNormal;
-            if (contactNormal.y < -0.5f)
+            std::cout << contactNormal.y << endl;
+            if (contactNormal.y < 0.5f)
             {
                 b2Fixture* fA = c->GetFixtureA();
                 b2Fixture* fB = c->GetFixtureB();
