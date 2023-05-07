@@ -113,7 +113,7 @@ bool Player::IsGrounded(b2Body* playerBody)
         {
             b2Vec2 contactNormal = c->GetManifold()->localNormal;
             std::cout << contactNormal.y << endl;
-            if (contactNormal.y < 0.5f)
+            if (contactNormal.y == 1)
             {
                 b2Fixture* fA = c->GetFixtureA();
                 b2Fixture* fB = c->GetFixtureB();
