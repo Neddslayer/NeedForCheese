@@ -29,28 +29,6 @@ Map level = Map();
 
 void InitLevelSelectScreen(void)
 {
-    // start ground point
-    startpoint.x = -1.5f;
-    startpoint.y = 1.5;
-
-    // end ground point
-    endpoint.x = 1.5;
-    endpoint.y = 1.5;
-
-    // LineGround
-    myGroundDef.type = b2_staticBody;
-    myGroundDef.position.Set(ground_x, ground_y); // set the starting position x and y cartesian
-    myGroundDef.angle = 0;
-
-    b2Body* groundLineBody = world.CreateBody(&myGroundDef);
-
-    groundLineBody->GetUserData().pointer = (uintptr_t)GROUND;
-
-    edgeShape.SetTwoSided(startpoint, endpoint);
-
-    edgeFixtureDef.shape = &edgeShape;
-    groundLineBody->CreateFixture(&edgeFixtureDef);
-
     //big balls -owen
     
     SDL_Surface* bgSurface = IMG_Load("resources/img/title_select_bg.png");
