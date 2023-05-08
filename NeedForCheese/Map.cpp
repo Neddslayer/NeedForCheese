@@ -102,7 +102,7 @@ Map::Map(const char* filename, b2World* world)
                 // Create fixture for current tile
                 b2PolygonShape shape;
                 b2FixtureDef tileFixtureDef;
-                shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
+                shape.SetAsBox(((tileWidth * PIX2MET) + 0.05f ) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
                 tileFixtureDef.shape = &shape;
                 body->CreateFixture(&tileFixtureDef);
 
@@ -149,7 +149,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world)
         }
     }
     
-    for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
+    /*for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
     {
         // Get the body position and angle
         b2Vec2 position = body->GetPosition();
@@ -198,7 +198,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world)
                 SDL_RenderDrawRect(renderer, &rect);
             }
         }
-    }
+    }*/
 }
 
 vector<string> split_string(const string& str, const char* delimiter)
