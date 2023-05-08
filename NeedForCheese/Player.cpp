@@ -63,14 +63,15 @@ void Player::Update()
     {
         state = 2;
     }
+    if (velo.y < 0 && !isGrounded) state = 4;
     if (velo.x > 0.5f && state != 2) velo.x = 0.5f;
     if (velo.x < -0.5f && state != 2) velo.x = -0.5f;
     if (velo.x > 1 && state == 2) velo.x = 1;
     if (velo.x < -1 && state == 2) velo.x = -1;
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 20.0f;
-    if (-0.2 < velo.x < 0.2 && -0.2 < velo.y < 0.2) state = 0;
-    cout << velo.x << " " << velo.y << endl;
+    if (abs(velo.x) < 0.01 && abs(velo.y) < 0.01 && isGrounded) state = 0;
+    cout << velo.x << " " << velo.y << " " << state << endl;
 
 }
 
