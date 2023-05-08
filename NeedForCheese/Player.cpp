@@ -63,13 +63,14 @@ void Player::Update()
     {
         state = 2;
     }
-    if (velo.x > 20 && state != 2) velo.x = 20;
-    if (velo.x < -20 && state != 2) velo.x = -20;
-    if (velo.x > 40 && state == 2) velo.x = 40;
-    if (velo.x < -40 && state == 2) velo.x = -40;
+    if (velo.x > 3 && state != 2) velo.x = 3;
+    if (velo.x < -3 && state != 2) velo.x = -3;
+    if (velo.x > 9 && state == 2) velo.x = 9;
+    if (velo.x < -9 && state == 2) velo.x = -9;
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 20.0f;
     if (-0.2 < velo.x < 0.2 && -0.2 < velo.y < 0.2) state = 0;
+    cout << velo.x << " " << velo.y << endl;
 
 }
 
@@ -121,7 +122,6 @@ bool Player::IsGrounded(b2Body* playerBody)
         if (c->IsTouching())
         {
             b2Vec2 contactNormal = c->GetManifold()->localNormal;
-            std::cout << contactNormal.y << endl;
             if (contactNormal.y == 1)
             {
                 b2Fixture* fA = c->GetFixtureA();
