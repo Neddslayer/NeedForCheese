@@ -55,14 +55,18 @@ void Player::Update()
         Player_Body->ApplyForceToCenter(b2Vec2(0.0, -35.0), true);
         state = 3;
     }
-    if (keyboard[SDL_SCANCODE_LSHIFT] && -0.5f > velo.x > 0.5f)
-    {
-        state = 2;
-    }
     pos = Player_Body->GetPosition(); // Body = Body from box
     velo = Player_Body->GetLinearVelocity();
     angle = Player_Body->GetAngle();
     isGrounded = IsGrounded(Player_Body); // check if grounded (horray)
+    if (keyboard[SDL_SCANCODE_LSHIFT] && -0.5f > velo.x > 0.5f)
+    {
+        state = 2;
+    }
+    if (velo.x > 20 && state != 2) velo.x = 20;
+    if (velo.x < -20 && state != 2) velo.x = -20;
+    if (velo.x > 40 && state == 2) velo.x = 40;
+    if (velo.x < -40 && state == 2) velo.x = -40;
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 20.0f;
     if (-0.2 < velo.x < 0.2 && -0.2 < velo.y < 0.2) state = 0;
