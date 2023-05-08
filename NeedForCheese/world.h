@@ -1,7 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-typedef enum PROPERTY_NAMES
+enum PROPERTY_NAMES
 {
 	PLAYER = 1,
 	GROUND = 2
