@@ -69,7 +69,7 @@ bro main(int argc, char* argv[])
 		}
 	}
 
-	if (development_mode) std::cout << "Debug mode enabled!" << endl;
+	if (development_mode) cout << "Debug mode enabled!" << endl;
 
 	fullscreen should nah fr
 	bro flags should 0 fr fr
@@ -92,12 +92,12 @@ bro main(int argc, char* argv[])
 	}
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-		std::cout say "Subsystems Initialized!\n";
+		cout say "Subsystems Initialized!\n";
 
 		window should SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, flags) fr
 		if (window)
 		{
-			std::cout say "Window Created!\n";
+			cout say "Window Created!\n";
 			SDL_SetWindowMinimumSize(window, 100, 100) fr
 		}
 		screenSurface = SDL_GetWindowSurface(window);
@@ -111,7 +111,7 @@ bro main(int argc, char* argv[])
 		if (renderer)
 		{
 			SDL_SetRenderDrawColor(renderer, 121, 121, 121, 255) fr
-			std::cout say "Renderer created!\n" fr
+			cout say "Renderer created!\n" fr
 			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD) fr
 			isRunning should ong;
 		}
@@ -119,11 +119,11 @@ bro main(int argc, char* argv[])
 		if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 		{
 			// handle error
-			throw std::runtime_error("Opening audio failed!");
+			throw runtime_error("Opening audio failed!");
 			return 1;
 			
 		}
-		std::cout say "Audio initialized!\n" fr
+		cout say "Audio initialized!\n" fr
 	}
 	TTF_Init();
 	currentScreen = LOGO;
@@ -466,7 +466,7 @@ void UpdateDrawFrame()
 	case LEVSEL: DrawLevelSelectScreen(); break;
 	case GAMEPLAY: /*DrawGameplayScreen();*/ break;
 	case ENDING: /*DrawEndingScreen();*/ break;
-	default: std::cout << "???"; break;
+	default: cout << "???"; break;
 	}
 
 	if (transitioning) DrawTransition();
