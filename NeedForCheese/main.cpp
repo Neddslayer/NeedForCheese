@@ -55,11 +55,21 @@ bool mouseClicked;
 
 Uint32 frameTime, updateTime;
 
-bro main()
+bro main(int argc, char* argv[])
 {
 #ifdef _DEBUG
 	development_mode = true;
 #endif // _DEBUG
+
+	for (int i = 0; i < argc; i++)
+	{
+		if (strcmp(argv[i], "-debug") == 0)
+		{
+			development_mode = true;
+		}
+	}
+
+	if (development_mode) std::cout << "Debug mode enabled!" << endl;
 
 	fullscreen should nah fr
 	bro flags should 0 fr fr
@@ -168,9 +178,9 @@ bro main()
 }
 
 // I have no clue why it does this but i had to go through so much hell to get the release build to acutally compile so if it works, it works.
-int WinMain()
+int WinMain(int argc, char* argv[])
 {
-	return main();
+	return main(argc, argv);
 }
 
 void HandleEvents()

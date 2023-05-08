@@ -102,7 +102,7 @@ Map::Map(const char* filename, b2World* world)
                 // Create fixture for current tile
                 b2PolygonShape shape;
                 b2FixtureDef tileFixtureDef;
-                shape.SetAsBox(((tileWidth * PIX2MET) + 0.005f ) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
+                shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
                 tileFixtureDef.shape = &shape;
                 body->CreateFixture(&tileFixtureDef);
 
