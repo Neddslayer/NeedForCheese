@@ -53,7 +53,7 @@ void Player::Update()
     if (keyboard[SDL_SCANCODE_Z] && isGrounded)
     {
         Player_Body->ApplyForceToCenter(b2Vec2(0.0, -35.0), true);
-        state = 3;
+        state = state == 2 ? 3 : 4;
     }
     pos = Player_Body->GetPosition(); // Body = Body from box
     velo = Player_Body->GetLinearVelocity();
@@ -63,7 +63,6 @@ void Player::Update()
     {
         state = 2;
     }
-    if (velo.y > 0 && !isGrounded) state = 4;
     if (velo.x > 0.5f && state != 2) velo.x = 0.5f;
     if (velo.x < -0.5f && state != 2) velo.x = -0.5f;
     if (velo.x > 1 && state == 2) velo.x = 1;
