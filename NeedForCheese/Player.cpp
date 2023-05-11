@@ -92,7 +92,7 @@ void Player::Draw()
         // animate jumping
         break;
     case 4:
-        //animate falling
+        //animate run-jumping
         break;
     case 5:
         // animate attack
