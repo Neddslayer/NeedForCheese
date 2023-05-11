@@ -6,7 +6,6 @@ SDL_Texture* texture_box = { 0 };
 void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
 {
     boxBodyDef.type = b2_dynamicBody;
-    //boxBodyDef.angle = 45; // flips the whole thing -> 180 grad drehung
     boxBodyDef.angle = 0;
     boxBodyDef.fixedRotation = true;
     boxBodyDef.position.Set(position.x, position.y);
@@ -15,7 +14,7 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     Player_Body->SetFixedRotation(true);
     Player_Body->SetLinearVelocity(velocity);
 
-    dynamicBox.SetAsBox(w_box / 2.0f, h_box / 2.0f); // will be 0.5 x 0.5
+    dynamicBox.SetAsBox(w_box / 2.0f, h_box / 2.0f);
 
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1;
