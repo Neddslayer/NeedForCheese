@@ -63,7 +63,7 @@ void Player::Update()
     {
         state = 2;
     }
-    if (velo.y < 0 && !isGrounded) state = 4;
+    if (velo.y > 0 && !isGrounded) state = 4;
     if (velo.x > 0.5f && state != 2) velo.x = 0.5f;
     if (velo.x < -0.5f && state != 2) velo.x = -0.5f;
     if (velo.x > 1 && state == 2) velo.x = 1;
