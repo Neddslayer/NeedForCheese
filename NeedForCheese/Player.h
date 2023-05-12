@@ -31,12 +31,14 @@ public:
 	void Update();
     // Draw the player.
 	void Draw();
-    // Unload the player. Shouldn't be used often!
+    // Unload the player. Shouldn't be used often, only when switching levels!
     void Unload();
 private:
 
+    // If player is on a tile marked PROPERTY_NAMES.GROUND
     bool isGrounded;
 
+    // Check if the player is on a tile marked PROPERTY_NAMES.GROUND. Loops through all bodies in a scene, so shouldn't be used often!
     bool IsGrounded(b2Body* playerBody);
 };
 
