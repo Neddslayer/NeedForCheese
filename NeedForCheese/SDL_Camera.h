@@ -33,7 +33,7 @@ struct Camera2D
     Vector2 target;         // Camera target (rotation and zoom origin)
     float rotation;         // Camera rotation in degrees
     float zoom;             // Camera zoom (scaling), should be 1.0f by default
-    Camera2D(Vector2 offset = Vector2(), Vector2 target = Vector2(), float rotation = 0.0f, float zoom = 0.0f) : offset(offset), target(target), rotation(rotation), zoom(zoom) {};
+    Camera2D(Vector2 offset = Vector2(), Vector2 target = Vector2(), float rotation = 0.0f, float zoom = 1.0f) : offset(offset), target(target), rotation(rotation), zoom(zoom) {};
 
 };
 
