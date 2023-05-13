@@ -11,26 +11,33 @@
 * 
 */
 
+// Thanks to raylib for some of this
+
 #ifndef SDL_CAMERA_H
-typedef struct Vector2
+struct Vector2
 {
     float x;                // Vector x component
     float y;                // Vector y component
-} Vector2;
 
-typedef struct Camera2D
+    Vector2(float x = 0.0f, float y = 0.0f) : x(x), y(y) {}
+
+    Vector2 operator+(const Vector2& other) const
+    {
+        return Vector2(x + other.x, y + other.y);
+    }
+};
+
+struct Camera2D
 {
     Vector2 offset;         // Camera offset (displacement from target)
     Vector2 target;         // Camera target (rotation and zoom origin)
     float rotation;         // Camera rotation in degrees
     float zoom;             // Camera zoom (scaling), should be 1.0f by default
-} Camera2D;
+    Camera2D(Vector2 offset = Vector2(), Vector2 target = Vector2(), float rotation = 0.0f, float zoom = 0.0f) : offset(offset), target(target), rotation(rotation), zoom(zoom) {};
 
-int SDLC_RenderCopy(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect);
-int SDLC_RenderCopyF(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_FRect* srcrect, SDL_FRect* dstrect);
-int SDLC_RenderCopyEx(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect, double angle, const SDL_Point* center, SDL_RendererFlip flip);
-int SDLC_RenderCopyExF(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_FRect* srcrect, SDL_FRect* dstrect, double angle, const SDL_Point* center, SDL_RendererFlip flip);
-int SDLC_RenderLine(Camera2D camera, SDL_Renderer* renderer, int x1, int y1, int x2, int y2);
-int SDLC_RenderFillRect(Camera2D camera, SDL_Renderer* renderer, SDL_Rect* rect);
+};
+
+void BeginMode2D(Camera2D camera);
+void EndMode2D(void);
 
 #endif // !SDL_CAMERA_H

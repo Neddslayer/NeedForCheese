@@ -2,12 +2,33 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL_FontCache.h"
+#include "utilities.h"
+#include "world.h"
 
-int SDLC_RenderCopy(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect)
+SDL_Texture* old_target;
+SDL_Rect old_viewport;
+
+void BeginMode2D(Camera2D camera)
 {
-	if (dstrect == NULL) return SDL_RenderCopy(renderer, texture, srcrect, dstrect);
-	SDL_Rect srcrect_copy = { srcrect->x, srcrect->y, srcrect->w, srcrect->h };
-	SDL_Rect dstrect_copy = { dstrect->x, dstrect->y, dstrect->w, dstrect->h };
-	dstrect_copy.x += camera.target.x;
-	dstrect_copy.y += camera.target.y;
+    // Save the current rendering target and viewport
+    old_target = SDL_GetRenderTarget(renderer);
+    SDL_RenderGetViewport(renderer, &old_viewport);
+
+    // Set up the camera transformation matrix
+    SDL_Rect viewport = { (int)camera.offset.x, (int)camera.offset.y, WIDTH, HEIGHT };
+    SDL_RenderSetViewport(renderer, &viewport);
+    SDL_RenderSetScale(renderer, camera.zoom, camera.zoom);
+
+    // Compute the center point of the screen
+    int centerX = viewport.w / 2;
+    int centerY = viewport.h / 2;
+}
+void EndMode2D()
+{
+    // Restore the old rendering target and viewport
+    SDL_SetRenderTarget(renderer, old_target);
+    SDL_RenderSetViewport(renderer, &old_viewport);
+
+    // Reset the rendering transformations
+    SDL_RenderSetScale(renderer, 1.0f, 1.0f);
 }

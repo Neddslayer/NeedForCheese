@@ -10,6 +10,8 @@ enum PROPERTY_NAMES
 
 const int WIDTH = 1280; // The width of the window, in pixels.
 const int HEIGHT = 720; // The height of the window, in pixels.
+static int WIDTH = 1280; // The width of the window, in pixels.
+static int HEIGHT = 720; // The height of the window, in pixels.
 
 const int SCALED_WIDTH = WIDTH / MET2PIX; // The width of the window, in meters.
 const int SCALED_HEIGHT = HEIGHT / MET2PIX; // The height of the window, in meters.

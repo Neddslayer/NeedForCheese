@@ -19,10 +19,10 @@
 #define say <<
 
 
-SDL_Renderer* renderer;
-SDL_Window* window;
-SDL_Surface* screenSurface;
-const Uint8* keyboard;
+SDL_Renderer* renderer; // The main SDL renderer.
+SDL_Window* window; // The game window.
+SDL_Surface* screenSurface; // The game window as a surface.
+const Uint8* keyboard; // All keyboard input.
 Uint64 prev_time = SDL_GetPerformanceCounter();
 bool isRunning;
 bool fullscreen;
