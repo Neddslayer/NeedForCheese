@@ -18,10 +18,6 @@ void BeginMode2D(Camera2D camera)
     SDL_Rect viewport = { (int)camera.offset.x, (int)camera.offset.y, WIDTH, HEIGHT };
     SDL_RenderSetViewport(renderer, &viewport);
     SDL_RenderSetScale(renderer, camera.zoom, camera.zoom);
-
-    // Compute the center point of the screen
-    int centerX = viewport.w / 2;
-    int centerY = viewport.h / 2;
 }
 void EndMode2D()
 {
