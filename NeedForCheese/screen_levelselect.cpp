@@ -37,7 +37,7 @@ void InitLevelSelectScreen(void)
     background_sprite = SDL_CreateTextureFromSurface(renderer, bgSurface);
     SDL_FreeSurface(bgSurface);
 
-    player.Initialize(&world, b2Vec2(0, 0), b2Vec2_zero);
+    player.Initialize(&world, b2Vec2_zero, b2Vec2_zero);
 
     level = Map("resources/map/timmy.xml", &world);
     
