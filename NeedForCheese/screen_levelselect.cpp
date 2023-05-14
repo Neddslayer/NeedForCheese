@@ -39,7 +39,7 @@ void InitLevelSelectScreen(void)
 
     player.Initialize(&world, b2Vec2_zero, b2Vec2_zero);
 
-    level = Map("resources/map/timmy.xml", &world);
+    level = Map("resources/map/test.xml", &world);
     
 }
 
@@ -73,7 +73,7 @@ void UpdateLevelSelectScreen(void)
 
 void DrawLevelSelectScreen(void)
 {
-    //SDL_RenderCopy(renderer, background_sprite, NULL, NULL);
+    SDL_RenderCopy(renderer, background_sprite, NULL, NULL);
 
     level.draw_map(renderer, &world, camera);
     player.Draw(camera);
