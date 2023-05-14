@@ -46,7 +46,7 @@ int SDL_RenderCopyEx_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture
 
 int SDL_RenderDrawLine_Camera(Camera2D camera, SDL_Renderer* renderer, int x1, int x2, int y1, int y2)
 {
-    return SDL_RenderDrawLine(renderer, x1 - camera.target.x - camera.offset.x, x1 - camera.target.x - camera.offset.x, y1 - camera.target.y - camera.offset.y, y2 - camera.target.y - camera.offset.y);
+    return SDL_RenderDrawLine(renderer, x1 - camera.target.x - camera.offset.x, x2 - camera.target.x - camera.offset.x, y1 - camera.target.y - camera.offset.y, y2 - camera.target.y - camera.offset.y);
 }
 
 int SDL_RenderFillRect_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Rect* rect)

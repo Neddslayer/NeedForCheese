@@ -55,19 +55,19 @@ void UpdateLevelSelectScreen(void)
     }
     if (keyboard[SDL_SCANCODE_D])
     {
-        camera.target += Vector2(3);
+        camera.target += Vector2(5);
     }
     if (keyboard[SDL_SCANCODE_A])
     {
-        camera.target -= Vector2(3);
+        camera.target -= Vector2(5);
     }
     if (keyboard[SDL_SCANCODE_S])
     {
-        camera.target -= Vector2(0, 3);
+        camera.target -= Vector2(0, 5);
     }
     if (keyboard[SDL_SCANCODE_W])
     {
-        camera.target += Vector2(0, 3);
+        camera.target += Vector2(0, 5);
     }
 }
 
