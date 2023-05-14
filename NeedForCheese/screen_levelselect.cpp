@@ -27,7 +27,7 @@ b2FixtureDef edgeFixtureDef;
 
 Player player = Player();
 Map level = Map();
-Camera2D camera = Camera2D(Vector2(-1, 0), Vector2(), 0.0f, 1.0f);
+Camera2D camera = Camera2D(Vector2(-1, 0), Vector2(), 0.0f, Vector2(1.0f,1.0f));
 
 void InitLevelSelectScreen(void)
 {
@@ -55,11 +55,19 @@ void UpdateLevelSelectScreen(void)
     }
     if (keyboard[SDL_SCANCODE_D])
     {
-        camera.target += Vector2(1);
+        camera.target += Vector2(3);
     }
     if (keyboard[SDL_SCANCODE_A])
     {
-        camera.target -= Vector2(1);
+        camera.target -= Vector2(3);
+    }
+    if (keyboard[SDL_SCANCODE_S])
+    {
+        camera.target -= Vector2(0, 3);
+    }
+    if (keyboard[SDL_SCANCODE_W])
+    {
+        camera.target += Vector2(0, 3);
     }
 }
 
@@ -68,7 +76,7 @@ void DrawLevelSelectScreen(void)
     //SDL_RenderCopy(renderer, background_sprite, NULL, NULL);
 
     level.draw_map(renderer, &world, camera);
-    player.Draw();
+    player.Draw(camera);
 }
 
 void UnloadLevelSelectScreen(void)

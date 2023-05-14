@@ -73,7 +73,7 @@ void Player::Update()
 
 }
 
-void Player::Draw()
+void Player::Draw(Camera2D camera)
 {
     switch (state)
     {
@@ -103,7 +103,7 @@ void Player::Draw()
         break;
     }
 
-    SDL_RenderCopyEx(renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, NULL, &box, angle, NULL, SDL_FLIP_NONE);
 }
 
 void Player::Unload()

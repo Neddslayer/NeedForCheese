@@ -4,6 +4,7 @@
 #include "box2d/box2d.h"
 #include "utilities.h"
 #include "world.h"
+#include "SDL_Camera.h"
 class Player
 {
 public:
@@ -30,7 +31,7 @@ public:
 	// Update the player. This includes applying velocity based on input, and detecting stuff like crouching.
 	void Update();
     // Draw the player.
-	void Draw();
+	void Draw(Camera2D camera);
     // Unload the player. Shouldn't be used often, only when switching levels!
     void Unload();
 private:
