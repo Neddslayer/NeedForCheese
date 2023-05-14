@@ -21,10 +21,10 @@ struct Vector2
 
     Vector2(float x = 0.0f, float y = 0.0f) : x(x), y(y) {}
 
-    Vector2 operator+(const Vector2& other) const
-    {
-        return Vector2(x + other.x, y + other.y);
-    }
+    Vector2 operator+(const Vector2& other) const;
+    Vector2 operator-(const Vector2& other) const;
+    Vector2& operator+=(const Vector2& other);
+    Vector2& operator-=(const Vector2& other);
 };
 
 struct Camera2D

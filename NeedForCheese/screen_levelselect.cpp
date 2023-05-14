@@ -47,13 +47,13 @@ void UpdateLevelSelectScreen(void)
 {
     player.Update();
     world.Step(1.0f / 60.0f, 6.0f, 2.0f); // update
-    //cout << "Position: { " << pos.x << ",  " << pos.y << " }" << endl << "Velocity: { " << velo.x << ", " << velo.y << " }" << endl;
+    
     if (keyboard[SDL_SCANCODE_R])
     {
         player.Player_Body->SetTransform(b2Vec2_zero, 0);
         player.Player_Body->SetLinearVelocity(b2Vec2_zero);
     }
-    camera.target = camera.target + Vector2(0.1f);
+    camera.target = camera.target - Vector2(0.1f);
 }
 
 void DrawLevelSelectScreen(void)

@@ -28,3 +28,23 @@ void EndMode2D()
     // Reset the rendering transformations
     SDL_RenderSetScale(renderer, 1.0f, 1.0f);
 }
+Vector2 Vector2::operator+(const Vector2& other) const
+{
+    return Vector2(x + other.x, y + other.y);
+}
+Vector2 Vector2::operator-(const Vector2& other) const
+{
+    return Vector2(x - other.x, y - other.y);
+}
+Vector2& Vector2::operator+=(const Vector2& other)
+{
+    x += other.x;
+    y += other.y;
+    return *this;
+}
+Vector2& Vector2::operator-=(const Vector2& other)
+{
+    x -= other.x;
+    y -= other.y;
+    return *this;
+}
