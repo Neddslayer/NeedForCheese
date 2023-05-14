@@ -15,7 +15,7 @@ void BeginMode2D(Camera2D camera)
     SDL_RenderGetViewport(renderer, &old_viewport);
 
     // Set up the camera transformation matrix
-    SDL_Rect viewport = { (int)camera.offset.x, (int)camera.offset.y, WIDTH, HEIGHT };
+    SDL_Rect viewport = { (int)camera.target.x + (int)camera.offset.x, (int)camera.target.y + (int)camera.offset.y, WIDTH, HEIGHT };
     SDL_RenderSetViewport(renderer, &viewport);
     SDL_RenderSetScale(renderer, camera.zoom, camera.zoom);
 }

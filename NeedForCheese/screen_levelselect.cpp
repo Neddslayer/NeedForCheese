@@ -27,7 +27,7 @@ b2FixtureDef edgeFixtureDef;
 
 Player player = Player();
 Map level = Map();
-Camera2D camera = Camera2D();
+Camera2D camera = Camera2D(Vector2(), Vector2(), 0.0f, 1.5f);
 
 void InitLevelSelectScreen(void)
 {
@@ -53,6 +53,7 @@ void UpdateLevelSelectScreen(void)
         player.Player_Body->SetTransform(b2Vec2_zero, 0);
         player.Player_Body->SetLinearVelocity(b2Vec2_zero);
     }
+    camera.target = camera.target + Vector2(0.1f);
 }
 
 void DrawLevelSelectScreen(void)
