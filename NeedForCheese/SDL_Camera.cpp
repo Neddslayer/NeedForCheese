@@ -10,19 +10,20 @@ SDL_Rect old_viewport;
 
 void BeginMode2D(Camera2D camera)
 {
-    // Save the current rendering target and viewport
-    old_target = SDL_GetRenderTarget(renderer);
     SDL_RenderGetViewport(renderer, &old_viewport);
 
     // Set up the camera transformation matrix
-    SDL_Rect viewport = { (int)camera.target.x + (int)camera.offset.x, (int)camera.target.y + (int)camera.offset.y, WIDTH, HEIGHT };
+    SDL_Rect viewport = {
+        SDL_max((int)camera.target.x + (int)camera.offset.x, 0),
+        SDL_max((int)camera.target.y + (int)camera.offset.y, 0),
+        (int)(WIDTH),
+        (int)(HEIGHT)
+    };
     SDL_RenderSetViewport(renderer, &viewport);
-    SDL_RenderSetScale(renderer, camera.zoom, camera.zoom);
 }
+
 void EndMode2D()
 {
-    // Restore the old rendering target and viewport
-    SDL_SetRenderTarget(renderer, old_target);
     SDL_RenderSetViewport(renderer, &old_viewport);
 
     // Reset the rendering transformations
