@@ -14,14 +14,14 @@ void BeginMode2D(Camera2D camera)
 
     // Set up the camera transformation matrix
     SDL_Rect viewport = {
-        SDL_max((int)camera.target.x + (int)camera.offset.x, 0),
-        SDL_max((int)camera.target.y + (int)camera.offset.y, 0),
+        (int)camera.target.x + (int)camera.offset.x,
+        (int)camera.target.y + (int)camera.offset.y,
         (int)(WIDTH),
         (int)(HEIGHT)
     };
-    SDL_RenderSetViewport(renderer, &viewport);
+    int thing = SDL_RenderSetViewport(renderer, &viewport);
+    std::cout << thing << endl;
 }
-
 void EndMode2D()
 {
     SDL_RenderSetViewport(renderer, &old_viewport);
@@ -29,6 +29,26 @@ void EndMode2D()
     // Reset the rendering transformations
     SDL_RenderSetScale(renderer, 1.0f, 1.0f);
 }
+
+int SDL_RenderCopy_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect)
+{
+    if (dstrect == NULL) return SDL_RenderCopy(renderer, texture, srcrect, dstrect);
+    SDL_Rect moddstrect = { dstrect->x + camera.target.x + camera.offset.x, dstrect->y + camera.target.y + camera.offset.y, dstrect->w * camera.zoom.x, dstrect->h * camera.zoom.y };
+    return SDL_RenderCopy(renderer, texture, srcrect, &moddstrect);
+}
+int SDL_RenderCopyEx_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect, double angle, const SDL_Point* center, SDL_RendererFlip flip)
+{
+
+}
+int SDL_RenderLine_Camera(Camera2D camera, SDL_Renderer* renderer, int x1, int x2, int y1, int y2)
+{
+
+}
+int SDL_RenderFillRect_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Rect* rect)
+{
+
+}
+
 Vector2 Vector2::operator+(const Vector2& other) const
 {
     return Vector2(x + other.x, y + other.y);

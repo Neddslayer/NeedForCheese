@@ -69,7 +69,7 @@ void Player::Update()
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 20.0f;
     if (abs(velo.x) < 0.01 && abs(velo.y) < 0.01 && isGrounded) state = 0;
-    cout << velo.x << " " << velo.y << " " << state << endl;
+    //cout << velo.x << " " << velo.y << " " << state << endl;
 
 }
 
