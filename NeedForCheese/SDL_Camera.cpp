@@ -33,13 +33,13 @@ void EndMode2D()
 int SDL_RenderCopy_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect)
 {
     if (dstrect == NULL) return SDL_RenderCopy(renderer, texture, srcrect, dstrect);
-    SDL_Rect moddstrect = { dstrect->x + camera.target.x + camera.offset.x, dstrect->y + camera.target.y + camera.offset.y, dstrect->w * camera.zoom.x, dstrect->h * camera.zoom.y };
+    SDL_Rect moddstrect = { dstrect->x - camera.target.x - camera.offset.x, dstrect->y + camera.target.y + camera.offset.y, dstrect->w * camera.zoom.x, dstrect->h * camera.zoom.y };
     return SDL_RenderCopy(renderer, texture, srcrect, &moddstrect);
 }
 int SDL_RenderCopyEx_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect, double angle, const SDL_Point* center, SDL_RendererFlip flip)
 {
     if (dstrect == NULL) return SDL_RenderCopyEx(renderer, texture, srcrect, dstrect, angle, center, flip);
-    SDL_Rect moddstrect = { dstrect->x + camera.target.x + camera.offset.x, dstrect->y + camera.target.y + camera.offset.y, dstrect->w * camera.zoom.x, dstrect->h * camera.zoom.y };
+    SDL_Rect moddstrect = { dstrect->x - camera.target.x - camera.offset.x, dstrect->y + camera.target.y + camera.offset.y, dstrect->w * camera.zoom.x, dstrect->h * camera.zoom.y };
     return SDL_RenderCopyEx(renderer, texture, srcrect, &moddstrect, angle, center, flip);
 }
 int SDL_RenderLine_Camera(Camera2D camera, SDL_Renderer* renderer, int x1, int x2, int y1, int y2)
