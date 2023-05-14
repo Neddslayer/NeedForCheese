@@ -42,13 +42,14 @@ int SDL_RenderCopyEx_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture
     SDL_Rect moddstrect = { dstrect->x - camera.target.x - camera.offset.x, dstrect->y + camera.target.y + camera.offset.y, dstrect->w * camera.zoom.x, dstrect->h * camera.zoom.y };
     return SDL_RenderCopyEx(renderer, texture, srcrect, &moddstrect, angle, center, flip);
 }
-int SDL_RenderLine_Camera(Camera2D camera, SDL_Renderer* renderer, int x1, int x2, int y1, int y2)
+int SDL_RenderDrawLine_Camera(Camera2D camera, SDL_Renderer* renderer, int x1, int x2, int y1, int y2)
 {
-    return 0;
+    return SDL_RenderDrawLine(renderer, x1 - camera.target.x - camera.offset.x, x1 - camera.target.x - camera.offset.x, y1 - camera.target.y - camera.offset.y, y2 - camera.target.y - camera.offset.y);
 }
 int SDL_RenderFillRect_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Rect* rect)
 {
-    return 0;
+    SDL_Rect modrect = { rect->x - camera.target.x - camera.offset.x, rect->y + camera.target.y + camera.offset.y, rect->w * camera.zoom.x, rect->h * camera.zoom.y };
+    return SDL_RenderFillRect(renderer, &modrect);
 }
 
 Vector2 Vector2::operator+(const Vector2& other) const
