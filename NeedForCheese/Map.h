@@ -8,6 +8,7 @@
 #include "tinyxml2.h"
 #include "SDL2/SDL_image.h"
 #include "box2d/box2d.h"
+#include "SDL_Camera.h"
 using namespace std;
 using namespace tinyxml2;
 class Map
@@ -18,7 +19,7 @@ public:
     // Initialize a blank map. This will fail when calling anything else, so use an actual map!
     Map();
     // Draw the map from the tiles specified in the files. Will fail if the empty Map() constructor is called rather than the initialized form.
-    void draw_map(SDL_Renderer* renderer, b2World* world);
+    void draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera);
     // Used while debugging the game. This does NOT need to be used in release builds!
     void GetPolygonShapeDimensions(const b2PolygonShape& shape, float& width, float& height);
 private:

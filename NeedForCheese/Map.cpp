@@ -6,6 +6,7 @@
 #include "box2d/box2d.h"
 #include <string>
 #include <iostream>
+#include "SDL_Camera.h"
 using namespace std;
 
 Map::Map(const char* filename, b2World* world)
@@ -114,7 +115,7 @@ Map::Map(const char* filename, b2World* world)
 
 Map::Map(){}
 
-void Map::draw_map(SDL_Renderer* renderer, b2World* world)
+void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
 {
     int texture_width, texture_height;
     SDL_QueryTexture(texture, NULL, NULL, &texture_width, &texture_height);
@@ -145,7 +146,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world)
             //SDL_RenderFillRect(renderer, &dstrect);
 
             // Render the tile to the screen
-            SDL_RenderCopy(renderer, texture, &srcrect, &dstrect);
+            SDL_RenderCopy_Camera(camera, renderer, texture, &srcrect, &dstrect);
         }
     }
     

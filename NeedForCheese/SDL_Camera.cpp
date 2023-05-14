@@ -38,15 +38,15 @@ int SDL_RenderCopy_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* 
 }
 int SDL_RenderCopyEx_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect, double angle, const SDL_Point* center, SDL_RendererFlip flip)
 {
-
+    return 0;
 }
 int SDL_RenderLine_Camera(Camera2D camera, SDL_Renderer* renderer, int x1, int x2, int y1, int y2)
 {
-
+    return 0;
 }
 int SDL_RenderFillRect_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Rect* rect)
 {
-
+    return 0;
 }
 
 Vector2 Vector2::operator+(const Vector2& other) const

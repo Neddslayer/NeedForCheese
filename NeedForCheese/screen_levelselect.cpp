@@ -67,12 +67,8 @@ void DrawLevelSelectScreen(void)
 {
     //SDL_RenderCopy(renderer, background_sprite, NULL, NULL);
 
-    BeginMode2D(camera);
-
-    level.draw_map(renderer, &world);
+    level.draw_map(renderer, &world, camera);
     player.Draw();
-
-    EndMode2D();
 }
 
 void UnloadLevelSelectScreen(void)
