@@ -5,31 +5,6 @@
 #include "utilities.h"
 #include "world.h"
 
-SDL_Texture* old_target;
-SDL_Rect old_viewport;
-
-void BeginMode2D(Camera2D camera)
-{
-    SDL_RenderGetViewport(renderer, &old_viewport);
-
-    // Set up the camera transformation matrix
-    SDL_Rect viewport = {
-        (int)camera.target.x + (int)camera.offset.x,
-        (int)camera.target.y + (int)camera.offset.y,
-        (int)(WIDTH),
-        (int)(HEIGHT)
-    };
-    int thing = SDL_RenderSetViewport(renderer, &viewport);
-    std::cout << thing << endl;
-}
-void EndMode2D()
-{
-    SDL_RenderSetViewport(renderer, &old_viewport);
-
-    // Reset the rendering transformations
-    SDL_RenderSetScale(renderer, 1.0f, 1.0f);
-}
-
 int SDL_RenderCopy_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect)
 {
     if (dstrect == NULL) return SDL_RenderCopy(renderer, texture, srcrect, dstrect);
@@ -55,21 +30,42 @@ int SDL_RenderFillRect_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Rect*
     return SDL_RenderFillRect(renderer, &modrect);
 }
 
-Vector2 Vector2::operator+(const Vector2& other) const
+Vector2f Vector2f::operator+(const Vector2f& other) const
 {
-    return Vector2(x + other.x, y + other.y);
+    return Vector2f(x + other.x, y + other.y);
 }
-Vector2 Vector2::operator-(const Vector2& other) const
+Vector2f Vector2f::operator-(const Vector2f& other) const
 {
-    return Vector2(x - other.x, y - other.y);
+    return Vector2f(x - other.x, y - other.y);
 }
-Vector2& Vector2::operator+=(const Vector2& other)
+Vector2f& Vector2f::operator+=(const Vector2f& other)
 {
     x += other.x;
     y += other.y;
     return *this;
 }
-Vector2& Vector2::operator-=(const Vector2& other)
+Vector2f& Vector2f::operator-=(const Vector2f& other)
+{
+    x -= other.x;
+    y -= other.y;
+    return *this;
+}
+
+Vector2d Vector2d::operator+(const Vector2d& other) const
+{
+    return Vector2d(x + other.x, y + other.y);
+}
+Vector2d Vector2d::operator-(const Vector2d& other) const
+{
+    return Vector2d(x - other.x, y - other.y);
+}
+Vector2d& Vector2d::operator+=(const Vector2d& other)
+{
+    x += other.x;
+    y += other.y;
+    return *this;
+}
+Vector2d& Vector2d::operator-=(const Vector2d& other)
 {
     x -= other.x;
     y -= other.y;

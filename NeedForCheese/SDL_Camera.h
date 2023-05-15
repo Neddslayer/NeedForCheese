@@ -19,31 +19,40 @@
 #include "SDL2/SDL_image.h"
 #include "SDL_FontCache.h"
 
-struct Vector2
+struct Vector2f
 {
     float x;                // Vector x component
     float y;                // Vector y component
 
-    Vector2(float x = 0.0f, float y = 0.0f) : x(x), y(y) {}
+    Vector2f(float x = 0.0f, float y = 0.0f) : x(x), y(y) {}
 
-    Vector2 operator+(const Vector2& other) const;
-    Vector2 operator-(const Vector2& other) const;
-    Vector2& operator+=(const Vector2& other);
-    Vector2& operator-=(const Vector2& other);
+    Vector2f operator+(const Vector2f& other) const;
+    Vector2f operator-(const Vector2f& other) const;
+    Vector2f& operator+=(const Vector2f& other);
+    Vector2f& operator-=(const Vector2f& other);
+};
+struct Vector2d
+{
+    double x;                // Vector x component
+    double y;                // Vector y component
+
+    Vector2d(double x = 0.0f, double y = 0.0f) : x(x), y(y) {}
+
+    Vector2d operator+(const Vector2d& other) const;
+    Vector2d operator-(const Vector2d& other) const;
+    Vector2d& operator+=(const Vector2d& other);
+    Vector2d& operator-=(const Vector2d& other);
 };
 
 struct Camera2D
 {
-    Vector2 offset;         // Camera offset (displacement from target)
-    Vector2 target;         // Camera target (rotation and zoom origin)
+    Vector2d offset;         // Camera offset (displacement from target)
+    Vector2d target;         // Camera target (rotation and zoom origin)
     float rotation;         // Camera rotation in degrees
-    Vector2 zoom;             // Camera zoom (scaling), should be 1.0f by default
-    Camera2D(Vector2 offset = Vector2(), Vector2 target = Vector2(), float rotation = 0.0f, Vector2 zoom = Vector2(1.0f,1.0f)) : offset(offset), target(target), rotation(rotation), zoom(zoom) {};
+    Vector2d zoom;             // Camera zoom (scaling), should be 1.0f by default
+    Camera2D(Vector2d offset = Vector2d(), Vector2d target = Vector2d(), float rotation = 0.0f, Vector2d zoom = Vector2d(1.0f,1.0f)) : offset(offset), target(target), rotation(rotation), zoom(zoom) {};
 
 };
-
-void BeginMode2D(Camera2D camera);
-void EndMode2D(void);
 
 int SDL_RenderCopy_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect);
 int SDL_RenderCopyEx_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect, double angle, const SDL_Point* center, SDL_RendererFlip flip);
