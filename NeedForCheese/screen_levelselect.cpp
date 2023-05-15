@@ -6,6 +6,7 @@
 #include "world.h"
 #include "box2d/box2d.h"
 #include <map>
+#include <chrono>
 #include <iostream>
 #include <vector>
 #include "Player.h"
@@ -15,6 +16,7 @@
 using namespace std;
 
 static int finishScreen;
+float elapsedTime = 0;
 
 b2World world = b2World(b2Vec2(0.0f, 9.81f));
 
@@ -43,6 +45,12 @@ void InitLevelSelectScreen(void)
     
 }
 
+float Lerp(float startValue, float endValue, float t)
+{
+    t = t < 0 ? 0 : t > 1 ? 1 : t; // clamp t between 0 and 1
+    return startValue + (endValue - startValue) * t * t * (3 - 2 * t);
+}
+
 void UpdateLevelSelectScreen(void)
 {
     player.Update();
@@ -53,22 +61,26 @@ void UpdateLevelSelectScreen(void)
         player.Player_Body->SetTransform(b2Vec2_zero, 0);
         player.Player_Body->SetLinearVelocity(b2Vec2_zero);
     }
-    if (keyboard[SDL_SCANCODE_D])
+    auto now = std::chrono::high_resolution_clock::now();
+    auto timeSinceStart = now.time_since_epoch();
+    float currentTime = std::chrono::duration_cast<std::chrono::duration<float>>(timeSinceStart).count();
+    float deltaTime = currentTime - elapsedTime;
+    elapsedTime = currentTime;
+
+    // Calculate the interpolation factor
+    const float InterpolationDuration = 0.1f;
+    float interpolationFactor = deltaTime / InterpolationDuration;
+    if (interpolationFactor > 1)
     {
-        camera.target += Vector2d(5);
+        interpolationFactor = 1;
     }
-    if (keyboard[SDL_SCANCODE_A])
-    {
-        camera.target -= Vector2d(5);
-    }
-    if (keyboard[SDL_SCANCODE_S])
-    {
-        camera.target -= Vector2d(0, 5);
-    }
-    if (keyboard[SDL_SCANCODE_W])
-    {
-        camera.target += Vector2d(0, 5);
-    }
+
+    // Calculate the interpolated camera position
+    float interpolatedCameraX = Lerp(camera.target.x, player.pos.x * MET2PIX, interpolationFactor);
+    float interpolatedCameraY = Lerp(camera.target.y, player.pos.y * -MET2PIX + 100, interpolationFactor);
+
+    camera.target = Vector2d(interpolatedCameraX, interpolatedCameraY);
+
 }
 
 void DrawLevelSelectScreen(void)
