@@ -26,12 +26,16 @@ public:
     int state; // Player animation state
     int direction; // Player direction. Also used for animation
 
+    bool sprinting;
+
 	// Initialize the player. This includes adding it into the world and giving it a starting position and velocity, usually for cutscene purposes.
     void Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity);
 	// Update the player. This includes applying velocity based on input, and detecting stuff like crouching.
 	void Update();
     // Draw the player.
 	void Draw(Camera2D camera);
+    // Update the player's animation state.
+    void UpdateState();
     // Unload the player. Shouldn't be used often, only when switching levels!
     void Unload();
 private:
