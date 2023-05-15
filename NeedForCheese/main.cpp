@@ -454,7 +454,7 @@ void UpdateDrawFrame()
 	}
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderClear(renderer);
+	SDL_RenderClear(renderer); // Clear the renderer
 	Uint32 drawTime = SDL_GetTicks() - previousTime; // Time taken for draw
 	switch (currentScreen)
 	{
@@ -468,6 +468,8 @@ void UpdateDrawFrame()
 	case ENDING: /*DrawEndingScreen();*/ break;
 	default: cout << "???"; break;
 	}
+
+	
 
 	if (transitioning) DrawTransition();
 	SDL_RenderPresent(renderer);
@@ -498,4 +500,9 @@ bool ButtonClicked(SDL_Rect button)
 bool ButtonClickedF(SDL_FRect button)
 {
 	return MouseCollidingWithRectF(button) && mouseClicked;
+}
+
+void DrawDevelopmentMode()
+{
+
 }

@@ -73,7 +73,7 @@ void UpdateLevelSelectScreen(void)
     elapsedTime = currentTime;
 
     // Calculate the interpolation factor
-    const float InterpolationDuration = 0.075f;
+    const float InterpolationDuration = 0.05f;
     float interpolationFactor = deltaTime / InterpolationDuration;
     if (interpolationFactor > 1)
     {
@@ -97,7 +97,9 @@ void DrawLevelSelectScreen(void)
 
     FC_Draw(font, renderer, 10, 10, to_string(player.pos.x).c_str());
     FC_Draw(font, renderer, 10, 40, to_string(player.pos.y).c_str());
-    FC_Draw(font, renderer, 10, 70, to_string(player.state).c_str());
+    FC_Draw(font, renderer, 10, 70, to_string(player.velo.x).c_str());
+    FC_Draw(font, renderer, 10, 100, to_string(player.velo.y).c_str());
+    FC_Draw(font, renderer, 10, 130, to_string(player.state).c_str());
 }
 
 void UnloadLevelSelectScreen(void)
