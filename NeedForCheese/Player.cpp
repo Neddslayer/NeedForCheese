@@ -51,14 +51,7 @@ void Player::Update()
     velo = Player_Body->GetLinearVelocity();
     angle = Player_Body->GetAngle();
     isGrounded = IsGrounded(Player_Body); // check if grounded (horray)
-    if (keyboard[SDL_SCANCODE_LSHIFT] && (velo.x > 1.5f || velo.x < -1.5f))
-    {
-        sprinting = true;
-    }
-    else
-    {
-        sprinting = false;
-    }
+    sprinting = (keyboard[SDL_SCANCODE_LSHIFT] && (velo.x > 1.5f || velo.x < -1.5f));
     if (keyboard[SDL_SCANCODE_Z] && isGrounded)
     {
         Player_Body->ApplyForceToCenter(b2Vec2(0.0, -50.0), true);
