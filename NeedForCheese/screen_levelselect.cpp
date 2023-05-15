@@ -68,7 +68,7 @@ void UpdateLevelSelectScreen(void)
     elapsedTime = currentTime;
 
     // Calculate the interpolation factor
-    const float InterpolationDuration = 0.1f;
+    const float InterpolationDuration = 0.075f;
     float interpolationFactor = deltaTime / InterpolationDuration;
     if (interpolationFactor > 1)
     {
