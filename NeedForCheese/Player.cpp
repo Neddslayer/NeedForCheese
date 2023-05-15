@@ -76,12 +76,12 @@ void Player::Update()
 
 void Player::UpdateState()
 {
-    if (abs(velo.x) < 0.01 && abs(velo.y) < 0.01 && isGrounded) state = 0;
     if (!isGrounded) state = sprinting ? 4 : 3;
     if (isGrounded)
     {
-        state = sprinting ? 2 : 3;
+        state = sprinting ? 2 : 1;
     }
+    if (abs(velo.x) < 0.01 && abs(velo.y) < 0.01 && isGrounded) state = 0;
 }
 
 void Player::Draw(Camera2D camera)
