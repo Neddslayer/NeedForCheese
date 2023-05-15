@@ -49,11 +49,6 @@ void Player::Update()
         direction = 1;
         state = 1;
     }
-    if (keyboard[SDL_SCANCODE_Z] && isGrounded)
-    {
-        Player_Body->ApplyForceToCenter(b2Vec2(0.0, -35.0), true);
-        state = state == 2 ? 3 : 4;
-    }
     pos = Player_Body->GetPosition(); // Body = Body from box
     velo = Player_Body->GetLinearVelocity();
     angle = Player_Body->GetAngle();
@@ -62,10 +57,15 @@ void Player::Update()
     {
         state = 2;
     }
+    if (keyboard[SDL_SCANCODE_Z] && isGrounded)
+    {
+        Player_Body->ApplyForceToCenter(b2Vec2(0.0, -35.0), true);
+        state = state == 2 ? 3 : 4;
+    }
     if (velo.x > 2.0f && state != 2) Player_Body->SetLinearVelocity(b2Vec2(2.0f, Player_Body->GetLinearVelocity().y));
     if (velo.x < -2.0f && state != 2) Player_Body->SetLinearVelocity(b2Vec2(-2.0f, Player_Body->GetLinearVelocity().y));
-    if (velo.x > 1 && (state == 2 || state == 4)) velo.x = 1;
-    if (velo.x < -1 && (state == 2 || state == 4)) velo.x = -1;
+    if (velo.x > 4.0f && (state == 2 || state == 4)) Player_Body->SetLinearVelocity(b2Vec2(4.0f, Player_Body->GetLinearVelocity().y));
+    if (velo.x < -4.0f && (state == 2 || state == 4)) Player_Body->SetLinearVelocity(b2Vec2(-4.0f, Player_Body->GetLinearVelocity().y));
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 20.0f;
     if (abs(velo.x) < 0.01 && abs(velo.y) < 0.01 && isGrounded) state = 0;
