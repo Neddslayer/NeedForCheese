@@ -42,29 +42,30 @@ void Player::Update()
         Player_Body->ApplyForceToCenter(b2Vec2(-5.0f, 0.0), true);
         direction = -1;
     }
+
     if (keyboard[SDL_SCANCODE_RIGHT])
     {
         Player_Body->ApplyForceToCenter(b2Vec2(5.0f, 0.0), true);
         direction = 1;
     }
+
     pos = Player_Body->GetPosition(); // Body = Body from box
     velo = Player_Body->GetLinearVelocity();
     angle = Player_Body->GetAngle();
+
     isGrounded = IsGrounded(Player_Body); // check if grounded (horray)
-    sprinting = (keyboard[SDL_SCANCODE_LSHIFT] && (velo.x > 1.5f || velo.x < -1.5f));
-    if (keyboard[SDL_SCANCODE_Z] && isGrounded)
-    {
-        Player_Body->ApplyForceToCenter(b2Vec2(0.0, -50.0), true);
-    }
+    sprinting = ((keyboard[SDL_SCANCODE_LSHIFT] && (velo.x > 1.5f || velo.x < -1.5f) && state != 3);
+    if (keyboard[SDL_SCANCODE_Z] && isGrounded) Player_Body->ApplyForceToCenter(b2Vec2(0.0, -50.0), true);
+    
     if (velo.x > 2.0f && !sprinting) Player_Body->SetLinearVelocity(b2Vec2(2.0f, Player_Body->GetLinearVelocity().y));
     if (velo.x < -2.0f && !sprinting) Player_Body->SetLinearVelocity(b2Vec2(-2.0f, Player_Body->GetLinearVelocity().y));
     if (velo.x > 4.0f && sprinting) Player_Body->SetLinearVelocity(b2Vec2(4.0f, Player_Body->GetLinearVelocity().y));
     if (velo.x < -4.0f && sprinting) Player_Body->SetLinearVelocity(b2Vec2(-4.0f, Player_Body->GetLinearVelocity().y));
+
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 20.0f;
     cout << velo.x << " " << velo.y << " " << state << endl;
     UpdateState();
-
 }
 
 void Player::UpdateState()
