@@ -13,6 +13,7 @@
 #include "tinyxml2.h"
 #include "Map.h"
 #include "SDL_Camera.h"
+#include "SDL_FontCache.h"
 using namespace std;
 
 static int finishScreen;
@@ -31,6 +32,8 @@ Player player = Player();
 Map level = Map();
 Camera2D camera = Camera2D(Vector2d(-1, 0), Vector2d(), 0.0f, Vector2d(1.0f,1.0f));
 
+static FC_Font* font;
+
 void InitLevelSelectScreen(void)
 {
     //big balls -owen
@@ -43,6 +46,8 @@ void InitLevelSelectScreen(void)
 
     level = Map("resources/map/test.xml", &world);
     
+    font = FC_CreateFont();
+    FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 20, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
 }
 
 float Lerp(float startValue, float endValue, float t)
@@ -89,6 +94,10 @@ void DrawLevelSelectScreen(void)
 
     level.draw_map(renderer, &world, camera);
     player.Draw(camera);
+
+    FC_Draw(font, renderer, 10, 10, to_string(player.pos.x).c_str());
+    FC_Draw(font, renderer, 10, 40, to_string(player.pos.y).c_str());
+    FC_Draw(font, renderer, 10, 70, to_string(player.state).c_str());
 }
 
 void UnloadLevelSelectScreen(void)
