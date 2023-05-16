@@ -94,12 +94,14 @@ void DrawLevelSelectScreen(void)
 
     level.draw_map(renderer, &world, camera);
     player.Draw(camera);
-
-    FC_Draw(font, renderer, 10, 10, to_string(player.pos.x).c_str());
-    FC_Draw(font, renderer, 10, 40, to_string(player.pos.y).c_str());
-    FC_Draw(font, renderer, 10, 70, to_string(player.velo.x).c_str());
-    FC_Draw(font, renderer, 10, 100, to_string(player.velo.y).c_str());
-    FC_Draw(font, renderer, 10, 130, to_string(player.state).c_str());
+    if (development_mode)
+    {
+        FC_Draw(font, renderer, 10, 10, to_string(player.pos.x).c_str());
+        FC_Draw(font, renderer, 10, 40, to_string(player.pos.y).c_str());
+        FC_Draw(font, renderer, 10, 70, to_string(player.velo.x).c_str());
+        FC_Draw(font, renderer, 10, 100, to_string(player.velo.y).c_str());
+        FC_Draw(font, renderer, 10, 130, to_string(player.state).c_str());
+    }
 }
 
 void UnloadLevelSelectScreen(void)
