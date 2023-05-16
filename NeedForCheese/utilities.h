@@ -20,7 +20,6 @@ extern bool mouseClicked;
 extern int mouseX, mouseY;
 extern Uint32 frameTime;
 extern Uint32 updateTime;
-extern bool development_mode;
 const int MET2PIX = 96;
 const float PIX2MET = 3.0f / MET2PIX;
 

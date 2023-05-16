@@ -14,6 +14,7 @@
 #include "Map.h"
 #include "SDL_Camera.h"
 #include "SDL_FontCache.h"
+#include "debug.h"
 using namespace std;
 
 static int finishScreen;

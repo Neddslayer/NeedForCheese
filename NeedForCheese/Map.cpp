@@ -150,7 +150,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
         }
     }
     
-    /*for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
+    for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
     {
         // Get the body position and angle
         b2Vec2 position = body->GetPosition();
@@ -187,7 +187,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
                 {
                     b2Vec2 v1 = body->GetWorldPoint(polygonShape->m_vertices[i]);
                     b2Vec2 v2 = body->GetWorldPoint(polygonShape->m_vertices[(i + 1) % count]);
-                    SDL_RenderDrawLine(renderer, (((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.9775f, (((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.9775f);
+                    SDL_RenderDrawLine_Camera(camera, renderer, (((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.9775f, (((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.9775f);
                 }
             }
             else if (type == b2Shape::e_circle)
@@ -199,7 +199,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
                 SDL_RenderDrawRect(renderer, &rect);
             }
         }
-    }*/
+    } 
 }
 
 vector<string> split_string(const string& str, const char* delimiter)

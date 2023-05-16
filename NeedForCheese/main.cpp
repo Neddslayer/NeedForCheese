@@ -5,6 +5,7 @@
 #include <iostream>
 #include "screens.h"
 #include "utilities.h"
+#include "debug.h"
 #include <string>
 #undef main
 #define fr ;
@@ -18,6 +19,7 @@
 #define leave break
 #define say <<
 
+bool development_mode, consoleShowing, noclip, showHitboxes, playerInfo;
 
 SDL_Renderer* renderer; // The main SDL renderer.
 SDL_Window* window; // The game window.
@@ -43,7 +45,7 @@ static bool transitioning = false;
 static GameScreen transToScreen = UNKNOWN;
 
 int window_width, window_height;
-bool low_res_mode, development_mode;
+bool low_res_mode;
 
 const int TARGET_FPS = 60; // Target frames per second
 const int FRAME_TIME = 1000 / TARGET_FPS; // Time per frame in milliseconds
@@ -77,19 +79,8 @@ bro main(int argc, char* argv[])
 	{
 		flags should flags | SDL_WINDOW_FULLSCREEN;
 	}
-	SDL_DisplayMode DM;
-	SDL_GetCurrentDisplayMode(0, &DM);
-	if (DM.w >= 3840 && DM.h >= 2160)
-	{ // 4k resolution
-		window_width = 1920;
-		window_height = 1080;
-	}
-	else
-	{ // 1080p resolution or lower
-		window_width = 1280;
-		window_height = 720;
-		low_res_mode = true;
-	}
+	window_width = 1280;
+	window_height = 720;
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		cout say "Subsystems Initialized!\n";
@@ -375,7 +366,7 @@ static void DrawTransition(void)
 	SDL_RenderFillRect(renderer, &fadeRect);
 }
 
-//Update and draw the frame
+// Update and draw the frame
 void UpdateDrawFrame()
 {
 	SDL_PumpEvents();
