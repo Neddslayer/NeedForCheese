@@ -469,8 +469,6 @@ void UpdateDrawFrame()
 	default: cout << "???"; break;
 	}
 
-	
-
 	if (transitioning) DrawTransition();
 	SDL_RenderPresent(renderer);
 
@@ -500,9 +498,4 @@ bool ButtonClicked(SDL_Rect button)
 bool ButtonClickedF(SDL_FRect button)
 {
 	return MouseCollidingWithRectF(button) && mouseClicked;
-}
-
-void DrawDevelopmentMode()
-{
-
 }
