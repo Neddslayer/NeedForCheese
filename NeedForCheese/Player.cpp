@@ -59,8 +59,8 @@ void Player::Update()
     
     if (velo.x > 2.0f && !sprinting) Player_Body->SetLinearVelocity(b2Vec2(2.0f, Player_Body->GetLinearVelocity().y));
     if (velo.x < -2.0f && !sprinting) Player_Body->SetLinearVelocity(b2Vec2(-2.0f, Player_Body->GetLinearVelocity().y));
-    if (velo.x > 4.0f && sprinting) Player_Body->SetLinearVelocity(b2Vec2(4.0f, Player_Body->GetLinearVelocity().y));
-    if (velo.x < -4.0f && sprinting) Player_Body->SetLinearVelocity(b2Vec2(-4.0f, Player_Body->GetLinearVelocity().y));
+    if (velo.x > 4.0f && sprinting) Player_Body->SetLinearVelocity(b2Vec2(6.0f, Player_Body->GetLinearVelocity().y));
+    if (velo.x < -4.0f && sprinting) Player_Body->SetLinearVelocity(b2Vec2(-6.0f, Player_Body->GetLinearVelocity().y));
 
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 20.0f;
