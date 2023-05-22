@@ -121,27 +121,157 @@ void Player::Draw(Camera2D camera)
         break;
     case Player::POGST:
     {
-
+        switch (state)
+        {
+        case 0:
+            // animate placeman idle
+            break;
+        case 1:
+            // animate placeman walking
+            break;
+        case 2:
+            // animate placeman running
+            break;
+        case 3:
+            // animate placeman jumping
+            break;
+        case 4:
+            //animate placeman run-jumping
+            break;
+        case 5:
+            // animate placeman attack
+            break;
+        case 6:
+            // animate placeman block
+            break;
+        default:
+            // animate placeman idle
+            break;
+        }
     }
         break;
     case Player::RUDYKIDS:
     {
-
+        switch (state)
+        {
+        case 0:
+            // animate placeman idle
+            break;
+        case 1:
+            // animate placeman walking
+            break;
+        case 2:
+            // animate placeman running
+            break;
+        case 3:
+            // animate placeman jumping
+            break;
+        case 4:
+            //animate placeman run-jumping
+            break;
+        case 5:
+            // animate placeman attack
+            break;
+        case 6:
+            // animate placeman block
+            break;
+        default:
+            // animate placeman idle
+            break;
+        }
     }
         break;
     case Player::NEDDSLAYER:
     {
-
+        switch (state)
+        {
+        case 0:
+            // animate placeman idle
+            break;
+        case 1:
+            // animate placeman walking
+            break;
+        case 2:
+            // animate placeman running
+            break;
+        case 3:
+            // animate placeman jumping
+            break;
+        case 4:
+            //animate placeman run-jumping
+            break;
+        case 5:
+            // animate placeman attack
+            break;
+        case 6:
+            // animate placeman block
+            break;
+        default:
+            // animate placeman idle
+            break;
+        }
     }
         break;
     case Player::KAUTION:
     {
-
+        switch (state)
+        {
+        case 0:
+            // animate placeman idle
+            break;
+        case 1:
+            // animate placeman walking
+            break;
+        case 2:
+            // animate placeman running
+            break;
+        case 3:
+            // animate placeman jumping
+            break;
+        case 4:
+            //animate placeman run-jumping
+            break;
+        case 5:
+            // animate placeman attack
+            break;
+        case 6:
+            // animate placeman block
+            break;
+        default:
+            // animate placeman idle
+            break;
+        }
     }
         break;
     default:
     {
-
+        switch (state)
+        {
+        case 0:
+            // animate placeman idle
+            break;
+        case 1:
+            // animate placeman walking
+            break;
+        case 2:
+            // animate placeman running
+            break;
+        case 3:
+            // animate placeman jumping
+            break;
+        case 4:
+            //animate placeman run-jumping
+            break;
+        case 5:
+            // animate placeman attack
+            break;
+        case 6:
+            // animate placeman block
+            break;
+        default:
+            // animate placeman idle
+            break;
+        }
     }
         break;
     }
