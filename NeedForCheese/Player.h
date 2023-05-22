@@ -8,6 +8,16 @@
 class Player
 {
 public:
+
+    enum PlayerType
+    {
+        PLACEMAN,
+        POGST,
+        RUDYKIDS,
+        NEDDSLAYER,
+        KAUTION
+    };
+
     // cartesian origin box
     float x_box; // Player body starting X
     float y_box; // Player body starting Y
@@ -27,6 +37,8 @@ public:
     int direction; // Player direction. Also used for animation
 
     bool sprinting; // If the player is sprinting.
+
+    PlayerType playerType = PLACEMAN;
 
 	// Initialize the player. This includes adding it into the world and giving it a starting position and velocity, usually for cutscene purposes.
     void Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity);

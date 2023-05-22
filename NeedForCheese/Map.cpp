@@ -80,9 +80,12 @@ Map::Map(const char* filename, b2World* world)
             tiles.push_back(stoi(columns[j]));
         }
     }
+    
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
     b2Body* body = world->CreateBody(&bodyDef);
+
+    vector<b2Body*> boxBodies;
 
     for (int y = 0; y < mapHeight; y++)
     {
@@ -106,6 +109,8 @@ Map::Map(const char* filename, b2World* world)
                 shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
                 tileFixtureDef.shape = &shape;
                 body->CreateFixture(&tileFixtureDef);
+
+                boxBodies.push_back(body);
 
                 std::cout << bodyDef.position.x << " " << bodyDef.position.y << endl;
             }
