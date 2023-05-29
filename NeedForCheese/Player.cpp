@@ -55,7 +55,8 @@ void Player::Update()
     velo = Player_Body->GetLinearVelocity(); // Get the player's rigidbody velocity.
     angle = Player_Body->GetAngle(); // Get the player's rigidbody angle. Should not be used, rotation is locked!
 
-    isGrounded = IsGrounded(Player_Body); // Check if the player is Grounded
+    //isGrounded = IsGrounded(Player_Body); // Check if the player is Grounded
+    isGrounded = true;
     sprinting = (keyboard[SDL_SCANCODE_LSHIFT] && (velo.x > 1.5f || velo.x < -1.5f) && state != 3); // Sprinting check.
     if (keyboard[SDL_SCANCODE_Z] && isGrounded) Player_Body->ApplyForceToCenter(b2Vec2(0.0, -50.0), true); // If the player is on the ground, jump.
     

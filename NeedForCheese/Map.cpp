@@ -98,24 +98,42 @@ Map::Map(const char* filename, b2World* world)
                 int tile = tiles[tileIndex];
                 if (tile != 0)
                 {
-                    // Create static body at center of current tile
-                    //bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
-                    //    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
-                    bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
-                        (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
-                    body = world->CreateBody(&bodyDef);
-                    body->GetUserData().pointer = (uintptr_t)GROUND;
+                    if (tile > 400)
+                    {
+                        bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+                            (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+                        bodyDef.angle = 0;
+                        body = world->CreateBody(&bodyDef);
+                        body->GetUserData().pointer = (uintptr_t)GROUND;
+                        b2FixtureDef edgeFixtureDef;
+                        b2EdgeShape edgeShape;
+                        edgeShape.SetOneSided(b2Vec2(0.5f, 2.0f), b2Vec2(0.5f, 0.0f), b2Vec2(-0.5f, 0.0f), b2Vec2(-0.5f, 2.0f));
+                        edgeFixtureDef.shape = &edgeShape;
+                        body->CreateFixture(&edgeFixtureDef);
 
-                    // Create fixture for current tile
-                    b2PolygonShape shape;
-                    b2FixtureDef tileFixtureDef;
-                    shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
-                    tileFixtureDef.shape = &shape;
-                    body->CreateFixture(&tileFixtureDef);
+                        boxBodies.push_back(body);
+                    }
+                    else
+                    {
+                        // Create static body at center of current tile
+                        //bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
+                        //    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
+                        bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+                            (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+                        body = world->CreateBody(&bodyDef);
+                        body->GetUserData().pointer = (uintptr_t)GROUND;
 
-                    boxBodies.push_back(body);
+                        // Create fixture for current tile
+                        b2PolygonShape shape;
+                        b2FixtureDef tileFixtureDef;
+                        shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
+                        tileFixtureDef.shape = &shape;
+                        body->CreateFixture(&tileFixtureDef);
 
-                    std::cout << bodyDef.position.x << " " << bodyDef.position.y << endl;
+                        boxBodies.push_back(body);
+
+                        std::cout << bodyDef.position.x << " " << bodyDef.position.y << endl;
+                    }
                 }
             }
         }
@@ -181,7 +199,9 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
                 b2EdgeShape* edgeShape = static_cast<b2EdgeShape*>(shape);
                 b2Vec2 v1 = edgeShape->m_vertex1;
                 b2Vec2 v2 = edgeShape->m_vertex2;
-                SDL_RenderDrawLine(renderer, ((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX);
+                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+                SDL_RenderDrawLine_Camera(camera, renderer, ((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX);
+                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             }
             else if (type == b2Shape::e_polygon)
             {
