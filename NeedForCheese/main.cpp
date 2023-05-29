@@ -19,7 +19,7 @@
 #define leave break
 #define say <<
 
-bool development_mode, consoleShowing, noclip, showHitboxes, playerInfo;
+bool development_mode, consoleShowing, noclip, showHitboxes, playerInfo, old_collision_generation;
 
 SDL_Renderer* renderer; // The main SDL renderer.
 SDL_Window* window; // The game window.
@@ -59,6 +59,8 @@ Uint32 frameTime, updateTime;
 
 bro main(int argc, char* argv[])
 {
+	old_collision_generation = true;
+
 #ifdef _DEBUG
 	development_mode = true;
 #endif // _DEBUG

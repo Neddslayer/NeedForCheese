@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include "SDL_Camera.h"
+#include "debug.h"
 using namespace std;
 
 Map::Map(const char* filename, b2World* world)
@@ -87,33 +88,35 @@ Map::Map(const char* filename, b2World* world)
     b2Body* body = world->CreateBody(&bodyDef);
 
     vector<b2Body*> boxBodies;
-
-    for (int y = 0; y < mapHeight; y++)
+    if (old_collision_generation)
     {
-        for (int x = 0; x < mapWidth; x++)
+        for (int y = 0; y < mapHeight; y++)
         {
-            int tileIndex = y * mapWidth + x;
-            int tile = tiles[tileIndex];
-            if (tile != 0)
+            for (int x = 0; x < mapWidth; x++)
             {
-                // Create static body at center of current tile
-                //bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
-                //    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
-                bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
-                    (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
-                body = world->CreateBody(&bodyDef);
-                body->GetUserData().pointer = (uintptr_t)GROUND;
+                int tileIndex = y * mapWidth + x;
+                int tile = tiles[tileIndex];
+                if (tile != 0)
+                {
+                    // Create static body at center of current tile
+                    //bodyDef.position.Set((x / static_cast<float>(MET2PIX)) + ((tileWidth / static_cast<float>(MET2PIX)) / 2.0f),
+                    //    (y / static_cast<float>(MET2PIX)) + ((tileHeight / static_cast<float>(MET2PIX)) / 2.0f));
+                    bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+                        (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+                    body = world->CreateBody(&bodyDef);
+                    body->GetUserData().pointer = (uintptr_t)GROUND;
 
-                // Create fixture for current tile
-                b2PolygonShape shape;
-                b2FixtureDef tileFixtureDef;
-                shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
-                tileFixtureDef.shape = &shape;
-                body->CreateFixture(&tileFixtureDef);
+                    // Create fixture for current tile
+                    b2PolygonShape shape;
+                    b2FixtureDef tileFixtureDef;
+                    shape.SetAsBox((tileWidth * PIX2MET) / 2.0f, (tileHeight * PIX2MET) / 2.0f);
+                    tileFixtureDef.shape = &shape;
+                    body->CreateFixture(&tileFixtureDef);
 
-                boxBodies.push_back(body);
+                    boxBodies.push_back(body);
 
-                std::cout << bodyDef.position.x << " " << bodyDef.position.y << endl;
+                    std::cout << bodyDef.position.x << " " << bodyDef.position.y << endl;
+                }
             }
         }
     }

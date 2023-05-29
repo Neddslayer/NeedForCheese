@@ -5,6 +5,7 @@ extern bool noclip;
 extern bool showHitboxes;
 extern bool playerInfo;
 extern bool development_mode;
+extern bool old_collision_generation;
 
 void DrawDevelopmentMode();
 
