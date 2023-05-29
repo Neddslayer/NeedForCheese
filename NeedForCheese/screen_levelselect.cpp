@@ -45,7 +45,7 @@ void InitLevelSelectScreen(void)
 
     player.Initialize(&world, b2Vec2_zero, b2Vec2_zero);
 
-    level = Map("resources/map/test.xml", &world);
+    level = Map("phil", &world);
     
     font = FC_CreateFont();
     FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 20, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);

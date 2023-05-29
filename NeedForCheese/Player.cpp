@@ -18,14 +18,14 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
 
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1;
-    fixtureDef.friction = 0.8f;
+    fixtureDef.friction = 0.5f;
     fixtureDef.restitution = 0.0f;
     fixtureDef.userData.pointer = (uintptr_t)PLAYER;
     Player_Body->CreateFixture(&fixtureDef);
 
     Player_Body->SetBullet(true);
 
-    // box: convert Metres back to Pixels for width and height
+    // box: convert Meters back to Pixels for width and height
     box.w = w_box * MET2PIX;
     box.h = h_box * MET2PIX;
 
