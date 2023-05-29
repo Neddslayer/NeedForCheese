@@ -107,8 +107,9 @@ Map::Map(const char* filename, b2World* world)
                         body->GetUserData().pointer = (uintptr_t)GROUND;
                         b2FixtureDef edgeFixtureDef;
                         b2EdgeShape edgeShape;
-                        edgeShape.SetOneSided(b2Vec2(-1, -0.25f), b2Vec2(-0.5f, -0.25f), b2Vec2(0.5f, -0.25f), b2Vec2(1, -0.25f));
+                        edgeShape.SetOneSided(b2Vec2(-0.5f, -0.25f), b2Vec2(-0.25f, -0.25f), b2Vec2(0.25f, -0.25f), b2Vec2(0.5f, -0.25f));
                         edgeFixtureDef.shape = &edgeShape;
+                        edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
                         body->CreateFixture(&edgeFixtureDef);
 
                         boxBodies.push_back(body);

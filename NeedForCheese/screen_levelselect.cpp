@@ -60,7 +60,7 @@ float Lerp(float startValue, float endValue, float t)
 void UpdateLevelSelectScreen(void)
 {
     player.Update();
-    world.Step(1.0f / 60.0f, 6.0f, 2.0f); // update
+    world.Step(1.0f / 60.0f, 8.0f, 4.0f); // update
     
     if (keyboard[SDL_SCANCODE_R])
     {

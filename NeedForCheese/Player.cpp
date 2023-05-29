@@ -58,7 +58,7 @@ void Player::Update()
     isGrounded = IsGrounded(Player_Body); // Check if the player is Grounded
     //isGrounded = true;
     sprinting = (keyboard[SDL_SCANCODE_LSHIFT] && (velo.x > 1.5f || velo.x < -1.5f) && state != 3); // Sprinting check.
-    if (keyboard[SDL_SCANCODE_Z] && isGrounded) Player_Body->ApplyForceToCenter(b2Vec2(0.0, -50.0), true); // If the player is on the ground, jump.
+    if (keyboard[SDL_SCANCODE_Z] && isGrounded) Player_Body->ApplyForceToCenter(b2Vec2(0.0, -60.0), true); // If the player is on the ground, jump.
     
     // ---------------SPEED CAP---------------
     if (velo.x > 2.0f && !sprinting) Player_Body->SetLinearVelocity(b2Vec2(2.0f, Player_Body->GetLinearVelocity().y));
@@ -299,7 +299,7 @@ bool Player::IsGrounded(b2Body* playerBody)
                 b2Fixture* fB = c->GetFixtureB();
                 int userDataA = fA->GetBody()->GetUserData().pointer;
                 int userDataB = fB->GetBody()->GetUserData().pointer;
-                if (userDataA == GROUND || userDataB == GROUND)
+                if (userDataA == GROUND || userDataB == GROUND || fA->GetUserData().pointer == GROUND || fB->GetUserData().pointer == GROUND)
                 {
                     return true;
                 }
