@@ -107,7 +107,7 @@ Map::Map(const char* filename, b2World* world)
                         body->GetUserData().pointer = (uintptr_t)GROUND;
                         b2FixtureDef edgeFixtureDef;
                         b2EdgeShape edgeShape;
-                        edgeShape.SetOneSided(b2Vec2(0.5f, 2.0f), b2Vec2(0.5f, 0.0f), b2Vec2(-0.5f, 0.0f), b2Vec2(-0.5f, 2.0f));
+                        edgeShape.SetOneSided(b2Vec2(-1, -0.25f), b2Vec2(-0.5f, -0.25f), b2Vec2(0.5f, -0.25f), b2Vec2(1, -0.25f));
                         edgeFixtureDef.shape = &edgeShape;
                         body->CreateFixture(&edgeFixtureDef);
 
@@ -176,59 +176,61 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
             SDL_RenderCopy_Camera(camera, renderer, texture, &srcrect, &dstrect);
         }
     }
-    
-    for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
+    if (showHitboxes)
     {
-        // Get the body position and angle
-        b2Vec2 position = body->GetPosition();
-        float angle = body->GetAngle();
-
-        // Iterate over all fixtures in the body
-        for (b2Fixture* fixture = body->GetFixtureList(); fixture; fixture = fixture->GetNext())
+        for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
         {
-            // Get the fixture shape and type
-            b2Shape* shape = fixture->GetShape();
-            b2Shape::Type type = shape->GetType();
+            // Get the body position and angle
+            b2Vec2 position = body->GetPosition();
+            float angle = body->GetAngle();
 
-            // Set the rendering color
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
-            // Draw the shape based on its type
-            if (type == b2Shape::e_edge)
+            // Iterate over all fixtures in the body
+            for (b2Fixture* fixture = body->GetFixtureList(); fixture; fixture = fixture->GetNext())
             {
-                b2EdgeShape* edgeShape = static_cast<b2EdgeShape*>(shape);
-                b2Vec2 v1 = edgeShape->m_vertex1;
-                b2Vec2 v2 = edgeShape->m_vertex2;
-                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-                SDL_RenderDrawLine_Camera(camera, renderer, ((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX);
+                // Get the fixture shape and type
+                b2Shape* shape = fixture->GetShape();
+                b2Shape::Type type = shape->GetType();
+
+                // Set the rendering color
                 SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            }
-            else if (type == b2Shape::e_polygon)
-            {
-                b2PolygonShape* polygonShape = static_cast<b2PolygonShape*>(shape);
-                b2PolygonShape copy;
-                copy.Set(polygonShape->m_vertices, polygonShape->m_count);
-                int count = polygonShape->m_count;
-                float width = 0;
-                float height = 0;
-                GetPolygonShapeDimensions(copy, width, height);
-                for (int i = 0; i < count; i++)
+
+                // Draw the shape based on its type
+                if (type == b2Shape::e_edge)
                 {
-                    b2Vec2 v1 = body->GetWorldPoint(polygonShape->m_vertices[i]);
-                    b2Vec2 v2 = body->GetWorldPoint(polygonShape->m_vertices[(i + 1) % count]);
-                    SDL_RenderDrawLine_Camera(camera, renderer, (((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.9775f, (((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.9775f);
+                    b2EdgeShape* edgeShape = static_cast<b2EdgeShape*>(shape);
+                    b2Vec2 v1 = edgeShape->m_vertex1;
+                    b2Vec2 v2 = edgeShape->m_vertex2;
+                    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+                    SDL_RenderDrawLine_Camera(camera, renderer, ((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX);
+                    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+                }
+                else if (type == b2Shape::e_polygon)
+                {
+                    b2PolygonShape* polygonShape = static_cast<b2PolygonShape*>(shape);
+                    b2PolygonShape copy;
+                    copy.Set(polygonShape->m_vertices, polygonShape->m_count);
+                    int count = polygonShape->m_count;
+                    float width = 0;
+                    float height = 0;
+                    GetPolygonShapeDimensions(copy, width, height);
+                    for (int i = 0; i < count; i++)
+                    {
+                        b2Vec2 v1 = body->GetWorldPoint(polygonShape->m_vertices[i]);
+                        b2Vec2 v2 = body->GetWorldPoint(polygonShape->m_vertices[(i + 1) % count]);
+                        SDL_RenderDrawLine_Camera(camera, renderer, (((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.9775f, (((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX) - width / 2.0f, (((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX) - height / 2.0f - MET2PIX * 2.9775f);
+                    }
+                }
+                else if (type == b2Shape::e_circle)
+                {
+                    b2CircleShape* circleShape = static_cast<b2CircleShape*>(shape);
+                    b2Vec2 center = body->GetWorldPoint(circleShape->m_p);
+                    float radius = circleShape->m_radius * SCALED_WIDTH;
+                    SDL_Rect rect = { (int)(center.x - radius), (int)(center.y - radius), (int)(2 * radius), (int)(2 * radius) };
+                    SDL_RenderDrawRect(renderer, &rect);
                 }
             }
-            else if (type == b2Shape::e_circle)
-            {
-                b2CircleShape* circleShape = static_cast<b2CircleShape*>(shape);
-                b2Vec2 center = body->GetWorldPoint(circleShape->m_p);
-                float radius = circleShape->m_radius * SCALED_WIDTH;
-                SDL_Rect rect = { (int)(center.x - radius), (int)(center.y - radius), (int)(2 * radius), (int)(2 * radius) };
-                SDL_RenderDrawRect(renderer, &rect);
-            }
         }
-    } 
+    }
 }
 
 vector<string> split_string(const string& str, const char* delimiter)
