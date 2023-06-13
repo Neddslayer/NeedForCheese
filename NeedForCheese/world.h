@@ -5,7 +5,8 @@
 enum PROPERTY_NAMES
 {
 	PLAYER = 1,
-	GROUND = 2
+	GROUND = 2,
+	SEMISOLID
 };
 
 const int WIDTH = 1280; // The width of the window, in pixels.

@@ -18,8 +18,6 @@ extern bool ButtonClicked(SDL_Rect button);
 extern bool ButtonClickedF(SDL_FRect button);
 extern bool mouseClicked;
 extern int mouseX, mouseY;
-extern Uint32 frameTime;
-extern Uint32 updateTime;
 const int MET2PIX = 96;
 const float PIX2MET = 3.0f / MET2PIX;
 

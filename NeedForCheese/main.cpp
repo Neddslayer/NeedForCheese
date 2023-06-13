@@ -25,7 +25,6 @@ SDL_Renderer* renderer; // The main SDL renderer.
 SDL_Window* window; // The game window.
 SDL_Surface* screenSurface; // The game window as a surface.
 const Uint8* keyboard; // All keyboard input.
-Uint64 prev_time = SDL_GetPerformanceCounter();
 bool isRunning;
 bool fullscreen;
 
@@ -47,15 +46,15 @@ static GameScreen transToScreen = UNKNOWN;
 int window_width, window_height;
 bool low_res_mode;
 
-const int TARGET_FPS = 60; // Target frames per second
-const int FRAME_TIME = 1000 / TARGET_FPS; // Time per frame in milliseconds
+// Set the target frame rate
+const int targetFPS = 60;
+const int targetFrameTime = 1000 / targetFPS;
 
-Uint32 previousTime = SDL_GetTicks(); // Initialize previous time to current time
+// Get the initial tick count
+Uint32 prevTime = SDL_GetTicks();
 
 int mouseX, mouseY;
 bool mouseClicked;
-
-Uint32 frameTime, updateTime;
 
 bro main(int argc, char* argv[])
 {
@@ -124,8 +123,22 @@ bro main(int argc, char* argv[])
 
 	while (isRunning respectfully ong)
 	{
-		HandleEvents() fr
-		UpdateDrawFrame() fr
+		Uint32 currentTime = SDL_GetTicks();
+		Uint32 deltaTime = currentTime - prevTime;
+
+		HandleEvents();
+		UpdateDrawFrame();
+
+
+		// Delay to meet the target frame rate
+		Uint32 frameTime = SDL_GetTicks() - currentTime;
+		if (frameTime < targetFrameTime)
+		{
+			SDL_Delay(targetFrameTime - frameTime);
+		}
+
+		// Update prevTime for the next frame
+		prevTime = currentTime;
 	}
 	switch (currentScreen)
 	{
@@ -373,10 +386,6 @@ void UpdateDrawFrame()
 {
 	SDL_PumpEvents();
 	keyboard = SDL_GetKeyboardState(NULL);
-	Uint32 currentTime = SDL_GetTicks(); // Get current time
-
-	updateTime = currentTime - previousTime; // Time taken for update
-	previousTime = currentTime; // Set previous time to current time
 	if (!transitioning)
 	{
 		switch (currentScreen)
@@ -448,7 +457,6 @@ void UpdateDrawFrame()
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_RenderClear(renderer); // Clear the renderer
-	Uint32 drawTime = SDL_GetTicks() - previousTime; // Time taken for draw
 	switch (currentScreen)
 	{
 	case LOGO: DrawLogoScreen(); break;
@@ -464,14 +472,6 @@ void UpdateDrawFrame()
 
 	if (transitioning) DrawTransition();
 	SDL_RenderPresent(renderer);
-
-	frameTime = SDL_GetTicks() - currentTime; // Time taken for the whole frame
-
-	// Wait for remaining time to meet the target frame rate
-	if (frameTime < FRAME_TIME)
-	{
-		SDL_Delay(FRAME_TIME - frameTime);
-	}
 }
 
 int GetScreenWidth()

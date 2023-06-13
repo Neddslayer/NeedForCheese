@@ -293,13 +293,21 @@ bool Player::IsGrounded(b2Body* playerBody)
         if (c->IsTouching())
         {
             b2Vec2 contactNormal = c->GetManifold()->localNormal;
+            cout << contactNormal.y << endl;
+            b2Fixture* fA = c->GetFixtureA();
+            b2Fixture* fB = c->GetFixtureB();
+            int userDataA = fA->GetBody()->GetUserData().pointer;
+            int userDataB = fB->GetBody()->GetUserData().pointer;
             if (contactNormal.y == 1)
             {
-                b2Fixture* fA = c->GetFixtureA();
-                b2Fixture* fB = c->GetFixtureB();
-                int userDataA = fA->GetBody()->GetUserData().pointer;
-                int userDataB = fB->GetBody()->GetUserData().pointer;
-                if (userDataA == GROUND || userDataB == GROUND || fA->GetUserData().pointer == GROUND || fB->GetUserData().pointer == GROUND)
+                if (userDataA == GROUND || userDataB == GROUND)
+                {
+                    return true;
+                }
+            }
+            if (contactNormal.y == -1)
+            {
+                if (userDataA == GROUND || userDataB == GROUND && (fA->GetUserData().pointer == SEMISOLID || fB->GetUserData().pointer == SEMISOLID))
                 {
                     return true;
                 }
