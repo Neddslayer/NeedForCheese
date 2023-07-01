@@ -30,7 +30,27 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     box.h = h_box * MET2PIX;
 
     SDL_Surface* tmp_sprites;
-    tmp_sprites = IMG_Load("resources/img/checker.png");
+    switch (playerType)
+    {
+    case Player::PLACEMAN:
+        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        break;
+    case Player::POGST:
+        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        break;
+    case Player::RUDYKIDS:
+        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        break;
+    case Player::NEDDSLAYER:
+        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        break;
+    case Player::KAUTION:
+        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        break;
+    default:
+        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        break;
+    }
     texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
     SDL_FreeSurface(tmp_sprites);
     direction = 1;
@@ -56,7 +76,7 @@ void Player::Update()
     angle = Player_Body->GetAngle(); // Get the player's rigidbody angle. Should not be used, rotation is locked!
 
     isGrounded = IsGrounded(Player_Body); // Check if the player is Grounded
-    //isGrounded = true;
+
     sprinting = (keyboard[SDL_SCANCODE_LSHIFT] && (velo.x > 1.5f || velo.x < -1.5f) && state != 3); // Sprinting check.
     if (keyboard[SDL_SCANCODE_Z] && isGrounded) Player_Body->ApplyForceToCenter(b2Vec2(0.0, -55.0), true); // If the player is on the ground, jump.
     
