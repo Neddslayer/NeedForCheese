@@ -169,7 +169,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
             // Set up the source and destination rectangles for rendering
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
             //SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
-            SDL_Rect dstrect = { j * tileWidth * 3, i * tileHeight * 3, tileWidth * 3, tileHeight * 3 };
+            SDL_Rect dstrect = { j * tileWidth * 4.5, i * tileHeight * 4.5, tileWidth * 4.5, tileHeight * 4.5 };
 
             //SDL_RenderFillRect(renderer, &dstrect);
 

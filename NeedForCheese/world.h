@@ -1,6 +1,6 @@
 #ifndef WORLD_H
 #define WORLD_H
-
+#include "utilities.h"
 // Property names of rigidbodies. This may expand in the future.
 enum PROPERTY_NAMES
 {
@@ -8,9 +8,6 @@ enum PROPERTY_NAMES
 	GROUND = 2,
 	SEMISOLID
 };
-
-const int WIDTH = 1280; // The width of the window, in pixels.
-const int HEIGHT = 720; // The height of the window, in pixels.
 
 const int SCALED_WIDTH = WIDTH / MET2PIX; // The width of the window, in meters.
 const int SCALED_HEIGHT = HEIGHT / MET2PIX; // The height of the window, in meters.

@@ -2,7 +2,7 @@
 #define SCREENS_H
 
 // The types of screens in the game. UNKNOWN should never be used!
-typedef enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE = 1, TITLESELECT, EQUIP, OPTIONS, LEVSEL, GAMEPLAY, ENDING};
+enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE = 1, TITLESELECT, EQUIP, OPTIONS, LEVSEL, GAMEPLAY, ENDING};
 
 extern GameScreen currentScreen; // The game's current screen.
 

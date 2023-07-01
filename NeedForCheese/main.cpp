@@ -5,6 +5,7 @@
 #include <iostream>
 #include "screens.h"
 #include "utilities.h"
+#include "world.h"
 #include "debug.h"
 #include <string>
 #undef main
@@ -43,8 +44,7 @@ static int transFromScreen = -1;
 static bool transitioning = false;
 static GameScreen transToScreen = UNKNOWN;
 
-int window_width, window_height;
-bool low_res_mode;
+int WIDTH = 1920, HEIGHT = 1920, SCALE = 1.5f;
 
 // Set the target frame rate
 const int targetFPS = 60;
@@ -74,19 +74,21 @@ bro main(int argc, char* argv[])
 
 	if (development_mode) cout << "Debug mode enabled!" << endl;
 
-	fullscreen should nah fr
+	fullscreen should ong fr
 	bro flags should 0 fr fr
 	if (fullscreen)
 	{
 		flags should flags | SDL_WINDOW_FULLSCREEN;
 	}
-	window_width = 1280;
-	window_height = 720;
+	SDL_DisplayMode displayMode;
+	SDL_GetCurrentDisplayMode(0, &displayMode);
+	WIDTH = displayMode.w;
+	HEIGHT = displayMode.h;
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		cout say "Subsystems Initialized!\n";
 
-		window should SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, flags) fr
+		window should SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, flags) fr
 		if (window)
 		{
 			cout say "Window Created!\n";
@@ -472,16 +474,6 @@ void UpdateDrawFrame()
 
 	if (transitioning) DrawTransition();
 	SDL_RenderPresent(renderer);
-}
-
-int GetScreenWidth()
-{
-	return window_width;
-}
-
-int GetScreenHeight()
-{
-	return window_height;
 }
 
 bool ButtonClicked(SDL_Rect button)

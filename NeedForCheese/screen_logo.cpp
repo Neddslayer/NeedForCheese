@@ -34,8 +34,8 @@ void InitLogoScreen(void)
     finishScreen = 0;
     framesCounter = 0;
 
-    logoPositionX = 640 - (128 * logoScale);
-    logoPositionY = 360 - (128 * logoScale);
+    logoPositionX = WIDTH / 2.0 - (128 * logoScale);
+    logoPositionY = HEIGHT / 2.0 - (128 * logoScale);
 
     alpha = 1.0f;
     imageSurface = IMG_Load("resources/img/logo.png");
@@ -59,8 +59,8 @@ void UpdateLogoScreen(void)
     {
         framesCounter++;
         logoScale = clamp(framesCounter / 10.0f, 0.0f, 2.0f);
-        logoPositionX = 640 - (128 * logoScale) / 2;
-        logoPositionY = 360 - (128 * logoScale) / 2;
+        logoPositionX = WIDTH / 2.0 - (128 * logoScale) / 2;
+        logoPositionY = WIDTH / 2.0 - (128 * logoScale) / 2;
         gdSprite = { logoPositionX, logoPositionY, 128 * logoScale, 128 * logoScale };
         if (!beeped)
         {
@@ -80,7 +80,7 @@ void UpdateLogoScreen(void)
     else
     {
         didtheAmount++;
-        if (didtheAmount > 200)
+        if (didtheAmount > 100)
         {
             didthe = true;
         }
