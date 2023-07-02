@@ -6,6 +6,7 @@
 SDL_Texture* texture_box = { 0 };
 using json = nlohmann::json;
 
+// Initialize the player. This includes adding it into the world and giving it a starting position and velocity, usually for cutscene purposes.
 void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
 {
     boxBodyDef.type = b2_dynamicBody;
@@ -65,6 +66,7 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     animationSpeed = animationData["speed"];
 }
 
+// Update the player. This includes applying velocity based on input, and detecting stuff like crouching.
 void Player::Update()
 {
     if (keyboard[SDL_SCANCODE_LEFT]) // Moving left
@@ -81,9 +83,8 @@ void Player::Update()
 
     pos = Player_Body->GetPosition(); // Get the player's rigidbody position.
     velo = Player_Body->GetLinearVelocity(); // Get the player's rigidbody velocity.
-    angle = Player_Body->GetAngle(); // Get the player's rigidbody angle. Should not be used, rotation is locked!
 
-    isGrounded = IsGrounded(Player_Body); // Check if the player is Grounded
+    isGrounded = IsGrounded(Player_Body); // Check if the player is grounded
 
     sprinting = (keyboard[SDL_SCANCODE_LSHIFT] && (velo.x > 1.5f || velo.x < -1.5f) && state != 3); // Sprinting check.
     if (keyboard[SDL_SCANCODE_Z] && isGrounded) Player_Body->ApplyForceToCenter(b2Vec2(0.0, -55.0), true); // If the player is on the ground, jump.
@@ -104,6 +105,7 @@ void Player::Update()
     UpdateState();
 }
 
+// Update the player's animation state.
 void Player::UpdateState()
 {
     if (!isGrounded) state = sprinting ? 4 : 3;
@@ -114,9 +116,9 @@ void Player::UpdateState()
     if (abs(velo.x) < 0.01 && abs(velo.y) < 0.01 && isGrounded) state = 0;
 }
 
+// Draw the player.
 void Player::Draw(Camera2D camera)
 {
-
     json indices = getCurrentAnimationIndices();
 
     SDL_Rect sprite = { indices[0], indices[1], indices[2], indices[3] };
@@ -124,6 +126,7 @@ void Player::Draw(Camera2D camera)
     SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &box, angle, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
+// Unload the player. Shouldn't be used often, only when switching levels!
 void Player::Unload()
 {
     SDL_DestroyTexture(texture_box);
@@ -164,32 +167,26 @@ json Player::getCurrentAnimationIndices()
     {
     case 0:
         setAnimationIndex("idle");
-        cout << animationIndex << endl;
         return animationData["animations"]["idle"][animationIndex];
         break;
     case 1:
         setAnimationIndex("walk");
-        cout << animationIndex << endl;
         return animationData["animations"]["walk"][animationIndex];
         break;
     case 2:
         setAnimationIndex("walk");
-        cout << animationIndex << endl;
         return animationData["animations"]["walk"][animationIndex];
         break;
     case 3:
         setAnimationIndex("jump");
-        cout << animationIndex << endl;
         return animationData["animations"]["jump"][animationIndex];
         break;
     case 4:
         setAnimationIndex("jump");
-        cout << animationIndex << endl;
         return animationData["animations"]["jump"][animationIndex];
         break;
     default:
         setAnimationIndex("idle");
-        cout << animationIndex << endl;
         return animationData["animations"]["idle"][animationIndex];
         break;
     }
