@@ -354,10 +354,10 @@ json Player::getCurrentAnimationIndices()
         animationTimer = 0;
         animationIndex++;
         int size = animationData["animations"][getCurrentAnimationFromState()].size();
-        cout << "deez" << endl;
-        if (animationIndex > size && size > 0)
+        if (animationIndex > (size - 1))
         {
             animationIndex = 0;
+            cout << "biggie small" << endl;
         }
     }
 
