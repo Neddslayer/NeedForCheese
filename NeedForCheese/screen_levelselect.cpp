@@ -39,7 +39,7 @@ void InitLevelSelectScreen(void)
 {
     //big balls -owen
     
-    SDL_Surface* bgSurface = IMG_Load("resources/img/title_select_bg.png");
+    SDL_Surface* bgSurface = IMG_Load("resources/img/temp-bg.png");
     background_sprite = SDL_CreateTextureFromSurface(renderer, bgSurface);
     SDL_FreeSurface(bgSurface);
 

@@ -5,6 +5,11 @@
 #include "utilities.h"
 #include "world.h"
 #include "SDL_Camera.h"
+#include <iostream>
+#include <fstream>
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 class Player
 {
@@ -60,7 +65,22 @@ private:
     bool IsGrounded(b2Body* playerBody);
 
     // The player's JSON animation file.
-    //json animationData;
+    json animationData;
+    
+    // The player's animation time before ticking to a new frame.
+    int animationTimer;
+
+    // The player's current animation indices index.
+    int animationIndex;
+
+    // The player's animation speed; stored here so the JSON isn't being called every frame.
+    int animationSpeed;
+
+    // Gets the current animation indices from the current state.
+    json getCurrentAnimationIndices();
+
+    // Gets the current animation name from the current state. Useful for getting the length of an animation.
+    string getCurrentAnimationFromState();
 };
 
 #endif // !PLAYER_H

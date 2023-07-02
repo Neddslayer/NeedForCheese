@@ -1,7 +1,10 @@
 #include "Player.h"
+#include <iostream>
+#include <fstream>
 #include "SDL2/SDL_image.h"
 
 SDL_Texture* texture_box = { 0 };
+using json = nlohmann::json;
 
 void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
 {
@@ -57,8 +60,9 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     SDL_FreeSurface(tmp_sprites);
     direction = 1;
     state = 0;
-    //std::ifstream f("resources/data/player/player_placeman.json");
-    //animationData = json::parse(f);
+    std::ifstream f("resources/data/player/player_placeman.json");
+    animationData = json::parse(f);
+    animationSpeed = animationData["speed"];
 }
 
 void Player::Update()
@@ -302,11 +306,11 @@ void Player::Draw(Camera2D camera)
     }
     */
 
-    //json indices = animationData["animations"]["idle"][0];
+    json indices = getCurrentAnimationIndices();
 
-    //SDL_Rect sprite = { indices[0], indices[1], indices[2], indices[3] };
+    SDL_Rect sprite = { indices[0], indices[1], indices[2], indices[3] };
 
-    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, NULL, &box, angle, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &box, angle, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 void Player::Unload()
@@ -340,4 +344,68 @@ bool Player::IsGrounded(b2Body* playerBody)
     }
 
     return false;
+}
+
+json Player::getCurrentAnimationIndices()
+{
+    animationTimer++;
+    if (animationTimer > animationSpeed)
+    {
+        animationTimer = 0;
+        animationIndex++;
+        int size = animationData["animations"][getCurrentAnimationFromState()].size();
+        cout << "deez" << endl;
+        if (animationIndex > size && size > 0)
+        {
+            animationIndex = 0;
+        }
+    }
+
+    switch (state)
+    {
+    case 0:
+        return animationData["animations"]["idle"][animationIndex];
+        break;
+    case 1:
+        return animationData["animations"]["walk"][animationIndex];
+        break;
+    case 2:
+        return animationData["animations"]["walk"][animationIndex];
+        break;
+    case 3:
+        return animationData["animations"]["jump"][animationIndex];
+        break;
+    case 4:
+        return animationData["animations"]["jump"][animationIndex];
+        break;
+
+    default:
+        return animationData["animations"]["idle"][0];
+        break;
+    }
+}
+
+string Player::getCurrentAnimationFromState()
+{
+    switch (state)
+    {
+    case 0:
+        return "idle";
+        break;
+    case 1:
+        return "walk";
+        break;
+    case 2:
+        return "walk"; // run
+        break;
+    case 3:
+        return "jump";
+        break;
+    case 4:
+        return "jump";
+        break;
+    default:
+        return "idle";
+        break;
+    }
 }
