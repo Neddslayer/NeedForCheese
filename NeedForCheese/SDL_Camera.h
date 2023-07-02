@@ -46,11 +46,12 @@ struct Vector2d
 
 struct Camera2D
 {
-    Vector2d offset;         // Camera offset (displacement from target)
-    Vector2d target;         // Camera target (rotation and zoom origin)
-    float rotation;         // Camera rotation in degrees
-    Vector2d zoom;             // Camera zoom (scaling), should be 1.0f by default
-    Camera2D(Vector2d offset = Vector2d(), Vector2d target = Vector2d(), float rotation = 0.0f, Vector2d zoom = Vector2d(1.0f,1.0f)) : offset(offset), target(target), rotation(rotation), zoom(zoom) {};
+    Vector2d offset;            // Camera offset (displacement from target)
+    Vector2d target;            // Camera target (rotation and zoom origin)
+    float rotation;             // Camera rotation in degrees.
+    Vector2d zoom;              // Camera zoom (scaling), should be 1.0f by default.
+    SDL_FRect bounds;           // Camera bounds.
+    Camera2D(Vector2d offset = Vector2d(), Vector2d target = Vector2d(), float rotation = 0.0f, Vector2d zoom = Vector2d(1.0f,1.0f), SDL_FRect bounds = SDL_FRect()) : offset(offset), target(target), rotation(rotation), zoom(zoom), bounds(bounds) {};
 
 };
 
@@ -58,5 +59,6 @@ int SDL_RenderCopy_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* 
 int SDL_RenderCopyEx_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect, double angle, const SDL_Point* center, SDL_RendererFlip flip);
 int SDL_RenderDrawLine_Camera(Camera2D camera, SDL_Renderer* renderer, int x1, int x2, int y1, int y2);
 int SDL_RenderFillRect_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Rect* rect);
+void Camera_UpdatePositionFromBounds(Camera2D camera);
 
 #endif // !SDL_CAMERA_H

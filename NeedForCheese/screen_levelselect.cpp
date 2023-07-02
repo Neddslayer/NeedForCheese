@@ -20,7 +20,7 @@ using namespace std;
 static int finishScreen;
 float elapsedTime = 0;
 
-b2World world = b2World(b2Vec2(0.0f, 9.81f));
+b2World world = b2World(b2Vec2(0.0f, 19.84f));
 
 float ground_x, ground_y = 0.0f;
 b2Vec2 startpoint, endpoint;
@@ -31,7 +31,7 @@ b2FixtureDef edgeFixtureDef;
 
 Player player = Player();
 Map level = Map();
-Camera2D camera = Camera2D(Vector2d(-1, 0), Vector2d(), 0.0f, Vector2d(1.0f,1.0f));
+Camera2D camera = Camera2D(Vector2d(-1, 0), Vector2d(), 0.0f, Vector2d(1.0f,1.0f), { 0.0f * MET2PIX, 300.0f, 2.0f * MET2PIX, 640.0f });
 
 static FC_Font* font;
 
@@ -49,6 +49,8 @@ void InitLevelSelectScreen(void)
     
     font = FC_CreateFont();
     FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 20, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
+
+    camera.bounds = { 0.0f, 2.0f * MET2PIX, 1.6667f * MET2PIX, 4.0f * MET2PIX };
 }
 
 float Lerp(float startValue, float endValue, float t)
@@ -82,11 +84,10 @@ void UpdateLevelSelectScreen(void)
     }
 
     // Calculate the interpolated camera position
-    float interpolatedCameraX = Lerp(camera.target.x, player.pos.x * MET2PIX, interpolationFactor);
-    float interpolatedCameraY = Lerp(camera.target.y, player.pos.y * -MET2PIX + 100, interpolationFactor);
+    float interpolatedCameraX = Lerp(camera.target.x, SDL_clamp(player.pos.x * MET2PIX, camera.bounds.x, camera.bounds.w), interpolationFactor);
+    float interpolatedCameraY = Lerp(camera.target.y, SDL_clamp(player.pos.y * -MET2PIX + 100, camera.bounds.y, camera.bounds.h), interpolationFactor);
 
     camera.target = Vector2d(interpolatedCameraX, interpolatedCameraY);
-
 }
 
 void DrawLevelSelectScreen(void)

@@ -81,8 +81,8 @@ bro main(int argc, char* argv[])
 	{
 		SDL_DisplayMode displayMode;
 		SDL_GetCurrentDisplayMode(0, &displayMode);
-		WIDTH = displayMode.w;
-		HEIGHT = displayMode.h;
+		WIDTH = 1280;
+		HEIGHT = 720;
 		SCALE = WIDTH / 1280.0;
 		MET2PIX = 96 * SCALE;
 		PIX2MET = (3.0f * SCALE) / MET2PIX;
