@@ -45,18 +45,12 @@ void InitLogoScreen(void)
     FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 50.0f * SCALE, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
 }
 
-double clamp(double d, double min, double max)
-{
-    const double t = d < min ? min : d;
-    return t > max ? max : t;
-}
-
 void UpdateLogoScreen(void)
 {
     if (didthe)
     {
         framesCounter++;
-        logoScale = clamp(framesCounter / 10.0f, 0.0f, 2.0f);
+        logoScale = SDL_clamp(framesCounter / 10.0f, 0.0f, 2.0f);
         logoPositionX = WIDTH / 2.0 - (128 * logoScale) / 2;
         logoPositionY = HEIGHT / 2.0 - (128 * logoScale) / 2;
         gdSprite = { logoPositionX, logoPositionY, 128 * logoScale, 128 * logoScale };
