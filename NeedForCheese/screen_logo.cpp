@@ -60,7 +60,7 @@ void UpdateLogoScreen(void)
         framesCounter++;
         logoScale = clamp(framesCounter / 10.0f, 0.0f, 2.0f);
         logoPositionX = WIDTH / 2.0 - (128 * logoScale) / 2;
-        logoPositionY = WIDTH / 2.0 - (128 * logoScale) / 2;
+        logoPositionY = HEIGHT / 2.0 - (128 * logoScale) / 2;
         gdSprite = { logoPositionX, logoPositionY, 128 * logoScale, 128 * logoScale };
         if (!beeped)
         {
