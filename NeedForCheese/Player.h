@@ -39,7 +39,7 @@ public:
     b2BodyDef boxBodyDef; // Player body definition. Used while initializing.
     b2FixtureDef fixtureDef; // Player fixture definition. Used while initializing.
 
-    int state; // Player animation state
+    int state, prevState; // Player animation state, and previous state for animation purposes
     int direction; // Player direction. Also used for animation
 
     bool sprinting; // If the player is sprinting.
@@ -79,8 +79,8 @@ private:
     // Gets the current animation indices from the current state.
     json getCurrentAnimationIndices();
 
-    // Gets the current animation name from the current state. Useful for getting the length of an animation.
-    string getCurrentAnimationFromState();
+    // Sets and ticks the current animation.
+    void setAnimationIndex(const char* animation);
 };
 
 #endif // !PLAYER_H

@@ -98,6 +98,8 @@ void Player::Update()
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 20.0f;
 
+    prevState = state;
+
     // Finally, update the player's animation state.
     UpdateState();
 }
@@ -114,197 +116,6 @@ void Player::UpdateState()
 
 void Player::Draw(Camera2D camera)
 {
-    /*
-    switch (playerType)
-    {
-    case Player::PLACEMAN:
-    {
-        switch (state)
-        {
-        case 0:
-            // animate placeman idle
-            break;
-        case 1:
-            // animate placeman walking
-            break;
-        case 2:
-            // animate placeman running
-            break;
-        case 3:
-            // animate placeman jumping
-            break;
-        case 4:
-            //animate placeman run-jumping
-            break;
-        case 5:
-            // animate placeman attack
-            break;
-        case 6:
-            // animate placeman block
-            break;
-        default:
-            // animate placeman idle
-            break;
-        }
-    }
-        break;
-    case Player::POGST:
-    {
-        switch (state)
-        {
-        case 0:
-            // animate placeman idle
-            break;
-        case 1:
-            // animate placeman walking
-            break;
-        case 2:
-            // animate placeman running
-            break;
-        case 3:
-            // animate placeman jumping
-            break;
-        case 4:
-            //animate placeman run-jumping
-            break;
-        case 5:
-            // animate placeman attack
-            break;
-        case 6:
-            // animate placeman block
-            break;
-        default:
-            // animate placeman idle
-            break;
-        }
-    }
-        break;
-    case Player::RUDYKIDS:
-    {
-        switch (state)
-        {
-        case 0:
-            // animate placeman idle
-            break;
-        case 1:
-            // animate placeman walking
-            break;
-        case 2:
-            // animate placeman running
-            break;
-        case 3:
-            // animate placeman jumping
-            break;
-        case 4:
-            //animate placeman run-jumping
-            break;
-        case 5:
-            // animate placeman attack
-            break;
-        case 6:
-            // animate placeman block
-            break;
-        default:
-            // animate placeman idle
-            break;
-        }
-    }
-        break;
-    case Player::NEDDSLAYER:
-    {
-        switch (state)
-        {
-        case 0:
-            // animate placeman idle
-            break;
-        case 1:
-            // animate placeman walking
-            break;
-        case 2:
-            // animate placeman running
-            break;
-        case 3:
-            // animate placeman jumping
-            break;
-        case 4:
-            //animate placeman run-jumping
-            break;
-        case 5:
-            // animate placeman attack
-            break;
-        case 6:
-            // animate placeman block
-            break;
-        default:
-            // animate placeman idle
-            break;
-        }
-    }
-        break;
-    case Player::KAUTION:
-    {
-        switch (state)
-        {
-        case 0:
-            // animate placeman idle
-            break;
-        case 1:
-            // animate placeman walking
-            break;
-        case 2:
-            // animate placeman running
-            break;
-        case 3:
-            // animate placeman jumping
-            break;
-        case 4:
-            //animate placeman run-jumping
-            break;
-        case 5:
-            // animate placeman attack
-            break;
-        case 6:
-            // animate placeman block
-            break;
-        default:
-            // animate placeman idle
-            break;
-        }
-    }
-        break;
-    default:
-    {
-        switch (state)
-        {
-        case 0:
-            // animate placeman idle
-            break;
-        case 1:
-            // animate placeman walking
-            break;
-        case 2:
-            // animate placeman running
-            break;
-        case 3:
-            // animate placeman jumping
-            break;
-        case 4:
-            //animate placeman run-jumping
-            break;
-        case 5:
-            // animate placeman attack
-            break;
-        case 6:
-            // animate placeman block
-            break;
-        default:
-            // animate placeman idle
-            break;
-        }
-    }
-        break;
-    }
-    */
 
     json indices = getCurrentAnimationIndices();
 
@@ -348,64 +159,53 @@ bool Player::IsGrounded(b2Body* playerBody)
 
 json Player::getCurrentAnimationIndices()
 {
-    animationTimer++;
-    if (animationTimer > animationSpeed)
-    {
-        animationTimer = 0;
-        animationIndex++;
-        int size = animationData["animations"][getCurrentAnimationFromState()].size();
-        if (animationIndex > (size - 1))
-        {
-            animationIndex = 0;
-            cout << "biggie small" << endl;
-        }
-    }
 
     switch (state)
     {
     case 0:
+        setAnimationIndex("idle");
+        cout << animationIndex << endl;
         return animationData["animations"]["idle"][animationIndex];
         break;
     case 1:
+        setAnimationIndex("walk");
+        cout << animationIndex << endl;
         return animationData["animations"]["walk"][animationIndex];
         break;
     case 2:
+        setAnimationIndex("walk");
+        cout << animationIndex << endl;
         return animationData["animations"]["walk"][animationIndex];
         break;
     case 3:
+        setAnimationIndex("jump");
+        cout << animationIndex << endl;
         return animationData["animations"]["jump"][animationIndex];
         break;
     case 4:
+        setAnimationIndex("jump");
+        cout << animationIndex << endl;
         return animationData["animations"]["jump"][animationIndex];
         break;
-
     default:
-        return animationData["animations"]["idle"][0];
+        setAnimationIndex("idle");
+        cout << animationIndex << endl;
+        return animationData["animations"]["idle"][animationIndex];
         break;
     }
 }
 
-string Player::getCurrentAnimationFromState()
+void Player::setAnimationIndex(const char* animation)
 {
-    switch (state)
+    animationTimer++;
+    if (animationTimer > animationSpeed || prevState != state)
     {
-    case 0:
-        return "idle";
-        break;
-    case 1:
-        return "walk";
-        break;
-    case 2:
-        return "walk"; // run
-        break;
-    case 3:
-        return "jump";
-        break;
-    case 4:
-        return "jump";
-        break;
-    default:
-        return "idle";
-        break;
+        animationTimer = 0;
+        animationIndex++;
+        int size = animationData["animations"][animation].size();
+        if (animationIndex > (size - 1))
+        {
+            animationIndex = 0;
+        }
     }
 }
