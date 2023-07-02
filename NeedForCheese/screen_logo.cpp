@@ -130,11 +130,11 @@ void DrawLogoScreen(void)
         if (framesCounter < 84)
         {
             if (framesCounter >= 70 && framesCounter % 3 == 0) Mix_PlayChannel(-1, textSound, 0);
-            FC_Draw(font, renderer, logoPositionX - 100 * SCALE, logoPositionY + 256, logoText);//(logoText, logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
+            FC_Draw(font, renderer, logoPositionX - FC_GetWidth(font, logoText) / 2.0f, logoPositionY + 256, logoText);//(logoText, logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
         }
         else
         {
-            FC_Draw(font, renderer, logoPositionX - 100 * SCALE, logoPositionY + 256, "Made by NeddLabs");//DrawText("Made by NeddLabs", logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
+            FC_Draw(font, renderer, logoPositionX - FC_GetWidth(font, "LOADING...") / 2.0f, logoPositionY + 256, "Made by NeddLabs");//DrawText("Made by NeddLabs", logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
         }
     }
     else
