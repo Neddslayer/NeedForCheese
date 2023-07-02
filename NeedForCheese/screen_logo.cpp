@@ -44,7 +44,7 @@ void InitLogoScreen(void)
     textSound = Mix_LoadWAV("resources/sfx/text.wav");
     SDL_FreeSurface(imageSurface);
     font = FC_CreateFont();
-    FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 50, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
+    FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 50.0f * SCALE, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
 }
 
 double clamp(double d, double min, double max)
@@ -62,11 +62,6 @@ void UpdateLogoScreen(void)
         logoPositionX = WIDTH / 2.0 - (128 * logoScale) / 2;
         logoPositionY = HEIGHT / 2.0 - (128 * logoScale) / 2;
         gdSprite = { logoPositionX, logoPositionY, 128 * logoScale, 128 * logoScale };
-        if (!beeped)
-        {
-            Mix_PlayChannel(-1, logoBeep, 0);
-            beeped = true;
-        }
         if (framesCounter > 100)
         {
             alpha -= 0.05f;
@@ -135,19 +130,18 @@ void DrawLogoScreen(void)
         if (framesCounter < 84)
         {
             if (framesCounter >= 70 && framesCounter % 3 == 0) Mix_PlayChannel(-1, textSound, 0);
-            FC_Draw(font, renderer, logoPositionX - 100, logoPositionY + 256, logoText);//(logoText, logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
+            FC_Draw(font, renderer, logoPositionX - 100 * SCALE, logoPositionY + 256, logoText);//(logoText, logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
         }
         else
         {
-            FC_Draw(font, renderer, logoPositionX - 100, logoPositionY + 256, "Made by NeddLabs");//DrawText("Made by NeddLabs", logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
+            FC_Draw(font, renderer, logoPositionX - 100 * SCALE, logoPositionY + 256, "Made by NeddLabs");//DrawText("Made by NeddLabs", logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
         }
     }
     else
     {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
-        FC_Draw(font, renderer, 950, 600, "LOADING...");
-        FC_DrawColor(font, renderer, 950, 600, FC_MakeColor(255, 255, 255, 255), "LOADING...");
+        FC_DrawColor(font, renderer, WIDTH - FC_GetWidth(font, "LOADING...") - 5 * SCALE, HEIGHT - FC_GetHeight(font, "LOADING...") - 5 * SCALE, FC_MakeColor(255, 255, 255, 255), "LOADING...");
     }
 }
 
