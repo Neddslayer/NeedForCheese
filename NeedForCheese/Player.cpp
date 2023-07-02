@@ -57,6 +57,8 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     SDL_FreeSurface(tmp_sprites);
     direction = 1;
     state = 0;
+    //std::ifstream f("resources/data/player/player_placeman.json");
+    //animationData = json::parse(f);
 }
 
 void Player::Update()
@@ -300,9 +302,11 @@ void Player::Draw(Camera2D camera)
     }
     */
 
-    
+    //json indices = animationData["animations"]["idle"][0];
 
-    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, NULL, &box, angle, NULL, direction == 1 ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
+    //SDL_Rect sprite = { indices[0], indices[1], indices[2], indices[3] };
+
+    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, NULL, &box, angle, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 void Player::Unload()
@@ -324,17 +328,13 @@ bool Player::IsGrounded(b2Body* playerBody)
             int userDataB = fB->GetBody()->GetUserData().pointer;
             if (contactNormal.y == 1)
             {
-                if (userDataA == GROUND || userDataB == GROUND)
-                {
-                    return true;
-                }
+                return userDataA == GROUND || userDataB == GROUND;
+                
             }
             if (contactNormal.y == -1)
             {
-                if (userDataA == GROUND || userDataB == GROUND && (fA->GetUserData().pointer == SEMISOLID || fB->GetUserData().pointer == SEMISOLID))
-                {
-                    return true;
-                }
+                return userDataA == GROUND || userDataB == GROUND && (fA->GetUserData().pointer == SEMISOLID || fB->GetUserData().pointer == SEMISOLID);
+                
             }
         }
     }

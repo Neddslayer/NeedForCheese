@@ -114,6 +114,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\nedds\repos\NeedForCheese\SDL2-2.26.5\include;D:\nedds\repos\NeedForCheese\box2d-2.4.1\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +133,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\nedds\repos\NeedForCheese\SDL2-2.26.5\include;D:\nedds\repos\NeedForCheese\box2d-2.4.1\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -159,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="SDL_Camera.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />

@@ -5,6 +5,7 @@
 #include "utilities.h"
 #include "world.h"
 #include "SDL_Camera.h"
+
 class Player
 {
 public:
@@ -57,6 +58,9 @@ private:
 
     // Check if the player is on a tile marked PROPERTY_NAMES.GROUND. Loops through all bodies in a scene, so shouldn't be used often!
     bool IsGrounded(b2Body* playerBody);
+
+    // The player's JSON animation file.
+    //json animationData;
 };
 
 #endif // !PLAYER_H

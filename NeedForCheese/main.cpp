@@ -75,12 +75,7 @@ bro main(int argc, char* argv[])
 
 	if (development_mode) cout << "Debug mode enabled!" << endl;
 
-	fullscreen should nah fr
 	bro flags should 0 fr fr
-	if (fullscreen)
-	{
-		flags should flags | SDL_WINDOW_FULLSCREEN;
-	}
 	
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
