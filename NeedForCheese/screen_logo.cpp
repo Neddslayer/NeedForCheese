@@ -19,7 +19,6 @@ float alpha = 1.0f;
 SDL_Surface* imageSurface = NULL;
 SDL_Texture* logoTex = { 0 };
 
-Mix_Chunk* logoBeep;
 Mix_Chunk* textSound;
 
 FC_Font* font;
@@ -40,7 +39,6 @@ void InitLogoScreen(void)
     alpha = 1.0f;
     imageSurface = IMG_Load("resources/img/logo.png");
     logoTex = SDL_CreateTextureFromSurface(renderer, imageSurface);
-    logoBeep = Mix_LoadWAV("resources/sfx/logo.wav");
     textSound = Mix_LoadWAV("resources/sfx/text.wav");
     SDL_FreeSurface(imageSurface);
     font = FC_CreateFont();
@@ -130,25 +128,24 @@ void DrawLogoScreen(void)
         if (framesCounter < 84)
         {
             if (framesCounter >= 70 && framesCounter % 3 == 0) Mix_PlayChannel(-1, textSound, 0);
-            FC_Draw(font, renderer, logoPositionX - FC_GetWidth(font, logoText) / 2.0f, logoPositionY + 256, logoText);//(logoText, logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
+            FC_Draw(font, renderer, logoPositionX - FC_GetWidth(font, logoText) / (2 * SCALE), logoPositionY + 256, logoText);//(logoText, logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
         }
         else
         {
-            FC_Draw(font, renderer, logoPositionX - FC_GetWidth(font, "LOADING...") / 2.0f, logoPositionY + 256, "Made by NeddLabs");//DrawText("Made by NeddLabs", logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
+            FC_Draw(font, renderer, logoPositionX - FC_GetWidth(font, "Made by NeddLabs") / (2 * SCALE), logoPositionY + 256, "Made by NeddLabs");//DrawText("Made by NeddLabs", logoPositionX - 112, logoPositionY + 256, 50, Fade(BLACK, alpha));
         }
     }
     else
     {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
-        FC_DrawColor(font, renderer, WIDTH - FC_GetWidth(font, "LOADING...") - 5 * SCALE, HEIGHT - FC_GetHeight(font, "LOADING...") - 5 * SCALE, FC_MakeColor(255, 255, 255, 255), "LOADING...");
+        FC_DrawColor(font, renderer, WIDTH - FC_GetWidth(font, "LOADING...") - 50 * SCALE, HEIGHT - FC_GetHeight(font, "LOADING...") - 5 * SCALE, FC_MakeColor(255, 255, 255, 255), "LOADING...");
     }
 }
 
 void UnloadLogoScreen(void)
 {
     SDL_DestroyTexture(logoTex);
-    Mix_FreeChunk(logoBeep);
     Mix_FreeChunk(textSound);
     FC_FreeFont(font);
 }
