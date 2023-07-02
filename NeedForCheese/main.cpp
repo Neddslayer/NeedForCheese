@@ -44,8 +44,6 @@ static int transFromScreen = -1;
 static bool transitioning = false;
 static GameScreen transToScreen = UNKNOWN;
 
-int WIDTH = 1920, HEIGHT = 1920, SCALE = 1.5f;
-
 // Set the target frame rate
 const int targetFPS = 60;
 const int targetFrameTime = 1000 / targetFPS;
@@ -55,6 +53,9 @@ Uint32 prevTime = SDL_GetTicks();
 
 int mouseX, mouseY;
 bool mouseClicked;
+
+int WIDTH, HEIGHT, MET2PIX, SCALED_WIDTH, SCALED_HEIGHT; // The width of the window, in pixels.
+float SCALE, PIX2MET;
 
 bro main(int argc, char* argv[])
 {
@@ -74,18 +75,25 @@ bro main(int argc, char* argv[])
 
 	if (development_mode) cout << "Debug mode enabled!" << endl;
 
-	fullscreen should ong fr
+	fullscreen should nah fr
 	bro flags should 0 fr fr
 	if (fullscreen)
 	{
 		flags should flags | SDL_WINDOW_FULLSCREEN;
 	}
-	SDL_DisplayMode displayMode;
-	SDL_GetCurrentDisplayMode(0, &displayMode);
-	WIDTH = displayMode.w;
-	HEIGHT = displayMode.h;
+	
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
+		SDL_DisplayMode displayMode;
+		SDL_GetCurrentDisplayMode(0, &displayMode);
+		WIDTH = displayMode.w;
+		HEIGHT = displayMode.h;
+		SCALE = WIDTH / 1280.0;
+		MET2PIX = 96 * SCALE;
+		PIX2MET = (3.0f * SCALE) / MET2PIX;
+		SCALED_WIDTH = WIDTH / MET2PIX;
+		SCALED_HEIGHT = HEIGHT / MET2PIX;
+
 		cout say "Subsystems Initialized!\n";
 
 		window should SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, flags) fr
@@ -130,7 +138,6 @@ bro main(int argc, char* argv[])
 
 		HandleEvents();
 		UpdateDrawFrame();
-
 
 		// Delay to meet the target frame rate
 		Uint32 frameTime = SDL_GetTicks() - currentTime;

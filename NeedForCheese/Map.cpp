@@ -132,8 +132,6 @@ Map::Map(const char* filename, b2World* world)
                         body->CreateFixture(&tileFixtureDef);
 
                         boxBodies.push_back(body);
-
-                        std::cout << bodyDef.position.x << " " << bodyDef.position.y << endl;
                     }
                 }
             }
@@ -169,7 +167,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
             // Set up the source and destination rectangles for rendering
             SDL_Rect srcrect = { x, y, tileWidth, tileHeight };
             //SDL_Rect dstrect = { ((SCALED_WIDTH / 2.0f) + (j * tileWidth)) * MET2PIX, ((SCALED_WIDTH / 2.0f) + (i * tileHeight)) * MET2PIX, tileWidth * MET2PIX, tileHeight * MET2PIX};
-            SDL_Rect dstrect = { j * tileWidth * 4.5, i * tileHeight * 4.5, tileWidth * 4.5, tileHeight * 4.5 };
+            SDL_Rect dstrect = { j * tileWidth * 3.0 * SCALE, i * tileHeight * 3.0 * SCALE, tileWidth * 3.0 * SCALE, tileHeight * 3.0 * SCALE };
 
             //SDL_RenderFillRect(renderer, &dstrect);
 

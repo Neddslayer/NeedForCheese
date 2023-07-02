@@ -29,6 +29,8 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
     box.w = w_box * MET2PIX;
     box.h = h_box * MET2PIX;
 
+    cout << SCALE << endl;
+
     SDL_Surface* tmp_sprites;
     switch (playerType)
     {
@@ -316,7 +318,6 @@ bool Player::IsGrounded(b2Body* playerBody)
         if (c->IsTouching())
         {
             b2Vec2 contactNormal = c->GetManifold()->localNormal;
-            cout << contactNormal.y << endl;
             b2Fixture* fA = c->GetFixtureA();
             b2Fixture* fB = c->GetFixtureB();
             int userDataA = fA->GetBody()->GetUserData().pointer;

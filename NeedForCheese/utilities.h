@@ -2,15 +2,10 @@
 #define UTILITIES_H
 
 #include "SDL2/SDL.h"
-#include "world.h"
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
-
-extern int WIDTH = 1920; // The width of the window, in pixels.
-extern int HEIGHT = 1080; // The height of the window, in pixels.
-extern int SCALE = WIDTH / 1280;
 
 extern SDL_Renderer* renderer;
 extern SDL_Window* window;
@@ -23,8 +18,14 @@ extern bool ButtonClicked(SDL_Rect button);
 extern bool ButtonClickedF(SDL_FRect button);
 extern bool mouseClicked;
 extern int mouseX, mouseY;
-const int MET2PIX = 96 * SCALE;
-const float PIX2MET = (3.0f * SCALE) / MET2PIX;
+
+extern int WIDTH; // The width of the window, in pixels.
+extern int HEIGHT; // The height of the window, in pixels.
+extern float SCALE;
+extern int MET2PIX;
+extern float PIX2MET;
+extern int SCALED_WIDTH; // The width of the window, in meters.
+extern int SCALED_HEIGHT; // The height of the window, in meters.
 
 vector<string> split_string(const string& str, const char* delim);
 
