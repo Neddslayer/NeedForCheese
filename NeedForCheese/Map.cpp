@@ -13,7 +13,7 @@ using namespace std;
 Map::Map(const char* filename, b2World* world)
 {
     XMLDocument level;
-    level.LoadFile((string("resources/map/") + string(filename) + string(".xml")).c_str());
+    level.LoadFile((string("resources/data/map/") + string(filename) + string(".xml")).c_str());
 
 
     if (level.Error())
