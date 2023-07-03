@@ -89,7 +89,7 @@ Map::Map(const char* filename, b2World* world)
 
     for (int i = 0; i < collisions.size(); i++)
     {
-        vector<string> columns = split_string(rows[i], ",");
+        vector<string> columns = split_string(collisions[i], ",");
 
         for (int j = 0; j < columns.size(); j++)
         {
@@ -156,7 +156,6 @@ Map::Map(const char* filename, b2World* world)
             {
                 int tileIndex = y * mapWidth + x;
                 int tile = collision_tiles[tileIndex];
-                cout << tile << endl;
                 if (tile != 0)
                     createTileCollision(x, y, tile, world);
             }
@@ -227,7 +226,6 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
                     b2Vec2 v2 = edgeShape->m_vertex2;
                     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
                     SDL_RenderDrawLine_Camera(camera, renderer, ((SCALED_WIDTH / 2.0f) + v1.x + position.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + v1.y + position.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.x + position.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + v2.y + position.y) * MET2PIX);
-                    cout << v1.x << " " << v1.y << endl;
                 }
                 else if (type == b2Shape::e_polygon)
                 {
@@ -255,7 +253,6 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
                 }
             }
         }
-        cout << "----------" << endl;
     }
 }
 
