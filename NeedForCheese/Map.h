@@ -29,10 +29,11 @@ private:
 
     vector<int> rendered_tiles; // A list of all of the tiles to be rendered in the map.
     vector<int> collision_tiles; // A list of all of the collision tiles to be created.
+    vector<b2Body*> tileBodies;
     int mapWidth; // The width (in tiles) of the map.
     int mapHeight; // The height (in tiles) of the map.
     int tileWidth; // A single tile's texture width.
     int tileHeight; // A single tile's texture height.
-
+    void createTileCollision(int x, int y, int tile, b2World* world);
 };
 #endif // !MAP_H

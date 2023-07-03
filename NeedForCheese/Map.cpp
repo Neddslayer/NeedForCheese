@@ -101,7 +101,6 @@ Map::Map(const char* filename, b2World* world)
     bodyDef.type = b2_staticBody;
     b2Body* body = world->CreateBody(&bodyDef);
 
-    vector<b2Body*> boxBodies;
     if (old_collision_generation) // this should NOT be used, it is a lot more taxing, as it creates bodies for each RENDERED tile, not the optimized collision tile.
     {
         for (int y = 0; y < mapHeight; y++)
@@ -126,7 +125,7 @@ Map::Map(const char* filename, b2World* world)
                         edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
                         body->CreateFixture(&edgeFixtureDef);
 
-                        boxBodies.push_back(body);
+                        tileBodies.push_back(body);
                     }
                     else
                     {
@@ -143,7 +142,7 @@ Map::Map(const char* filename, b2World* world)
                         tileFixtureDef.shape = &shape;
                         body->CreateFixture(&tileFixtureDef);
 
-                        boxBodies.push_back(body);
+                        tileBodies.push_back(body);
                     }
                 }
             }
@@ -157,22 +156,9 @@ Map::Map(const char* filename, b2World* world)
             {
                 int tileIndex = y * mapWidth + x;
                 int tile = collision_tiles[tileIndex];
-
-
-
-                bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
-                    (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
-                bodyDef.angle = 0;
-                body = world->CreateBody(&bodyDef);
-                body->GetUserData().pointer = (uintptr_t)GROUND;
-                b2FixtureDef edgeFixtureDef;
-                b2EdgeShape edgeShape;
-                edgeShape.SetOneSided(b2Vec2(-0.5f, -0.25f), b2Vec2(-0.25f, -0.25f), b2Vec2(0.25f, -0.25f), b2Vec2(0.5f, -0.25f));
-                edgeFixtureDef.shape = &edgeShape;
-                edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
-                body->CreateFixture(&edgeFixtureDef);
-
-                boxBodies.push_back(body);
+                cout << tile << endl;
+                if (tile != 0)
+                    createTileCollision(x, y, tile, world);
             }
         }
     }
@@ -184,7 +170,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
 {
     int texture_width, texture_height;
     SDL_QueryTexture(texture, NULL, NULL, &texture_width, &texture_height);
-    
+    /*
     for (int i = 0; i < mapHeight; i++)
     {
         for (int j = 0; j < mapWidth; j++)
@@ -214,6 +200,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
             SDL_RenderCopy_Camera(camera, renderer, texture, &srcrect, &dstrect);
         }
     }
+    */
     if (showHitboxes)
     {
         for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
@@ -235,12 +222,12 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
                 // Draw the shape based on its type
                 if (type == b2Shape::e_edge)
                 {
-                    b2EdgeShape* edgeShape = static_cast<b2EdgeShape*>(shape);
+                    b2EdgeShape* edgeShape = (b2EdgeShape*)shape;
                     b2Vec2 v1 = edgeShape->m_vertex1;
                     b2Vec2 v2 = edgeShape->m_vertex2;
                     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-                    SDL_RenderDrawLine_Camera(camera, renderer, ((SCALED_WIDTH / 2.0f) + v1.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v1.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.x) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.y) * MET2PIX);
-                    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+                    SDL_RenderDrawLine_Camera(camera, renderer, ((SCALED_WIDTH / 2.0f) + v1.x + position.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + v1.y + position.y) * MET2PIX, ((SCALED_WIDTH / 2.0f) + v2.x + position.x) * MET2PIX, ((SCALED_HEIGHT / 2.0f) + v2.y + position.y) * MET2PIX);
+                    cout << v1.x << " " << v1.y << endl;
                 }
                 else if (type == b2Shape::e_polygon)
                 {
@@ -268,6 +255,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
                 }
             }
         }
+        cout << "----------" << endl;
     }
 }
 
@@ -315,4 +303,53 @@ void Map::GetPolygonShapeDimensions(const b2PolygonShape& shape, float& width, f
     // Calculate the width and height based on the min and max values
     width = maxX - minX;
     height = maxY - minY;
+}
+
+void Map::createTileCollision(int x, int y, int tile, b2World* world)
+{
+    switch (tile)
+    {
+    case 638:
+    {
+        b2BodyDef bodyDef;
+        bodyDef.type = b2_staticBody;
+        b2Body* body = world->CreateBody(&bodyDef);
+        bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+            (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+        bodyDef.angle = 0;
+        body = world->CreateBody(&bodyDef);
+        body->GetUserData().pointer = (uintptr_t)GROUND;
+        b2FixtureDef edgeFixtureDef;
+        b2EdgeShape edgeShape;
+        edgeShape.SetOneSided(b2Vec2(-0.5f, -0.25f), b2Vec2(-0.25f, -0.25f), b2Vec2(0.25f, -0.25f), b2Vec2(0.5f, -0.25f));
+        edgeFixtureDef.shape = &edgeShape;
+        edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
+        body->CreateFixture(&edgeFixtureDef);
+
+        tileBodies.push_back(body);
+        break;
+    }
+    case 626:
+    {
+        b2BodyDef bodyDef;
+        bodyDef.type = b2_staticBody;
+        b2Body* body = world->CreateBody(&bodyDef);
+        bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+            (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+        bodyDef.angle = 0;
+        body = world->CreateBody(&bodyDef);
+        body->GetUserData().pointer = (uintptr_t)GROUND;
+        b2FixtureDef edgeFixtureDef;
+        b2EdgeShape edgeShape;
+        edgeShape.SetTwoSided(b2Vec2(-0.5f, -0.25f), b2Vec2(0.5f, -0.25f));
+        edgeFixtureDef.shape = &edgeShape;
+        edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
+        body->CreateFixture(&edgeFixtureDef);
+
+        tileBodies.push_back(body);
+        break;
+    }
+    default:
+        break;
+    }
 }

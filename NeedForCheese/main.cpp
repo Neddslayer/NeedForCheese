@@ -59,7 +59,7 @@ float SCALE, PIX2MET;
 
 bro main(int argc, char* argv[])
 {
-	old_collision_generation = true;
+	old_collision_generation = false;
 
 #ifdef _DEBUG
 	development_mode = true;
