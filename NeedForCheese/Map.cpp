@@ -306,7 +306,34 @@ void Map::createTileCollision(int x, int y, int tile, b2World* world)
 {
     switch (tile)
     {
-    case 638:
+    case 626: // UP
+    {
+        createUpCollision(x, y, world);
+        break;
+    }
+    case 627: // UP-RIGHT
+    {
+        createUpCollision(x, y, world);
+        createRightCollision(x, y, world);
+        break;
+    }
+    case 628: // UP-LEFT
+    {
+        createUpCollision(x, y, world);
+        createLeftCollision(x, y, world);
+        break;
+    }
+    case 629: // RIGHT
+    {
+        createRightCollision(x, y, world);
+        break;
+    }
+    case 630: // LEFT
+    {
+        createLeftCollision(x, y, world);
+        break;
+    }
+    case 638: // UP-SEMISOLID
     {
         b2BodyDef bodyDef;
         bodyDef.type = b2_staticBody;
@@ -326,31 +353,84 @@ void Map::createTileCollision(int x, int y, int tile, b2World* world)
         tileBodies.push_back(body);
         break;
     }
-    case 626:
-    {
-        b2BodyDef bodyDef;
-        bodyDef.type = b2_staticBody;
-        b2Body* body = world->CreateBody(&bodyDef);
-        bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
-            (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
-        bodyDef.angle = 0;
-        body = world->CreateBody(&bodyDef);
-        body->GetUserData().pointer = (uintptr_t)GROUND;
-        b2FixtureDef edgeFixtureDef;
-        b2EdgeShape edgeShape;
-        edgeShape.SetTwoSided(b2Vec2(-0.5f, -0.25f), b2Vec2(0.5f, -0.25f));
-        edgeFixtureDef.shape = &edgeShape;
-        edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
-        body->CreateFixture(&edgeFixtureDef);
-
-        tileBodies.push_back(body);
-        break;
-    }
-    case 630:
-    {
-        break;
-    }
     default:
         break;
     }
+    
+}
+void Map::createUpCollision(int x, int y, b2World* world)
+{
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+    b2Body* body = world->CreateBody(&bodyDef);
+    bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+        (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+    bodyDef.angle = 0;
+    body = world->CreateBody(&bodyDef);
+    body->GetUserData().pointer = (uintptr_t)GROUND;
+    b2FixtureDef edgeFixtureDef;
+    b2EdgeShape edgeShape;
+    edgeShape.SetTwoSided(b2Vec2(-0.25f, -0.25f), b2Vec2(0.25f, -0.25f));
+    edgeFixtureDef.shape = &edgeShape;
+    edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
+    body->CreateFixture(&edgeFixtureDef);
+
+    tileBodies.push_back(body);
+}
+void Map::createLeftCollision(int x, int y, b2World* world)
+{
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+    b2Body* body = world->CreateBody(&bodyDef);
+    bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+        (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+    bodyDef.angle = 0;
+    body = world->CreateBody(&bodyDef);
+    body->GetUserData().pointer = (uintptr_t)GROUND;
+    b2FixtureDef edgeFixtureDef;
+    b2EdgeShape edgeShape;
+    edgeShape.SetTwoSided(b2Vec2(-0.25f, -0.25f), b2Vec2(-0.25f, 0.25f));
+    edgeFixtureDef.shape = &edgeShape;
+    edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
+    body->CreateFixture(&edgeFixtureDef);
+
+    tileBodies.push_back(body);
+}
+void Map::createDownCollision(int x, int y, b2World* world)
+{
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+    b2Body* body = world->CreateBody(&bodyDef);
+    bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+        (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+    bodyDef.angle = 0;
+    body = world->CreateBody(&bodyDef);
+    body->GetUserData().pointer = (uintptr_t)GROUND;
+    b2FixtureDef edgeFixtureDef;
+    b2EdgeShape edgeShape;
+    edgeShape.SetTwoSided(b2Vec2(-0.25f, 0.25f), b2Vec2(0.25f, 0.25f));
+    edgeFixtureDef.shape = &edgeShape;
+    edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
+    body->CreateFixture(&edgeFixtureDef);
+
+    tileBodies.push_back(body);
+}
+void Map::createRightCollision(int x, int y, b2World* world)
+{
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+    b2Body* body = world->CreateBody(&bodyDef);
+    bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+        (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+    bodyDef.angle = 0;
+    body = world->CreateBody(&bodyDef);
+    body->GetUserData().pointer = (uintptr_t)GROUND;
+    b2FixtureDef edgeFixtureDef;
+    b2EdgeShape edgeShape;
+    edgeShape.SetTwoSided(b2Vec2(0.25f, -0.25f), b2Vec2(0.25f, 0.25f));
+    edgeFixtureDef.shape = &edgeShape;
+    edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
+    body->CreateFixture(&edgeFixtureDef);
+
+    tileBodies.push_back(body);
 }

@@ -35,5 +35,9 @@ private:
     int tileWidth; // A single tile's texture width.
     int tileHeight; // A single tile's texture height.
     void createTileCollision(int x, int y, int tile, b2World* world);
+    void createUpCollision(int x, int y, b2World* world);
+    void createLeftCollision(int x, int y, b2World* world);
+    void createDownCollision(int x, int y, b2World* world);
+    void createRightCollision(int x, int y, b2World* world);
 };
 #endif // !MAP_H

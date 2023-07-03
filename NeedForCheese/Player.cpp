@@ -162,7 +162,6 @@ bool Player::IsGrounded(b2Body* playerBody)
 
 json Player::getCurrentAnimationIndices()
 {
-
     switch (state)
     {
     case 0:
