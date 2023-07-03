@@ -43,12 +43,12 @@ void InitLevelSelectScreen(void)
     background_sprite = SDL_CreateTextureFromSurface(renderer, bgSurface);
     SDL_FreeSurface(bgSurface);
 
-    player.Initialize(&world, b2Vec2_zero, b2Vec2_zero);
+    player.Initialize(&world, b2Vec2(1, 0.085), b2Vec2_zero);
 
     level = Map("phil", &world);
     
     font = FC_CreateFont();
-    FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 20, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
+    FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 20 * SCALE, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
 
     camera.bounds = { 0.0f, 2.0f * MET2PIX, 1.6667f * MET2PIX, 4.0f * MET2PIX };
 }
@@ -66,7 +66,7 @@ void UpdateLevelSelectScreen(void)
     
     if (keyboard[SDL_SCANCODE_R])
     {
-        player.Player_Body->SetTransform(b2Vec2_zero, 0);
+        player.Player_Body->SetTransform(b2Vec2(1, 0.085), 0);
         player.Player_Body->SetLinearVelocity(b2Vec2_zero);
     }
     auto now = std::chrono::high_resolution_clock::now();
@@ -85,7 +85,7 @@ void UpdateLevelSelectScreen(void)
 
     // Calculate the interpolated camera position
     float interpolatedCameraX = Lerp(camera.target.x, SDL_clamp(player.pos.x * MET2PIX, camera.bounds.x, camera.bounds.w), interpolationFactor);
-    float interpolatedCameraY = Lerp(camera.target.y, SDL_clamp(player.pos.y * -MET2PIX + 100, camera.bounds.y, camera.bounds.h), interpolationFactor);
+    float interpolatedCameraY = Lerp(camera.target.y, SDL_clamp(player.pos.y * -MET2PIX + 50, camera.bounds.y, camera.bounds.h), interpolationFactor);
 
     camera.target = Vector2d(interpolatedCameraX, interpolatedCameraY);
 }
