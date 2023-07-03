@@ -98,11 +98,11 @@ void DrawLevelSelectScreen(void)
     player.Draw(camera);
     if (development_mode)
     {
-        FC_Draw(font, renderer, 10, 10, to_string(player.pos.x).c_str());
-        FC_Draw(font, renderer, 10, 40, to_string(player.pos.y).c_str());
-        FC_Draw(font, renderer, 10, 70, to_string(player.velo.x).c_str());
-        FC_Draw(font, renderer, 10, 100, to_string(player.velo.y).c_str());
-        FC_Draw(font, renderer, 10, 130, to_string(player.state).c_str());
+        FC_Draw(font, renderer, 10, 10 * SCALE, to_string(player.pos.x).c_str());
+        FC_Draw(font, renderer, 10, 40 * SCALE, to_string(player.pos.y).c_str());
+        FC_Draw(font, renderer, 10, 70 * SCALE, to_string(player.velo.x).c_str());
+        FC_Draw(font, renderer, 10, 100 * SCALE, to_string(player.velo.y).c_str());
+        FC_Draw(font, renderer, 10, 130 * SCALE, to_string(player.state).c_str());
     }
 }
 

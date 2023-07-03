@@ -27,7 +27,8 @@ private:
     int texture_width; // The tileset's texture width.
     int texture_height; // The tileset's texture height.
 
-    vector<int> tiles; // A list of all of the tiles in the map.
+    vector<int> rendered_tiles; // A list of all of the tiles to be rendered in the map.
+    vector<int> collision_tiles; // A list of all of the collision tiles to be created.
     int mapWidth; // The width (in tiles) of the map.
     int mapHeight; // The height (in tiles) of the map.
     int tileWidth; // A single tile's texture width.

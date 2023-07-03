@@ -59,19 +59,23 @@ Map::Map(const char* filename, b2World* world)
     SDL_FreeSurface(surface);
 
     XMLElement* dataElement = mapElement->FirstChildElement("layer")->FirstChildElement("data");
-    if (dataElement == nullptr)
+    XMLElement* collisionElement = mapElement->FirstChildElement("layer")->NextSiblingElement("layer")->FirstChildElement("data");
+    if (dataElement == nullptr || collisionElement == nullptr)
     {
         printf("Error loading map: no layer data found\n");
     }
     const char* csvData = dataElement->GetText();
+    const char* collisionData = collisionElement->GetText();
     
-    if (csvData == nullptr)
+    if (csvData == nullptr || collisionData == nullptr)
     {
         printf("Error loading map: no layer data found\n");
     }
 
     string csvString(csvData);
-    vector<string> rows = split_string(csvString, "\n");
+    string collisionString(collisionData);
+    vector<string> rows = split_string(csvString, ",\n");
+    vector<string> collisions = split_string(collisionData, ",\n");
 
     for (int i = 0; i < rows.size(); i++)
     {
@@ -79,7 +83,17 @@ Map::Map(const char* filename, b2World* world)
         
         for (int j = 0; j < columns.size(); j++)
         {
-            tiles.push_back(stoi(columns[j]));
+            rendered_tiles.push_back(stoi(columns[j]));
+        }
+    }
+
+    for (int i = 0; i < collisions.size(); i++)
+    {
+        vector<string> columns = split_string(rows[i], ",");
+
+        for (int j = 0; j < columns.size(); j++)
+        {
+            collision_tiles.push_back(stoi(columns[j]));
         }
     }
     
@@ -88,14 +102,14 @@ Map::Map(const char* filename, b2World* world)
     b2Body* body = world->CreateBody(&bodyDef);
 
     vector<b2Body*> boxBodies;
-    if (old_collision_generation)
+    if (old_collision_generation) // this should NOT be used, it is a lot more taxing, as it creates bodies for each RENDERED tile, not the optimized collision tile.
     {
         for (int y = 0; y < mapHeight; y++)
         {
             for (int x = 0; x < mapWidth; x++)
             {
                 int tileIndex = y * mapWidth + x;
-                int tile = tiles[tileIndex];
+                int tile = rendered_tiles[tileIndex];
                 if (tile != 0)
                 {
                     if (tile > 400)
@@ -135,6 +149,33 @@ Map::Map(const char* filename, b2World* world)
             }
         }
     }
+    else
+    {
+        for (int y = 0; y < mapHeight; y++)
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                int tileIndex = y * mapWidth + x;
+                int tile = collision_tiles[tileIndex];
+
+
+
+                bodyDef.position.Set((x * (tileWidth * PIX2MET)) - (tileWidth * PIX2MET) * 12.5f,
+                    (y * (tileHeight * PIX2MET)) - (tileHeight * PIX2MET) - (tileWidth * PIX2MET) * 5.55f);
+                bodyDef.angle = 0;
+                body = world->CreateBody(&bodyDef);
+                body->GetUserData().pointer = (uintptr_t)GROUND;
+                b2FixtureDef edgeFixtureDef;
+                b2EdgeShape edgeShape;
+                edgeShape.SetOneSided(b2Vec2(-0.5f, -0.25f), b2Vec2(-0.25f, -0.25f), b2Vec2(0.25f, -0.25f), b2Vec2(0.5f, -0.25f));
+                edgeFixtureDef.shape = &edgeShape;
+                edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
+                body->CreateFixture(&edgeFixtureDef);
+
+                boxBodies.push_back(body);
+            }
+        }
+    }
 }
 
 Map::Map(){}
@@ -148,7 +189,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
     {
         for (int j = 0; j < mapWidth; j++)
         {
-            int tile = tiles[static_cast<vector<int, allocator<int>>::size_type>(i) * mapWidth + j];
+            int tile = rendered_tiles[static_cast<vector<int, allocator<int>>::size_type>(i) * mapWidth + j];
 
             // If the tile is 0, it's an empty tile so we skip it
             if (tile == 0)
