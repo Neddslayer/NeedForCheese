@@ -169,7 +169,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
 {
     int texture_width, texture_height;
     SDL_QueryTexture(texture, NULL, NULL, &texture_width, &texture_height);
-    /*
+    
     for (int i = 0; i < mapHeight; i++)
     {
         for (int j = 0; j < mapWidth; j++)
@@ -199,7 +199,7 @@ void Map::draw_map(SDL_Renderer* renderer, b2World* world, Camera2D camera)
             SDL_RenderCopy_Camera(camera, renderer, texture, &srcrect, &dstrect);
         }
     }
-    */
+    
     if (showHitboxes)
     {
         for (b2Body* body = world->GetBodyList(); body; body = body->GetNext())
@@ -344,6 +344,10 @@ void Map::createTileCollision(int x, int y, int tile, b2World* world)
         body->CreateFixture(&edgeFixtureDef);
 
         tileBodies.push_back(body);
+        break;
+    }
+    case 630:
+    {
         break;
     }
     default:
