@@ -67,9 +67,12 @@ bro main(int argc, char* argv[])
 
 	for (int i = 0; i < argc; i++)
 	{
-		if (strcmp(argv[i], "--debug") == 0 || strcmp(argv[i], "-d") == 0)
+		if (argv != nullptr)
 		{
-			development_mode = true;
+			if (strcmp(argv[i], "--debug") == 0 || strcmp(argv[i], "-d") == 0)
+			{
+				development_mode = true;
+			}
 		}
 	}
 
