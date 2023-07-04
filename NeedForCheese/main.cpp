@@ -177,8 +177,8 @@ bro main(int argc, char* argv[])
 	case OPTIONS:
 		//UnloadOptionsScreen();
 		break;
-	case LEVSEL:
-		UnloadLevelSelectScreen();
+	case CHARSEL:
+		//UnloadLevelSelectScreen();
 		break;
 	case GAMEPLAY:
 		//UnloadGameplayScreen();
@@ -253,7 +253,7 @@ static void ChangeToScreen(GameScreen screen)
 	case TITLESELECT: UnloadTitleSelectScreen(); break;
 	case EQUIP: UnloadEquipScreen(); break;
 	case OPTIONS: /*UnloadOptionsScreen();*/ break;
-	case LEVSEL: UnloadLevelSelectScreen(); break;
+	case CHARSEL: /*UnloadLevelSelectScreen();*/ break;
 	case GAMEPLAY: /*UnloadGameplayScreen();*/ break;
 	case ENDING: /*UnloadEndingScreen();*/ break;
 	default: break;
@@ -267,8 +267,8 @@ static void ChangeToScreen(GameScreen screen)
 	case TITLESELECT: InitTitleSelectScreen(); break;
 	case EQUIP: InitEquipScreen(); break;
 	case OPTIONS: /*InitOptionsScreen();*/ break;
-	case LEVSEL: InitLevelSelectScreen(); break;
-	case GAMEPLAY: /*InitGameplayScreen();*/ break;
+	case CHARSEL: /*InitLevelSelectScreen();*/ break;
+	case GAMEPLAY: InitGameplayScreen(); break;
 	case ENDING: /*InitEndingScreen();*/ break;
 	default: break;
 	}
@@ -304,8 +304,8 @@ static void UpdateTransition(void)
 			case LOGO: UnloadLogoScreen(); break;
 			case TITLE: UnloadTitleScreen(); break;
 			case OPTIONS: /*UnloadOptionsScreen();*/ break;
-			case LEVSEL: /*UnloadLevelSelectScreen();*/ break;
-			case GAMEPLAY: /*UnloadGameplayScreen();*/ break;
+			case CHARSEL: /*UnloadGameplayScreen();*/ break;
+			case GAMEPLAY: UnloadGameplayScreen(); break;
 			case ENDING: /*UnloadEndingScreen();*/ break;
 			default: break;
 			}
@@ -316,8 +316,8 @@ static void UpdateTransition(void)
 			case LOGO: InitLogoScreen(); break;
 			case TITLE: InitTitleScreen(); break;
 			case OPTIONS: /*InitOptionsScreen();*/ break;
-			case LEVSEL: /*InitLevelSelectScreen();*/ break;
-			case GAMEPLAY: /*InitGameplayScreen();*/ break;
+			case CHARSEL: /*InitLevelSelectScreen();*/ break;
+			case GAMEPLAY: InitGameplayScreen(); break;
 			case ENDING: /*InitEndingScreen();*/ break;
 			default: break;
 			}
@@ -344,7 +344,7 @@ static void UpdateTransition(void)
 			UpdateTitleScreen();
 
 			if (FinishTitleScreen() == 1) TransitionToScreen(OPTIONS);
-			else if (FinishTitleScreen() == 2) TransitionToScreen(LEVSEL);
+			else if (FinishTitleScreen() == 2) TransitionToScreen(CHARSEL);
 		} break;
 		case OPTIONS:
 		{/*
@@ -353,7 +353,7 @@ static void UpdateTransition(void)
 			if (FinishOptionsScreen()) TransitionToScreen(TITLE);
 			*/
 		} break;
-		case LEVSEL:
+		case CHARSEL:
 		{
 			/*
 			UpdateLevelSelectScreen();
@@ -363,12 +363,11 @@ static void UpdateTransition(void)
 		} break;
 		case GAMEPLAY:
 		{
-			/*
 			UpdateGameplayScreen();
 
 			if (FinishGameplayScreen() == 1) TransitionToScreen(ENDING);
 			else if (FinishGameplayScreen() == 2) TransitionToScreen(TITLE);
-			*/
+			
 		} break;
 		case ENDING:
 		{
@@ -424,7 +423,7 @@ void UpdateDrawFrame()
 		{
 			UpdateTitleSelectScreen();
 
-			if (FinishTitleSelectScreen() == 1) ChangeToScreen(LEVSEL);
+			if (FinishTitleSelectScreen() == 1) ChangeToScreen(CHARSEL);
 			if (FinishTitleSelectScreen() == 2) ChangeToScreen(EQUIP);
 		} break;
 		case EQUIP:
@@ -440,22 +439,20 @@ void UpdateDrawFrame()
 			if (FinishOptionsScreen()) TransitionToScreen(TITLE);
 			*/
 		} break;
-		case LEVSEL:
-		{
-			
-			UpdateLevelSelectScreen();
-
-			if (FinishLevelSelectScreen()) TransitionToScreen(GAMEPLAY);
-			
-		} break;
-		case GAMEPLAY:
+		case CHARSEL:
 		{
 			/*
 			UpdateGameplayScreen();
 
+			if (FinishGameplayScreen()) TransitionToScreen(GAMEPLAY);
+			*/
+		} break;
+		case GAMEPLAY:
+		{
+			UpdateGameplayScreen();
+
 			if (FinishGameplayScreen() == 1) TransitionToScreen(ENDING);
 			else if (FinishGameplayScreen() == 2) TransitionToScreen(TITLE);
-			*/
 		} break;
 		case ENDING:
 		{
@@ -482,8 +479,8 @@ void UpdateDrawFrame()
 	case TITLESELECT: DrawTitleSelectScreen(); break;
 	case EQUIP: DrawEquipScreen(); break;
 	case OPTIONS: /*DrawOptionsScreen();*/ break;
-	case LEVSEL: DrawLevelSelectScreen(); break;
-	case GAMEPLAY: /*DrawGameplayScreen();*/ break;
+	case CHARSEL: /*DrawLevelSelectScreen();*/ break;
+	case GAMEPLAY: DrawGameplayScreen(); break;
 	case ENDING: /*DrawEndingScreen();*/ break;
 	default: cout << "???"; break;
 	}

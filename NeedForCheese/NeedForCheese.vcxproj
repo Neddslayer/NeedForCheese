@@ -147,11 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="screen_characterselect.cpp" />
     <ClCompile Include="SDL_Camera.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="screen_equip.cpp" />
-    <ClCompile Include="screen_levelselect.cpp" />
+    <ClCompile Include="screen_gameplay.cpp" />
     <ClCompile Include="screen_logo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="screen_title.cpp" />

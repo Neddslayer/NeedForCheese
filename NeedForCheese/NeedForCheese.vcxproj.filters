@@ -33,7 +33,7 @@
     <ClCompile Include="screen_equip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="screen_levelselect.cpp">
+    <ClCompile Include="screen_gameplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -46,6 +46,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SDL_Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="screen_characterselect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

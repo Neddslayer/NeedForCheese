@@ -35,7 +35,7 @@ Camera2D camera = Camera2D(Vector2d(-1, 0), Vector2d(), 0.0f, Vector2d(1.0f,1.0f
 
 static FC_Font* font;
 
-void InitLevelSelectScreen(void)
+void InitGameplayScreen(void)
 {
     //big balls -owen
     
@@ -59,7 +59,7 @@ float Lerp(float startValue, float endValue, float t)
     return startValue + (endValue - startValue) * t * t * (3 - 2 * t);
 }
 
-void UpdateLevelSelectScreen(void)
+void UpdateGameplayScreen(void)
 {
     player.Update();
     world.Step(1.0f / 60.0f, 8.0f, 4.0f); // update
@@ -89,7 +89,7 @@ void UpdateLevelSelectScreen(void)
     camera.target = Vector2d(interpolatedCameraX, interpolatedCameraY);
 }
 
-void DrawLevelSelectScreen(void)
+void DrawGameplayScreen(void)
 {
     SDL_RenderCopy(renderer, background_sprite, NULL, NULL);
 
@@ -105,13 +105,13 @@ void DrawLevelSelectScreen(void)
     }
 }
 
-void UnloadLevelSelectScreen(void)
+void UnloadGameplayScreen(void)
 {
     player.Unload();
     SDL_DestroyTexture(background_sprite);
 }
 
-int FinishLevelSelectScreen(void)
+int FinishGameplayScreen(void)
 {
 	return finishScreen;
 }

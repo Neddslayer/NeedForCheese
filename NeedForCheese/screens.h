@@ -2,7 +2,7 @@
 #define SCREENS_H
 
 // The types of screens in the game. UNKNOWN should never be used!
-enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE = 1, TITLESELECT, EQUIP, OPTIONS, LEVSEL, GAMEPLAY, ENDING};
+enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE = 1, TITLESELECT, EQUIP, OPTIONS, CHARSEL, GAMEPLAY, ENDING};
 
 extern GameScreen currentScreen; // The game's current screen.
 
@@ -36,10 +36,16 @@ void DrawOptionsScreen(void);
 void UnloadOptionsScreen(void);
 int FinishOptionsScreen(void);
 
-void InitLevelSelectScreen(void); // Initialize the level select screen.
-void UpdateLevelSelectScreen(void);
-void DrawLevelSelectScreen(void);
-void UnloadLevelSelectScreen(void);
-int FinishLevelSelectScreen(void);
+void InitCharacterSelectScreen(void); // Initialize the options screen.
+void UpdateCharacterSelectScreen(void);
+void DrawCharacterSelectScreen(void);
+void UnloadCharacterSelectScreen(void);
+int FinishCharacterSelectScreen(void);
+
+void InitGameplayScreen(void); // Initialize the gameplay screen.
+void UpdateGameplayScreen(void);
+void DrawGameplayScreen(void);
+void UnloadGameplayScreen(void);
+int FinishGameplayScreen(void);
 
 #endif // !SCREENS_H
