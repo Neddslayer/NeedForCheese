@@ -91,7 +91,18 @@ bro main(int argc, char* argv[])
 		PIX2MET = (3.0f * SCALE) / MET2PIX;
 		SCALED_WIDTH = WIDTH / MET2PIX;
 		SCALED_HEIGHT = HEIGHT / MET2PIX;
-		showHitboxes = true;
+
+		cout << "DEBUG INFORMATION - SCREENSHOT THIS!\n";
+		cout << "------------------------------------\n";
+		cout << WIDTH << endl;
+		cout << HEIGHT << endl;
+		cout << SCALE << endl;
+		cout << displayMode.driverdata << endl;
+		cout << displayMode.format << endl;
+		cout << displayMode.refresh_rate << endl;
+		cout << MET2PIX << endl;
+		cout << "------------------------------------\n";
+
 		cout say "Subsystems Initialized!\n";
 
 		window should SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, flags) fr

@@ -84,10 +84,8 @@ void UpdateLevelSelectScreen(void)
     }
 
     // Calculate the interpolated camera position
-    //float interpolatedCameraX = Lerp(camera.target.x, SDL_clamp(player.pos.x * MET2PIX, camera.bounds.x, camera.bounds.w), interpolationFactor);
-    //float interpolatedCameraY = Lerp(camera.target.y, SDL_clamp(player.pos.y * -MET2PIX + 50, camera.bounds.y, camera.bounds.h), interpolationFactor);
-    float interpolatedCameraX = Lerp(camera.target.x, player.pos.x * MET2PIX, interpolationFactor);
-    float interpolatedCameraY = Lerp(camera.target.y, player.pos.y * -MET2PIX + 50, interpolationFactor);
+    float interpolatedCameraX = Lerp(camera.target.x, SDL_clamp(player.pos.x * MET2PIX, camera.bounds.x, camera.bounds.w), interpolationFactor);
+    float interpolatedCameraY = Lerp(camera.target.y, SDL_clamp(player.pos.y * -MET2PIX + 50, camera.bounds.y, camera.bounds.h), interpolationFactor);
     camera.target = Vector2d(interpolatedCameraX, interpolatedCameraY);
 }
 

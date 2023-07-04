@@ -345,6 +345,9 @@ void Map::createTileCollision(int x, int y, int tile, b2World* world)
         body->GetUserData().pointer = (uintptr_t)GROUND;
         b2FixtureDef edgeFixtureDef;
         b2EdgeShape edgeShape;
+        // the code is different because of this ONE LINE
+        // then again, i could split it into a seperate function... 
+        // but it's just quicker, and it probably makes no difference in compilation anyway.
         edgeShape.SetOneSided(b2Vec2(-0.5f, -0.25f), b2Vec2(-0.25f, -0.25f), b2Vec2(0.25f, -0.25f), b2Vec2(0.5f, -0.25f));
         edgeFixtureDef.shape = &edgeShape;
         edgeFixtureDef.userData.pointer = (uintptr_t)GROUND;
