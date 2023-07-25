@@ -123,7 +123,7 @@ void Player::Draw(Camera2D camera)
 
     SDL_Rect sprite = { indices[0], indices[1], indices[2], indices[3] };
 
-    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &box, angle, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &box, -0.00, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 // Unload the player. Shouldn't be used often, only when switching levels!

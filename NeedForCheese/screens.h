@@ -36,7 +36,7 @@ void DrawOptionsScreen(void);
 void UnloadOptionsScreen(void);
 int FinishOptionsScreen(void);
 
-void InitCharacterSelectScreen(void); // Initialize the options screen.
+void InitCharacterSelectScreen(void); // Initialize the character select	 screen.
 void UpdateCharacterSelectScreen(void);
 void DrawCharacterSelectScreen(void);
 void UnloadCharacterSelectScreen(void);

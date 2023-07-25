@@ -25,5 +25,5 @@ void UnloadCharacterSelectScreen(void)
 
 int FinishCharacterSelectScreen(void)
 {
-
+	return 0;
 }

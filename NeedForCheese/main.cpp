@@ -104,12 +104,13 @@ bro main(int argc, char* argv[])
 		cout << "------------------------------------\n";
 
 		cout say "Subsystems Initialized!\n";
-
-		window should SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, flags) fr
+		window should SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, flags);
 		if (window)
 		{
 			cout say "Window Created!\n";
-			SDL_SetWindowMinimumSize(window, 100, 100) fr
+			SDL_SetWindowMinimumSize(window, 100, 100);
+
+			SDL_SetWindowBordered(window, SDL_FALSE);
 		}
 		screenSurface = SDL_GetWindowSurface(window);
 		if (!screenSurface)
@@ -254,7 +255,7 @@ static void ChangeToScreen(GameScreen screen)
 	case EQUIP: UnloadEquipScreen(); break;
 	case OPTIONS: /*UnloadOptionsScreen();*/ break;
 	case CHARSEL: /*UnloadLevelSelectScreen();*/ break;
-	case GAMEPLAY: /*UnloadGameplayScreen();*/ break;
+	case GAMEPLAY: UnloadGameplayScreen(); break;
 	case ENDING: /*UnloadEndingScreen();*/ break;
 	default: break;
 	}
@@ -344,7 +345,7 @@ static void UpdateTransition(void)
 			UpdateTitleScreen();
 
 			if (FinishTitleScreen() == 1) TransitionToScreen(OPTIONS);
-			else if (FinishTitleScreen() == 2) TransitionToScreen(CHARSEL);
+			else if (FinishTitleScreen() == 2) TransitionToScreen(GAMEPLAY);
 		} break;
 		case OPTIONS:
 		{/*
@@ -423,7 +424,7 @@ void UpdateDrawFrame()
 		{
 			UpdateTitleSelectScreen();
 
-			if (FinishTitleSelectScreen() == 1) ChangeToScreen(CHARSEL);
+			if (FinishTitleSelectScreen() == 1) ChangeToScreen(GAMEPLAY);
 			if (FinishTitleSelectScreen() == 2) ChangeToScreen(EQUIP);
 		} break;
 		case EQUIP:
