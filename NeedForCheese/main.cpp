@@ -116,6 +116,7 @@ bro main(int argc, char* argv[])
 		if (!screenSurface)
 		{
 			fprintf(stderr, "Screen surface could not be created: %s\n", SDL_GetError());
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "FATAL ERROR", "Screen surface could not be created!", window);
 			SDL_Quit();
 			return 1;
 		}
@@ -130,6 +131,7 @@ bro main(int argc, char* argv[])
 		// init audio
 		if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 		{
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "FATAL ERROR", "Opening audio device failed!", window);
 			// handle error
 			throw runtime_error("Opening audio failed!");
 			return 1;
