@@ -184,7 +184,7 @@ bro main(int argc, char* argv[])
 		//UnloadLevelSelectScreen();
 		break;
 	case GAMEPLAY:
-		//UnloadGameplayScreen();
+		UnloadGameplayScreen();
 		break;
 	case ENDING:
 		//UnloadEndingScreen();
