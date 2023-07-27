@@ -185,7 +185,6 @@ json Player::getCurrentAnimationIndices()
         break;
     case 4:
         setAnimationIndex("jump");
-        cout << animationData["animations"]["jump"] << endl;
         return animationData["animations"]["jump"]["indices"][animationIndex];
         break;
     default:
