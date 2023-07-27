@@ -45,8 +45,8 @@ public:
     bool sprinting; // If the player is sprinting.
 
     PlayerType playerType = PLACEMAN;
-
-	// Initialize the player. This includes adding it into the world and giving it a starting position and velocity, usually for cutscene purposes.
+    
+    // Initialize the player. This includes adding it into the world and giving it a starting position and velocity, usually for cutscene purposes.
     void Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity);
 
 	// Update the player. This includes applying velocity based on input, and detecting stuff like crouching.
@@ -80,8 +80,11 @@ private:
     // The player's animation speed; stored here so the JSON isn't being called every frame.
     int animationSpeed;
 
-    // Gets the current animation indices from the current state.
+    // Gets the current animation indices from the player's state.
     json getCurrentAnimationIndices();
+
+    // Gets the current animation offset from the player's state.
+    json getCurrentAnimationOffset();
 
     // Sets and ticks the current animation.
     void setAnimationIndex(const char* animation);

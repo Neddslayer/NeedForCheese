@@ -120,10 +120,13 @@ void Player::UpdateState()
 void Player::Draw(Camera2D camera)
 {
     json indices = getCurrentAnimationIndices();
+    json offset = getCurrentAnimationOffset();
 
     SDL_Rect sprite = { indices[0], indices[1], indices[2], indices[3] };
 
-    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &box, -0.00, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    SDL_Rect position = { box.x + offset[0], box.y + offset[1] };
+
+    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &position, -0.00, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 // Unload the player. Shouldn't be used often, only when switching levels!
@@ -166,27 +169,59 @@ json Player::getCurrentAnimationIndices()
     {
     case 0:
         setAnimationIndex("idle");
-        return animationData["animations"]["idle"][animationIndex];
+        return animationData["animations"]["idle"]["indices"][animationIndex];
         break;
     case 1:
         setAnimationIndex("walk");
-        return animationData["animations"]["walk"][animationIndex];
+        return animationData["animations"]["walk"]["indices"][animationIndex];
         break;
     case 2:
         setAnimationIndex("walk");
-        return animationData["animations"]["walk"][animationIndex];
+        return animationData["animations"]["walk"]["indices"][animationIndex];
         break;
     case 3:
         setAnimationIndex("jump");
-        return animationData["animations"]["jump"][animationIndex];
+        return animationData["animations"]["jump"]["indices"][animationIndex];
         break;
     case 4:
         setAnimationIndex("jump");
-        return animationData["animations"]["jump"][animationIndex];
+        cout << animationData["animations"]["jump"] << endl;
+        return animationData["animations"]["jump"]["indices"][animationIndex];
         break;
     default:
         setAnimationIndex("idle");
-        return animationData["animations"]["idle"][animationIndex];
+        return animationData["animations"]["idle"]["indices"][animationIndex];
+        break;
+    }
+}
+
+json Player::getCurrentAnimationOffset()
+{
+    switch (state)
+    {
+    case 0:
+        setAnimationIndex("idle");
+        return animationData["animations"]["idle"]["offset"][animationIndex];
+        break;
+    case 1:
+        setAnimationIndex("walk");
+        return animationData["animations"]["walk"]["offset"][animationIndex];
+        break;
+    case 2:
+        setAnimationIndex("walk");
+        return animationData["animations"]["walk"]["offset"][animationIndex];
+        break;
+    case 3:
+        setAnimationIndex("jump");
+        return animationData["animations"]["jump"]["offset"][animationIndex];
+        break;
+    case 4:
+        setAnimationIndex("jump");
+        return animationData["animations"]["jump"]["offset"][animationIndex];
+        break;
+    default:
+        setAnimationIndex("idle");
+        return animationData["animations"]["idle"]["offset"][animationIndex];
         break;
     }
 }
@@ -198,7 +233,7 @@ void Player::setAnimationIndex(const char* animation)
     {
         animationTimer = 0;
         animationIndex++;
-        int size = animationData["animations"][animation].size();
+        int size = animationData["animations"][animation]["indices"].size();
         if (animationIndex > (size - 1))
         {
             animationIndex = 0;
