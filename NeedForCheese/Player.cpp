@@ -124,7 +124,7 @@ void Player::Draw(Camera2D camera)
 
     SDL_Rect sprite = { indices[0], indices[1], indices[2], indices[3] };
 
-    SDL_Rect position = { box.x + offset[0], box.y + offset[1] };
+    SDL_Rect position = { box.x + offset[0], box.y + offset[1], box.w, box.h };
 
     SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &box, -0.00, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
