@@ -126,7 +126,7 @@ void Player::Draw(Camera2D camera)
 
     SDL_Rect position = { box.x + offset[0], box.y + offset[1], box.w, box.h };
 
-    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &box, -0.00, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    SDL_RenderCopyEx_Camera(camera, renderer, texture_box, &sprite, &position, -0.00, NULL, direction == 1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 // Unload the player. Shouldn't be used often, only when switching levels!
