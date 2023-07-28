@@ -35,30 +35,30 @@ void Player::Initialize(b2World* world, b2Vec2 position, b2Vec2 velocity)
 
     cout << SCALE << endl;
 
-    SDL_Surface* tmp_sprites;
+    SDL_Surface* char_sprite;
     switch (playerType)
     {
     case Player::PLACEMAN:
-        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        char_sprite = IMG_Load("resources/img/player/player_placeman.png");
         break;
     case Player::POGST:
-        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        char_sprite = IMG_Load("resources/img/player/player_placeman.png");
         break;
     case Player::RUDYKIDS:
-        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        char_sprite = IMG_Load("resources/img/player/player_placeman.png");
         break;
     case Player::NEDDSLAYER:
-        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        char_sprite = IMG_Load("resources/img/player/player_placeman.png");
         break;
     case Player::KAUTION:
-        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        char_sprite = IMG_Load("resources/img/player/player_placeman.png");
         break;
     default:
-        tmp_sprites = IMG_Load("resources/img/player/player_placeman.png");
+        char_sprite = IMG_Load("resources/img/player/player_placeman.png");
         break;
     }
-    texture_box = SDL_CreateTextureFromSurface(renderer, tmp_sprites);
-    SDL_FreeSurface(tmp_sprites);
+    texture_box = SDL_CreateTextureFromSurface(renderer, char_sprite);
+    SDL_FreeSurface(char_sprite);
     direction = 1;
     state = 0;
     std::ifstream f("resources/data/player/player_placeman.json");
@@ -98,7 +98,7 @@ void Player::Update()
 
     box.x = ((SCALED_WIDTH / 2.0f) + pos.x) * MET2PIX - box.w / 2.0f;
     box.y = (((SCALED_HEIGHT / 2.0f) + pos.y) * MET2PIX - box.h / 2.0f) + MET2PIX / 30.0f;
-
+    // Set the previous state, in case the state changes and we need to play a new animation.
     prevState = state;
 
     // Finally, update the player's animation state.
@@ -150,9 +150,8 @@ bool Player::IsGrounded(b2Body* playerBody)
             if (contactNormal.y == 1)
             {
                 return userDataA == GROUND || userDataB == GROUND;
-                
             }
-            if (contactNormal.y == -1)
+            else if (contactNormal.y == -1)
             {
                 return userDataA == GROUND || userDataB == GROUND && (fA->GetUserData().pointer == SEMISOLID || fB->GetUserData().pointer == SEMISOLID);
                 

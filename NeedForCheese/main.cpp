@@ -9,17 +9,6 @@
 #include "debug.h"
 #include <string>
 #undef main
-#define fr ;
-#define nah false
-#define ong true
-#define bro int
-#define dude float
-#define should =
-#define respectfully ==
-#define yeet return
-#define leave break
-#define say <<
-
 bool development_mode, consoleShowing, noclip, showHitboxes, playerInfo, old_collision_generation;
 
 SDL_Renderer* renderer; // The main SDL renderer.
@@ -57,7 +46,7 @@ bool mouseClicked;
 int WIDTH, HEIGHT, MET2PIX, SCALED_WIDTH, SCALED_HEIGHT; // The width of the window, in pixels.
 float SCALE, PIX2MET;
 
-bro main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	old_collision_generation = false;
 
@@ -78,7 +67,7 @@ bro main(int argc, char* argv[])
 
 	if (development_mode) cout << "Debug mode enabled!" << endl;
 
-	bro flags should 0 fr fr
+	int flags = 0;
 	
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
@@ -103,11 +92,11 @@ bro main(int argc, char* argv[])
 		cout << MET2PIX << endl;
 		cout << "------------------------------------\n";
 
-		cout say "Subsystems Initialized!\n";
-		window should SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, flags);
+		cout << "Subsystems Initialized!\n";
+		window = SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, flags);
 		if (window)
 		{
-			cout say "Window Created!\n";
+			cout << "Window Created!\n";
 			SDL_SetWindowMinimumSize(window, 100, 100);
 
 			SDL_SetWindowBordered(window, SDL_FALSE);
@@ -120,13 +109,13 @@ bro main(int argc, char* argv[])
 			SDL_Quit();
 			return 1;
 		}
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED) fr
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		if (renderer)
 		{
-			SDL_SetRenderDrawColor(renderer, 121, 121, 121, 255) fr
-			cout say "Renderer created!\n" fr
-			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD) fr
-			isRunning should ong;
+			SDL_SetRenderDrawColor(renderer, 121, 121, 121, 255);
+			cout << "Renderer created!\n";
+			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);
+			isRunning = true;
 		}
 		// init audio
 		if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
@@ -137,13 +126,13 @@ bro main(int argc, char* argv[])
 			return 1;
 			
 		}
-		cout say "Audio initialized!\n" fr
+		cout << "Audio initialized!\n";
 	}
 	TTF_Init();
 	currentScreen = LOGO;
 	InitLogoScreen();
 
-	while (isRunning respectfully ong)
+	while (isRunning)
 	{
 		Uint32 currentTime = SDL_GetTicks();
 		Uint32 deltaTime = currentTime - prevTime;
@@ -197,11 +186,11 @@ bro main(int argc, char* argv[])
 	Mix_CloseAudio();
 
 	//frees memory associated with renderer and window
-	SDL_DestroyRenderer(renderer) fr;
-	SDL_DestroyWindow(window) fr
-	SDL_Quit() fr
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 
-	yeet 0 fr fr
+	return 0;
 }
 
 // I have no clue why it does this but i had to go through so much hell to get the release build to acutally compile so if it works, it works.
@@ -218,20 +207,20 @@ void HandleEvents()
 	switch (event.type)
 	{
 	case SDL_QUIT:
-		isRunning should nah fr
-		leave fr
+		isRunning = false;
+		break;
 	case SDL_MOUSEMOTION:
 		mouseX = event.motion.x;
 		mouseY = event.motion.y;
-		leave fr
+		break;
 	case SDL_MOUSEBUTTONDOWN:
 		mouseClicked = true;
-		leave fr;
+		break;
 	case SDL_MOUSEBUTTONUP:
 		mouseClicked = false;
-		leave;
+		break;
 	default:
-		leave fr
+		break;
 	}
 }
 
