@@ -2,19 +2,19 @@
 #include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_image.h"
 #include "screens.h"
-#include "utilities.h"
-#include "world.h"
+#include "../h/utilities.h"
+#include "../h/world.h"
 #include "box2d/box2d.h"
 #include <map>
 #include <chrono>
 #include <iostream>
 #include <vector>
-#include "Player.h"
-#include "tinyxml2.h"
-#include "Map.h"
-#include "SDL_Camera.h"
-#include "SDL_FontCache.h"
-#include "debug.h"
+#include "../player/Player.h"
+#include "../util/tinyxml2.h"
+#include "../map/Map.h"
+#include "../camera/SDL_Camera.h"
+#include "../util/SDL_FontCache.h"
+#include "../debug/debug.h"
 using namespace std;
 
 static int finishScreen;

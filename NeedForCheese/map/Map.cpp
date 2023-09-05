@@ -1,13 +1,13 @@
 #include "Map.h"
-#include "utilities.h"
-#include "world.h"
-#include "tinyxml2.h"
+#include "../h/utilities.h"
+#include "../h/world.h"
+#include "../util/tinyxml2.h"
 #include "SDL2/SDL.h"
 #include "box2d/box2d.h"
 #include <string>
 #include <iostream>
-#include "SDL_Camera.h"
-#include "debug.h"
+#include "../camera/SDL_Camera.h"
+#include "../debug/debug.h"
 using namespace std;
 
 Map::Map(const char* filename, b2World* world)

@@ -4,11 +4,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "utilities.h"
-#include "tinyxml2.h"
+#include "../h/utilities.h"
+#include "../util/tinyxml2.h"
 #include "SDL2/SDL_image.h"
 #include "box2d/box2d.h"
-#include "SDL_Camera.h"
+#include "../camera/SDL_Camera.h"
 using namespace std;
 using namespace tinyxml2;
 class Map

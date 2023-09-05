@@ -147,37 +147,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="screen_characterselect.cpp" />
-    <ClCompile Include="SDL_Camera.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="screen_equip.cpp" />
-    <ClCompile Include="screen_gameplay.cpp" />
-    <ClCompile Include="screen_logo.cpp" />
+    <ClCompile Include="camera\SDL_Camera.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="screen_title.cpp" />
-    <ClCompile Include="screen_titleselect.cpp" />
-    <ClCompile Include="SDL_FontCache.c" />
-    <ClCompile Include="tinyxml2.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="debug.h" />
-    <ClInclude Include="json.hpp" />
-    <ClInclude Include="SDL_Camera.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="screens.h" />
-    <ClInclude Include="SDL_FontCache.h" />
-    <ClInclude Include="tinyxml2.h" />
-    <ClInclude Include="utilities.h" />
-    <ClInclude Include="world.h" />
+    <ClCompile Include="map\Map.cpp" />
+    <ClCompile Include="player\Player.cpp" />
+    <ClCompile Include="screen\screen_characterselect.cpp" />
+    <ClCompile Include="screen\screen_equip.cpp" />
+    <ClCompile Include="screen\screen_gameplay.cpp" />
+    <ClCompile Include="screen\screen_logo.cpp" />
+    <ClCompile Include="screen\screen_title.cpp" />
+    <ClCompile Include="screen\screen_titleselect.cpp" />
+    <ClCompile Include="util\SDL_FontCache.c" />
+    <ClCompile Include="util\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NeedForCheese.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="camera\SDL_Camera.h" />
+    <ClInclude Include="debug\debug.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="h\utilities.h" />
+    <ClInclude Include="h\world.h" />
+    <ClInclude Include="map\Map.h" />
+    <ClInclude Include="player\Player.h" />
+    <ClInclude Include="screen\screens.h" />
+    <ClInclude Include="util\json.hpp" />
+    <ClInclude Include="util\SDL_FontCache.h" />
+    <ClInclude Include="util\tinyxml2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

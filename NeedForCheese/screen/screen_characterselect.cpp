@@ -1,6 +1,6 @@
 #include "SDL2/SDL.h"
-#include "screens.h"
-#include "utilities.h"
+#include "../screen/screens.h"
+#include "../h/utilities.h"
 
 void InitCharacterSelectScreen(void)
 {

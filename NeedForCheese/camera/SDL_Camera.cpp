@@ -1,9 +1,9 @@
 #include "SDL_Camera.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "SDL_FontCache.h"
-#include "utilities.h"
-#include "world.h"
+#include "../util/SDL_FontCache.h"
+#include "../h/utilities.h"
+#include "../h/world.h"
 
 // Render a texture with a camera offset.
 int SDL_RenderCopy_Camera(Camera2D camera, SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* srcrect, SDL_Rect* dstrect)

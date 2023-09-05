@@ -1,9 +1,10 @@
 #include "SDL2/SDL.h"
 #include "screens.h"
-#include "utilities.h"
+#include "../h/utilities.h"
 #include "SDL2/SDL_image.h"
-#include "SDL_FontCache.h"
+#include "../util/SDL_FontCache.h"
 #include "SDL2/SDL_mixer.h"
+#include <chrono>
 #include <iostream>
 
 static int framesCounter = 0;
@@ -28,6 +29,12 @@ SDL_FRect gdSprite;
 bool didthe, beeped;
 int didtheAmount;
 
+typedef std::chrono::high_resolution_clock Clock;
+typedef std::chrono::duration<float> fsec;
+
+auto startTime = Clock::now();
+auto endTime = Clock::now();
+
 void InitLogoScreen(void)
 {
     finishScreen = 0;
@@ -43,6 +50,7 @@ void InitLogoScreen(void)
     SDL_FreeSurface(imageSurface);
     font = FC_CreateFont();
     FC_LoadFont(font, renderer, "resources/font/RobotoSlab.ttf", 50.0f * SCALE, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
+    startTime = Clock::now();
 }
 
 void UpdateLogoScreen(void)
@@ -54,8 +62,9 @@ void UpdateLogoScreen(void)
         logoPositionX = WIDTH / 2.0 - (128 * logoScale) / 2;
         logoPositionY = HEIGHT / 2.0 - (128 * logoScale) / 2;
         gdSprite = { logoPositionX, logoPositionY, 128 * logoScale, 128 * logoScale };
-        if (framesCounter > 100)
+        if (framesCounter > 4000)
         {
+            cout << "Time took " << startTime.time_since_epoch().count() << " for 4000" << endl;
             alpha -= 0.05f;
             if (alpha <= 0.0f)
             {

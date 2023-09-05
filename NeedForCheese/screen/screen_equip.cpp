@@ -1,7 +1,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "screens.h"
-#include "utilities.h"
+#include "../h/utilities.h"
 #include <iostream>
 
 SDL_Surface* titleEquipBGSurface = NULL;

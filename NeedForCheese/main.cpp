@@ -1,16 +1,17 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
-#include "SDL_FontCache.h"
+#include "util/SDL_FontCache.h"
 #include "SDL2/SDL_mixer.h"
+#include <chrono>
 #include <iostream>
-#include "screens.h"
-#include "utilities.h"
-#include "world.h"
-#include "debug.h"
+#include "screen/screens.h"
+#include "h/utilities.h"
+#include "h/world.h"
+#include "debug/debug.h"
 #include <string>
 #undef main
-bool development_mode, consoleShowing, noclip, showHitboxes, playerInfo, old_collision_generation;
 
+// MAIN RENDERER VARS
 SDL_Renderer* renderer; // The main SDL renderer.
 SDL_Window* window; // The game window.
 SDL_Surface* screenSurface; // The game window as a surface.
@@ -18,6 +19,7 @@ const Uint8* keyboard; // All keyboard input.
 bool isRunning;
 bool fullscreen;
 
+// SCREEN FUNC AND VARS
 static void ChangeToScreen(GameScreen);
 static void TransitionToScreen(GameScreen);
 static void UpdateTransition(void);
@@ -27,24 +29,29 @@ void UpdateDrawFrame();
 
 GameScreen currentScreen;
 
+// TRANSITION
 static float transAlpha = 0.0f;
 static bool transFadeOut = false;
 static int transFromScreen = -1;
 static bool transitioning = false;
 static GameScreen transToScreen = UNKNOWN;
 
-// Set the target frame rate
-const int targetFPS = 60;
-const int targetFrameTime = 1000 / targetFPS;
-
-// Get the initial tick count
-Uint32 prevTime = SDL_GetTicks();
-
+// MOUSE
 int mouseX, mouseY;
 bool mouseClicked;
 
+// WINDOW AND SCALING STUFF
 int WIDTH, HEIGHT, MET2PIX, SCALED_WIDTH, SCALED_HEIGHT; // The width of the window, in pixels.
 float SCALE, PIX2MET;
+
+// DELTA TIME
+typedef std::chrono::high_resolution_clock Clock;
+typedef std::chrono::duration<float> fsec;
+
+auto lastTime = Clock::now();
+float deltaTime = 0;
+
+FC_Font* debugFont;
 
 int main(int argc, char* argv[])
 {
@@ -73,30 +80,32 @@ int main(int argc, char* argv[])
 	{
 		SDL_DisplayMode displayMode;
 		SDL_GetCurrentDisplayMode(0, &displayMode);
-		WIDTH = 1920;
-		HEIGHT = 1080;
+		WIDTH = displayMode.w;
+		HEIGHT = displayMode.h;
 		SCALE = WIDTH / 1280.0;
 		MET2PIX = 96 * SCALE;
 		PIX2MET = (3.0f * SCALE) / MET2PIX;
 		SCALED_WIDTH = WIDTH / MET2PIX;
 		SCALED_HEIGHT = HEIGHT / MET2PIX;
 
-		cout << "DEBUG INFORMATION - SCREENSHOT THIS!\n";
-		cout << "------------------------------------\n";
-		cout << WIDTH << endl;
-		cout << HEIGHT << endl;
-		cout << SCALE << endl;
-		cout << displayMode.driverdata << endl;
-		cout << displayMode.format << endl;
-		cout << displayMode.refresh_rate << endl;
-		cout << MET2PIX << endl;
-		cout << "------------------------------------\n";
-
+		if (development_mode)
+		{
+			cout << "DEBUG INFORMATION\n";
+			cout << "------------------------------------\n";
+			cout << WIDTH << endl;
+			cout << HEIGHT << endl;
+			cout << SCALE << endl;
+			cout << displayMode.driverdata << endl;
+			cout << displayMode.format << endl;
+			cout << displayMode.refresh_rate << endl;
+			cout << MET2PIX << endl;
+			cout << "------------------------------------\n";
+		}
 		cout << "Subsystems Initialized!\n";
 		window = SDL_CreateWindow("Need for Cheese", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, flags);
 		if (window)
 		{
-			cout << "Window Created!\n";
+			fprintf(stdout, "Window Created!\n");
 			SDL_SetWindowMinimumSize(window, 100, 100);
 
 			SDL_SetWindowBordered(window, SDL_FALSE);
@@ -132,23 +141,18 @@ int main(int argc, char* argv[])
 	currentScreen = LOGO;
 	InitLogoScreen();
 
+	debugFont = FC_CreateFont();
+	FC_LoadFont(debugFont, renderer, "resources/font/Roboto-Regular.ttf", 20 * SCALE, FC_MakeColor(0, 0, 0, 255), TTF_STYLE_NORMAL);
 	while (isRunning)
 	{
-		Uint32 currentTime = SDL_GetTicks();
-		Uint32 deltaTime = currentTime - prevTime;
+		auto currentTime = Clock::now();
+		fsec passedTime = currentTime - lastTime;
+		deltaTime = passedTime.count();
+
+		lastTime = currentTime;
 
 		HandleEvents();
-		UpdateDrawFrame();
-
-		// Delay to meet the target frame rate
-		Uint32 frameTime = SDL_GetTicks() - currentTime;
-		if (frameTime < targetFrameTime)
-		{
-			SDL_Delay(targetFrameTime - frameTime);
-		}
-
-		// Update prevTime for the next frame
-		prevTime = currentTime;
+		UpdateDrawFrame();	
 	}
 	switch (currentScreen)
 	{
@@ -478,6 +482,7 @@ void UpdateDrawFrame()
 	}
 
 	if (transitioning) DrawTransition();
+	FC_Draw(debugFont, renderer, 20, 20, std::to_string((int)(1.0 / deltaTime)).c_str());
 	SDL_RenderPresent(renderer);
 }
 

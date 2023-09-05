@@ -2,12 +2,12 @@
 #define PLAYER_H
 #include "SDL2/SDL.h"
 #include "box2d/box2d.h"
-#include "utilities.h"
-#include "world.h"
-#include "SDL_Camera.h"
+#include "../h/utilities.h"
+#include "../h/world.h"
+#include "../camera/SDL_Camera.h"
 #include <iostream>
 #include <fstream>
-#include "json.hpp"
+#include "../util/json.hpp"
 
 using json = nlohmann::json;
 

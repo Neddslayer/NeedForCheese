@@ -17,7 +17,7 @@
 #define SDL_CAMERA_H
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "SDL_FontCache.h"
+#include "../util/SDL_FontCache.h"
 
 struct Vector2f
 {

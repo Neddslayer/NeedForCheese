@@ -2,7 +2,7 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
 #include "screens.h"
-#include "utilities.h"
+#include "../h/utilities.h"
 #include <iostream>
 
 SDL_Surface* titleSelectBGSurfacea = NULL;
